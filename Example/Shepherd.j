@@ -22,6 +22,7 @@ scope Shepherd initializer init
             call this.SetColumnsRows(3, 4)
             set this.title = "Shepherd"
             call this.SetTalentPoints(6)
+            set this.backgroundImage = "arms.dds"
             // set this.icon = "FireBolt"
             // TODO: set tree background texture here
 

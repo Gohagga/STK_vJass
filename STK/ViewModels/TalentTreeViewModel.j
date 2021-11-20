@@ -180,6 +180,7 @@ library STKTalentTreeViewModel requires STKITalentSlot
 
             if (tree != 0) then
                 call BlzFrameSetText(this.view.title, this.tree.GetTitle())
+                call BlzFrameSetTexture(this.view.containerImage, this.tree.backgroundImage, 0, true)
             endif
         endmethod
 

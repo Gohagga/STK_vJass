@@ -4,6 +4,7 @@ library STKTalentTreeView requires STKTalentViewModel
 
         framehandle box
         framehandle container
+        framehandle containerImage
         framehandle title
         framehandle closeButton
         framehandle confirmButtonMain

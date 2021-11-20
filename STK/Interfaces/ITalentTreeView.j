@@ -4,6 +4,7 @@ library STKITalentTreeView
 
         framehandle box
         framehandle container
+        framehandle containerImage
         framehandle title
         framehandle confirmButtonMain
         framehandle cancelButtonMain

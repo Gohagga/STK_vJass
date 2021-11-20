@@ -22,6 +22,7 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
         public string icon              = ""
         public string title             = ""
         public integer talentPoints     = 0
+        public string backgroundImage    = ""
 
         public STKTalent_Talent array talents[MAX_TALENTS]
         public integer array rankState[MAX_TALENTS]

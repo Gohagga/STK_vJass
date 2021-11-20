@@ -1,4 +1,4 @@
-library STKTalentView requires STKTalentViewModel
+library STKTalentView requires STKTalentViewModel, STKConstants
     
     public struct TalentView extends ITalentView
 
@@ -30,28 +30,28 @@ library STKTalentView requires STKTalentViewModel
     public function GenerateTalentView takes framehandle parent returns ITalentView
 
         // ========= SETUP ===============================================================================
-        local real buttonWidth = 0.04
-        local real buttonHeight = 0.04
+        local real buttonWidth = STKConstants_buttonWidth
+        local real buttonHeight = STKConstants_buttonHeight
         local string buttonTexture = "ReplaceableTextures/CommandButtons/BTNPeasant.blp"
-        local real tooltipWidth = 0.28
-        local real tooltipHeight = 0.16
-        local real tooltipTextX = 0
-        local real tooltipTextY = 0
-        local real tooltipTextWidth = 0.25
-        local real tooltipTextHeight = 0.13
+        local real tooltipWidth = STKConstants_tooltipWidth
+        local real tooltipHeight = STKConstants_tooltipHeight
+        local real tooltipTextX = STKConstants_tooltipTextX
+        local real tooltipTextY = STKConstants_tooltipTextY
+        local real tooltipTextWidth = STKConstants_tooltipTextWidth
+        local real tooltipTextHeight = STKConstants_tooltipTextHeight
         local string tooltipDefaultText = "Default talent name \n\nDefault talent description"
 
-        local real rankX = -0.0006
-        local real rankY = 0.0015
-        local real rankSizeWidth = 0.014
-        local real rankSizeHeight = 0.014
-        local string rankTexture = "UI/Widgets/Console/Human/human-transport-slot.blp"
+        local real rankX = STKConstants_rankX
+        local real rankY = STKConstants_rankY
+        local real rankSizeWidth = STKConstants_rankSizeWidth
+        local real rankSizeHeight = STKConstants_rankSizeHeight
+        local string rankTexture = STKConstants_rankTexture
 
-        local real highlightWidth = 0.036
-        local real highlightHeight = 0.036
-        local string highlightTexture = "UI/Widgets/Console/Human/CommandButton/human-activebutton.blp"
+        local real highlightWidth = STKConstants_highlightWidth
+        local real highlightHeight = STKConstants_highlightHeight
+        local string highlightTexture = STKConstants_highlightTexture
 
-        local real linkWidth = 0.004
+        local real linkWidth = STKConstants_linkWidth
         // ========= ENDSETUP ============================================================================
 
         // Creating the view

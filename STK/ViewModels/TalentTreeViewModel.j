@@ -34,8 +34,8 @@ library STKTalentTreeViewModel requires STKITalentSlot
         private ITalentTreeView view
         private framehandle parent
         private integer panelId
-        private ITalentSlot array slots[STKTalentTree_MAX_TALENTS]
-        private integer slotCount = STKTalentTree_MAX_TALENTS
+        private ITalentSlot array slots[STKConstants_MAX_TALENT_SLOTS]
+        private integer slotCount = STKConstants_MAX_TALENT_SLOTS
 
         // UI config ===============================================================
         public real boxWidth = 0
@@ -147,7 +147,7 @@ library STKTalentTreeViewModel requires STKITalentSlot
             endif
 
             set tempState = this.tree.tempRankState[index]
-            if (this.tree.pointsAvailable >= talent.cost and tempState < talent.maxRank) then
+            if (this.tree.GetTalentPoints() >= talent.cost and tempState < talent.maxRank) then
 
                 call this.tree.ApplyTalentTemporary(index)
                 set tempState = this.tree.tempRankState[index]
@@ -347,7 +347,7 @@ library STKTalentTreeViewModel requires STKITalentSlot
             if (tempState == talent.maxRank) then
                 // call BJDebugMsg("STATE 4")
                 call slot.SetState(4) // Maxed
-            elseif (depOk and reqOk and talent.cost <= tree.pointsAvailable) then
+            elseif (depOk and reqOk and talent.cost <= tree.GetTalentPoints()) then
                 // call BJDebugMsg("STATE 3")
                 call slot.SetState(3) // Available
             else

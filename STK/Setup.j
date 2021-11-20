@@ -59,7 +59,7 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
     // Use to add or remove available talent points from a unit
     public function UpdateUnitTalentPoints takes unit u, integer points returns nothing
         local STKTalentTree_TalentTree tree = LoadInteger(Hash, 0, GetHandleId(u))
-        set tree.pointsAvailable = tree.pointsAvailable + points
+        call tree.SetTalentPoints(tree.GetTalentPoints() + points)
         call TalentUI[GetPlayerId(GetOwningPlayer(u))].ResetTalentViewModels()
     endfunction
 

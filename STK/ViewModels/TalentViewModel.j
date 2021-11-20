@@ -2,8 +2,8 @@ library STKTalentViewModel requires STKITalentSlot, STKITalentView
 
     public struct TalentViewModel extends ITalentSlot
 
-        public static constant string ActiveLinkTexture = "Textures/Water00.blp"
-        public static constant string InactiveLinkTexture = "UI/Widgets/Console/Human/human-inventory-slotfiller.blp"
+        public static constant string ActiveLinkTexture = STKConstants_ACTIVE_LINK_TEXTURE
+        public static constant string InactiveLinkTexture = STKConstants_INACTIVE_LINK_TEXTURE
 
         private ITalentView view
         private player watcher

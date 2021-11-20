@@ -4,7 +4,7 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
         public constant integer MAX_ROWS        = STKConstants_MAX_ROWS
         public constant integer MAX_COLUMNS     = STKConstants_MAX_COLUMNS
 
-        public constant integer MAX_TALENTS = STKConstants_MAX_TALENT_SLOTS
+        public constant integer MAX_TALENTS     = STKConstants_MAX_TALENT_SLOTS
 
         // Event variables
         public unit EventUnit
@@ -19,9 +19,9 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
 
         public unit ownerUnit
         public player ownerPlayer
-        public string icon             = ""
-        public string title            = ""
-        public integer pointsAvailable = 0
+        public string icon              = ""
+        public string title             = ""
+        public integer talentPoints     = 0
 
         public STKTalent_Talent array talents[MAX_TALENTS]
         public integer array rankState[MAX_TALENTS]
@@ -34,6 +34,18 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
         
         stub method Initialize takes nothing returns nothing
 
+        endmethod
+
+        stub method SetTalentPoints takes integer points returns nothing
+            set this.talentPoints = points
+        endmethod
+
+        stub method GetTalentPoints takes nothing returns integer
+            return this.talentPoints
+        endmethod
+
+        stub method GetTitle takes nothing returns string
+            return this.title + " (" + I2S(this.GetTalentPoints()) + " points available)"
         endmethod
 
         private method AddTalentRaw takes integer x, integer y, STKTalent_Talent talent returns STKTalent_Talent
@@ -187,18 +199,17 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
                 set talent = this.talents[i]
                 if (talent != 0 and this.rankState[i] != this.tempRankState[i]) then
 
-                    // set this.pointsAvailable = this.pointsAvailable + talent.cost
                     set j = this.tempRankState[i]
                     if (talent.maxRank == 1 and j > this.rankState[i]) then
                         call this.DeallocateTalent(talent)
-                        set this.pointsAvailable = this.pointsAvailable + talent.cost
+                        call this.SetTalentPoints(this.GetTalentPoints() + talent.cost)
                     else
                         set talent2 = talent.previousRank
                         loop
                             // TODO
                             exitwhen j <= this.rankState[i] or talent2 == 0
                             call this.DeallocateTalent(talent2)
-                            set this.pointsAvailable = this.pointsAvailable + talent2.cost
+                            call this.SetTalentPoints(this.GetTalentPoints() + talent2.cost)
                             set talent2 = talent2.previousRank
                             set j = j - 1
                         endloop
@@ -247,7 +258,7 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
             set this.isDirty = true
 
             if (this.tempRankState[index] < talent.maxRank) then
-                set this.pointsAvailable = this.pointsAvailable - talent.cost
+                call this.SetTalentPoints(this.GetTalentPoints() - talent.cost)
                 set this.tempRankState[index] = this.tempRankState[index] + 1
 
                 // Fire talent allocate event
@@ -257,7 +268,7 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
                 endif
             else
                 // Rollback
-                set this.pointsAvailable = this.pointsAvailable + talent.cost
+                call this.SetTalentPoints(this.GetTalentPoints() + talent.cost)
                 set this.tempRankState[index] = this.tempRankState[index] - 1
             endif
 
@@ -344,11 +355,6 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
         method SetColumnsRows takes integer columns, integer rows returns nothing
             set this.columns = columns
             set this.rows = rows
-        endmethod
-
-        method GetTitle takes nothing returns string
-            // return this.title + " (" + I2S(tree.pointsAvailable) + " points available)"
-            return this.title
         endmethod
         
         method onDestroy takes nothing returns nothing

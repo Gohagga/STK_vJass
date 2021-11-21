@@ -12,8 +12,8 @@ library STKConstants
         // TalentView Config ============================================================================================
         // (Ignore this if using custom GenerateTalentView function)
         // Talent button height width scaling
-        public constant real buttonWidth = 0.035
-        public constant real buttonHeight = 0.035
+        public constant real buttonWidth = 0.030
+        public constant real buttonHeight = 0.030
 
         // Talent-hover tooltip box
         public constant real tooltipWidth = 0.28
@@ -26,19 +26,28 @@ library STKConstants
         // Small rank box for multi-rank talents
         public constant real rankX = -0.0006
         public constant real rankY = 0.0015
-        public constant real rankSizeWidth = 0.020
-        public constant real rankSizeHeight = 0.014
-        public constant real rankTextScale = 0.7
+        public constant real rankSizeWidth = 0.016
+        public constant real rankSizeHeight = 0.010
+        public constant real rankTextScale = 0.72
         public constant string rankTexture = "UI/Widgets/Console/Human/human-transport-slot.blp"
 
         // Highlight when talent is available to put points into
-        public constant real highlightWidth = 0.03
-        public constant real highlightHeight = 0.03
+        public constant real highlightWidth = 0.025
+        public constant real highlightHeight = 0.025
         public constant string highlightTexture = "UI/Widgets/Console/Human/CommandButton/human-activebutton.blp"
 
         // Link between talents (dependency)
         public constant real linkWidth = 0.006
-        public constant real linkIntersectionScale = 0.80
+        public constant real linkIntersectionScale = 1
         // End TalentView Config =========================================================================================
+
+
+        // TalentTreeViewModel Config ====================================================================================
+        // Affects automatic positioning of the talents
+        public constant real boxWidth = 0.1547
+        public constant real boxHeight = 0.3103
+        public constant real sideMargin = -0.05
+        public constant real verticalMargin = 0
+        // End TalentTreeViewModel Config ================================================================================
     endglobals
 endlibrary

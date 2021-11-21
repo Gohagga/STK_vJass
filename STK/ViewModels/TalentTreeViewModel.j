@@ -36,6 +36,7 @@ library STKTalentTreeViewModel requires STKITalentSlot
         private integer panelId
         private ITalentSlot array slots[STKConstants_MAX_TALENT_SLOTS]
         private integer slotCount = STKConstants_MAX_TALENT_SLOTS
+        private ViewChanged onViewChanged
 
         // UI config ===============================================================
         public real boxWidth = 0
@@ -90,7 +91,7 @@ library STKTalentTreeViewModel requires STKITalentSlot
             endif
         endmethod
 
-        static method create takes player watcher, ITalentTreeView view, TalentSlotFactory talentSlotFactory, integer panelId returns TalentTreeViewModel
+        static method create takes player watcher, ITalentTreeView view, TalentSlotFactory talentSlotFactory, integer panelId, ViewChanged onViewChanged returns TalentTreeViewModel
             local TalentTreeViewModel this = TalentTreeViewModel.allocate()
             local ITalentSlot slot
             local integer i = 0
@@ -101,6 +102,7 @@ library STKTalentTreeViewModel requires STKITalentSlot
             set this.watcher = watcher
             set this.parent = view.box
             set this.panelId = panelId
+            set this.onViewChanged = onViewChanged
             
             call thistype.SetUpTriggersIfNeeded()
 
@@ -151,7 +153,13 @@ library STKTalentTreeViewModel requires STKITalentSlot
 
                 call this.tree.ApplyTalentTemporary(index)
                 set tempState = this.tree.tempRankState[index]
-                call this.ResetTalentViewModels()
+
+                // Check for link states
+                call this.tree.UpdateLinkStates()
+                // call this.ResetTalentViewModels()
+                if (this.onViewChanged != null) then
+                    call this.onViewChanged.execute(this, this.watcher)
+                endif
             endif
         endmethod
 
@@ -159,7 +167,10 @@ library STKTalentTreeViewModel requires STKITalentSlot
             
             if (this.tree != 0) then
                 call this.tree.SaveTalentRankState()
-                call this.ResetTalentViewModels()
+                // call this.ResetTalentViewModels()
+                if (this.onViewChanged != null) then
+                    call this.onViewChanged.execute(this, this.watcher)
+                endif
             endif
 
         endmethod
@@ -168,7 +179,11 @@ library STKTalentTreeViewModel requires STKITalentSlot
             
             if (this.tree != 0) then
                 call this.tree.ResetTempRankState()
-                call this.ResetTalentViewModels()
+                call this.tree.UpdateLinkStates()
+                // call this.ResetTalentViewModels()
+                if (this.onViewChanged != null) then
+                    call this.onViewChanged.execute(this, this.watcher)
+                endif
             endif
 
         endmethod
@@ -273,7 +288,7 @@ library STKTalentTreeViewModel requires STKITalentSlot
                     // call BJDebugMsg("Setting visible")
                     call slot.SetVisible(true)
                 else
-                    // call slot.SetVisible(false)
+                    call slot.SetVisible(false)
                 endif
 
                 set i = i + 1
@@ -284,6 +299,7 @@ library STKTalentTreeViewModel requires STKITalentSlot
             endif
 
             call BlzFrameSetVisible(this.view.box, true)
+            call BlzFrameSetVisible(this.view.container, true)
         endmethod
 
         method Hide takes nothing returns nothing
@@ -322,6 +338,11 @@ library STKTalentTreeViewModel requires STKITalentSlot
             call slot.SetRank(tempState)
             call slot.RenderLinks(depLeft, depUp, depRight, depDown)
 
+            if (talent.isLink == true) then
+                call slot.SetState(5) // Link
+                return
+            endif
+
             call slot.SetErrorText("")
             set depOk = true
             set reqOk = true
@@ -338,7 +359,7 @@ library STKTalentTreeViewModel requires STKITalentSlot
                 set depError = ConcatenateErrors(depError, depDown)
             endif
 
-            set reqError = tree.CalculateTalentRequirements(talent)
+            set reqError = tree.CalculateTalentRequirements(talent, index)
             set reqOk = false
             if (reqError == null) then
                 set reqOk = true
@@ -449,5 +470,7 @@ library STKTalentTreeViewModel requires STKITalentSlot
         endmethod
 
     endstruct
+
+    function interface ViewChanged takes TalentTreeViewModel ttvm, player watcher returns nothing
 endlibrary
 

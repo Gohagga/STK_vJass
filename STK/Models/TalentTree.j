@@ -11,6 +11,7 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
         public integer EventTalentTree
         public integer EventTalent
         public integer EventRank
+        public integer EventTalentIndex
         // Event result
         public string ResultTalentRequirements
     endglobals
@@ -28,6 +29,9 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
         public integer array rankState[MAX_TALENTS]
         public integer array tempRankState [MAX_TALENTS]
         private boolean isDirty = false
+
+        private integer array linkTalentIndex[MAX_TALENTS]
+        private integer linkTalentCount = 0
 
         public integer rows = MAX_ROWS
         public integer columns = MAX_COLUMNS
@@ -71,6 +75,11 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
                 set this.talents[index] = talent
                 set this.rankState[index] = 0
                 call this.talents[index].UpdateMaxRank()
+            endif
+
+            if (talent.isLink) then
+                set this.linkTalentIndex[this.linkTalentCount] = index
+                set this.linkTalentCount = this.linkTalentCount + 1
             endif
 
             if (this.tempRankState[index] != talent.startingLevel) then
@@ -140,9 +149,11 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
             call this.ActivateTalent(talent, rank - count)
         endmethod
 
-        method CalculateTalentRequirements takes STKTalent_Talent talent returns string
+        method CalculateTalentRequirements takes STKTalent_Talent talent, integer index returns string
             set EventUnit = this.ownerUnit
             set EventTalentTree = this
+            set EventTalent = talent
+            set EventTalentIndex = index
             
             set ResultTalentRequirements = null
             if (talent.requirements != null) then
@@ -316,6 +327,76 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
             return this.CheckDependencyKey(requiredLevel, index, depIndex)
         endmethod
 
+        method UpdateLinkState takes integer index returns integer
+            local STKTalent_Talent talent = this.talents[index]
+            local integer depIndex = 0
+            local integer reqLevel = 0
+            local integer i = index
+            local integer level = 0
+
+            if (talent != 0 and talent.isLink) then
+                if (talent.dependencyLeft > 0) then
+                    set depIndex = i - 1
+                    set reqLevel = talent.dependencyLeft
+                    if (this.talents[depIndex] != 0 and this.talents[depIndex].isLink) then
+                        call this.UpdateLinkState(depIndex)
+                    endif
+                    if (this.CheckDependencyKey(reqLevel, i, depIndex) == null) then
+                        set level = level + 1
+                    endif
+                endif
+                if (talent.dependencyUp > 0) then
+                    set depIndex = i + this.columns
+                    set reqLevel = talent.dependencyUp
+                    if (this.talents[depIndex] != 0 and this.talents[depIndex].isLink) then
+                        call this.UpdateLinkState(depIndex)
+                    endif
+                    if (this.CheckDependencyKey(reqLevel, i, depIndex) == null) then
+                        set level = level + 1
+                    endif
+                endif
+                if (talent.dependencyRight > 0) then
+                    set depIndex = i + 1
+                    set reqLevel = talent.dependencyRight
+                    if (this.talents[depIndex] != 0 and this.talents[depIndex].isLink) then
+                        call this.UpdateLinkState(depIndex)
+                    endif
+                    if (this.CheckDependencyKey(reqLevel, i, depIndex) == null) then
+                        set level = level + 1
+                    endif
+                endif
+                if (talent.dependencyDown > 0) then
+                    set depIndex = i - this.columns
+                    set reqLevel = talent.dependencyDown
+                    if (this.talents[depIndex] != 0 and this.talents[depIndex].isLink) then
+                        call this.UpdateLinkState(depIndex)
+                    endif
+                    if (this.CheckDependencyKey(reqLevel, i, depIndex) == null) then
+                        set level = level + 1
+                    endif
+                endif
+                
+                set this.rankState[i] = level
+                set this.tempRankState[i] = level
+            endif
+            return level
+        endmethod
+
+        method UpdateLinkStates takes nothing returns nothing
+            local STKTalent_Talent talent
+            local integer i = 0
+            local integer level = 0
+
+            loop
+                exitwhen i == this.linkTalentCount
+
+                if (this.linkTalentIndex[i] != 0) then
+                    call this.UpdateLinkState(this.linkTalentIndex[i])
+                endif
+
+                set i = i + 1
+            endloop
+        endmethod
         
         // [TalentDepType.up]: (index: number, cols: number) => [index + cols, 1],
         // [TalentDepType.right]: (index: number, cols: number) => [index + 1, 0],
@@ -329,6 +410,10 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
 
         static method GetEventTalent takes nothing returns STKTalent_Talent
             return EventTalent
+        endmethod
+
+        static method GetEventTalentIndex takes nothing returns integer
+            return EventTalentIndex
         endmethod
 
         static method GetEventRank takes nothing returns integer

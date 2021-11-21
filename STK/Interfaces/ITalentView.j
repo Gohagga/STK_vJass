@@ -15,6 +15,7 @@ library STKITalentView
         framehandle linkUp
         framehandle linkRight
         framehandle linkDown
+        framehandle linkIntersection
 
     endinterface
 

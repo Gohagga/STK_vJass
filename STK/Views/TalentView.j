@@ -15,6 +15,7 @@ library STKTalentView requires STKTalentViewModel, STKConstants
         framehandle linkUp
         framehandle linkRight
         framehandle linkDown
+        framehandle linkIntersection
 
     endstruct
 
@@ -24,7 +25,7 @@ library STKTalentView requires STKTalentViewModel, STKConstants
         call BlzFrameSetSize(frame, width, width)
         call BlzFrameSetTexture(frame, "UI/Widgets/Console/Human/human-inventory-slotfiller.blp", 0, true)
         call BlzFrameSetLevel(frame, 1)
-        call BlzFrameSetVisible(frame, true)
+        call BlzFrameSetVisible(frame, false)
     endfunction
 
     public function GenerateTalentView takes framehandle parent returns ITalentView
@@ -45,6 +46,7 @@ library STKTalentView requires STKTalentViewModel, STKConstants
         local real rankY = STKConstants_rankY
         local real rankSizeWidth = STKConstants_rankSizeWidth
         local real rankSizeHeight = STKConstants_rankSizeHeight
+        local real rankTextScale = STKConstants_rankTextScale
         local string rankTexture = STKConstants_rankTexture
 
         local real highlightWidth = STKConstants_highlightWidth
@@ -52,6 +54,7 @@ library STKTalentView requires STKTalentViewModel, STKConstants
         local string highlightTexture = STKConstants_highlightTexture
 
         local real linkWidth = STKConstants_linkWidth
+        local real linkIntersectionScale = STKConstants_linkIntersectionScale
         // ========= ENDSETUP ============================================================================
 
         // Creating the view
@@ -61,6 +64,7 @@ library STKTalentView requires STKTalentViewModel, STKConstants
         local framehandle linkUp = BlzCreateFrameByType("BACKDROP", "UpLink", parent, "", 0)
         local framehandle linkRight = BlzCreateFrameByType("BACKDROP", "RightLink", parent, "", 0)
         local framehandle linkDown = BlzCreateFrameByType("BACKDROP", "DownLink", parent, "", 0)
+        local framehandle linkIntersection = BlzCreateFrameByType("BACKDROP", "DownLink", parent, "", 0)
 
         local framehandle highlight = BlzCreateFrameByType("BACKDROP", "AvailableImage", parent, "", 0)
         local framehandle buttonMain = BlzCreateFrame("ScoreScreenBottomButtonTemplate", parent, 0, 0)
@@ -70,7 +74,6 @@ library STKTalentView requires STKTalentViewModel, STKConstants
         local framehandle rankImage = BlzCreateFrameByType("BACKDROP", "Counter", buttonMain, "", 0)
         local framehandle rankText = BlzCreateFrameByType("TEXT", "FaceFrameTooltip", buttonMain, "", 0)
         local framehandle toolRank = BlzCreateFrameByType("TEXT", "FaceFrameTooltip", toolBox, "", 0)
-        
 
         call BlzFrameSetTooltip(buttonMain, toolBox)
 
@@ -94,9 +97,11 @@ library STKTalentView requires STKTalentViewModel, STKConstants
         call BlzFrameSetTexture(rankImage, rankTexture, 0, true)
 
         call BlzFrameClearAllPoints(rankText)
-        call BlzFrameSetPoint(rankText, FRAMEPOINT_CENTER, rankImage, FRAMEPOINT_CENTER, 0, 0)
-        call BlzFrameSetSize(rankText, 0.01, 0.012)
+        call BlzFrameSetPoint(rankText, FRAMEPOINT_TOPLEFT, rankImage, FRAMEPOINT_TOPLEFT, 0, 0)
+        call BlzFrameSetPoint(rankText, FRAMEPOINT_BOTTOMRIGHT, rankImage, FRAMEPOINT_BOTTOMRIGHT, 0, 0)
         call BlzFrameSetText(rankText, "0")
+        call BlzFrameSetTextAlignment(rankText, TEXT_JUSTIFY_CENTER, TEXT_JUSTIFY_MIDDLE)
+        call BlzFrameSetScale(rankText, rankTextScale)
 
         call BlzFrameSetPoint(highlight, FRAMEPOINT_CENTER, buttonMain, FRAMEPOINT_CENTER, 0, 0)
         call BlzFrameSetSize(highlight, highlightWidth, highlightHeight)
@@ -109,10 +114,12 @@ library STKTalentView requires STKTalentViewModel, STKConstants
         call BlzFrameSetSize(toolRank, tooltipWidth - 0.03, tooltipHeight - 0.03)
         call BlzFrameSetText(toolRank, "Rank 1/3")
         
-        call SetUpLink(linkLeft, parent, linkWidth)
-        call SetUpLink(linkUp, parent, linkWidth)
-        call SetUpLink(linkRight, parent, linkWidth)
-        call SetUpLink(linkDown, parent, linkWidth)
+        call SetUpLink(linkLeft, buttonMain, linkWidth)
+        call SetUpLink(linkUp, buttonMain, linkWidth)
+        call SetUpLink(linkRight, buttonMain, linkWidth)
+        call SetUpLink(linkDown, buttonMain, linkWidth)
+        call SetUpLink(linkIntersection, buttonMain, linkWidth)
+        call BlzFrameSetScale(linkIntersection, linkIntersectionScale)
 
         // EXPERIEMENTAL
         call BlzFrameSetVisible(buttonMain, false)
@@ -130,6 +137,7 @@ library STKTalentView requires STKTalentViewModel, STKConstants
         set view.linkUp = linkUp
         set view.linkRight = linkRight
         set view.linkDown = linkDown
+        set view.linkIntersection = linkIntersection
         
         return view
     endfunction

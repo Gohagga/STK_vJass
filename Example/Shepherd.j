@@ -2,12 +2,27 @@ scope Shepherd initializer init
 
     public struct Shepherd extends STKTalentTree_TalentTree
 
+        // Overriden stub methods ==================================================
+        method GetTalentPoints takes nothing returns integer
+            return GetPlayerState(this.ownerPlayer, PLAYER_STATE_RESOURCE_LUMBER)
+        endmethod
+
+        method SetTalentPoints takes integer points returns nothing
+            call SetPlayerState(this.ownerPlayer, PLAYER_STATE_RESOURCE_LUMBER, points)
+        endmethod
+
+        method GetTitle takes nothing returns string
+            return this.title
+        endmethod
+        // =========================================================================
+
         method Initialize takes nothing returns nothing
             local STKTalent_Talent t
 
             call this.SetColumnsRows(3, 4)
             set this.title = "Shepherd"
-            set this.pointsAvailable = 6
+            call this.SetTalentPoints(6)
+            set this.backgroundImage = "arms.dds"
             // set this.icon = "FireBolt"
             // TODO: set tree background texture here
 

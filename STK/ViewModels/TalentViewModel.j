@@ -2,8 +2,8 @@ library STKTalentViewModel requires STKITalentSlot, STKITalentView
 
     public struct TalentViewModel extends ITalentSlot
 
-        public static constant string ActiveLinkTexture = "Textures/Water00.blp"
-        public static constant string InactiveLinkTexture = "UI/Widgets/Console/Human/human-inventory-slotfiller.blp"
+        public static constant string ActiveLinkTexture = STKConstants_ACTIVE_LINK_TEXTURE
+        public static constant string InactiveLinkTexture = STKConstants_INACTIVE_LINK_TEXTURE
 
         private ITalentView view
         private player watcher
@@ -144,8 +144,9 @@ library STKTalentViewModel requires STKITalentSlot, STKITalentView
                 return
             endif
 
+            call BlzFrameSetVisible(this.view.highlight, false)
+
             if (this.talent != 0 and this.talent.iconEnabled != null) then
-                call BlzFrameSetVisible(this.view.highlight, false)
                 call BlzFrameSetVisible(this.view.buttonMain, true)
                 call BlzFrameSetEnable(this.view.buttonMain, false)
                 if (this.rank > 0) then
@@ -153,6 +154,12 @@ library STKTalentViewModel requires STKITalentSlot, STKITalentView
                 endif
             else
                 call BlzFrameSetVisible(this.view.buttonMain, false)
+                call BlzFrameSetVisible(this.view.linkIntersection, true)
+                if (this.rank > 0) then
+                    call BlzFrameSetTexture(this.view.linkIntersection, ActiveLinkTexture, 0, true)
+                else
+                    call BlzFrameSetTexture(this.view.linkIntersection, InactiveLinkTexture, 0, true)
+                endif
             endif
 
             call this.UpdateLinkVisibility()
@@ -176,6 +183,12 @@ library STKTalentViewModel requires STKITalentSlot, STKITalentView
                 return
             endif
 
+            if (this.talent != 0 and this.talent.isLink) then
+                call BlzFrameSetVisible(this.view.linkIntersection, isVisible and this.talent.isLink)
+                return
+            endif
+
+            call BlzFrameSetVisible(this.view.linkIntersection, false)
             call BlzFrameSetVisible(this.view.buttonMain, isVisible)
             call BlzFrameSetVisible(this.view.highlight, isVisible and this.isAvailable)
 
@@ -208,8 +221,8 @@ library STKTalentViewModel requires STKITalentSlot, STKITalentView
                 return
             endif
 
-            set tooltipText = "Rank " + I2S(rank) + "/" + I2S(this.talent.maxRank)
-            set rankText = I2S(rank)
+            set rankText = I2S(rank) + "/" + I2S(this.talent.maxRank)
+            set tooltipText = "Rank " + rankText
 
             if (GetLocalPlayer() != this.watcher) then
                 return

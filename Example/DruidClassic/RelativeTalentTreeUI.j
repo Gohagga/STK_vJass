@@ -100,8 +100,8 @@ globals
      call TriggerAddAction(TriggerConfirmTalentsButton, function ConfirmTalentsButtonFunc) 
     
     set CancelTalentsButton = BlzCreateFrame("ScriptDialogButton", TalentMainFrame,0,0) 
-    call BlzFrameSetPoint(CancelTalentsButton, FRAMEPOINT_TOPLEFT, TalentMainFrame, FRAMEPOINT_BOTTOMRIGHT, -0.020126, 0.02811)
-    call BlzFrameSetPoint(CancelTalentsButton, FRAMEPOINT_BOTTOMRIGHT, TalentMainFrame, FRAMEPOINT_BOTTOMRIGHT, -0.123126, -0.0013)
+    call BlzFrameSetPoint(CancelTalentsButton, FRAMEPOINT_TOPLEFT, TalentMainFrame, FRAMEPOINT_BOTTOMRIGHT, -0.123126, 0.02811)
+    call BlzFrameSetPoint(CancelTalentsButton, FRAMEPOINT_BOTTOMRIGHT, TalentMainFrame, FRAMEPOINT_BOTTOMRIGHT, -0.020126, -0.0013)
     //  call BlzFrameSetAbsPoint(CancelTalentsButton, FRAMEPOINT_TOPLEFT, 0.389900, 0.180410) 
     //  call BlzFrameSetAbsPoint(CancelTalentsButton, FRAMEPOINT_BOTTOMRIGHT, 0.492900, 0.151000) 
      call BlzFrameSetText(CancelTalentsButton, "|cffFCD20DReset|r") 

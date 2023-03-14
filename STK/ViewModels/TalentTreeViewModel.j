@@ -405,6 +405,9 @@ library STKTalentTreeViewModel requires STKITalentSlot
                 endif
                 set i = i + 1
             endloop
+
+            set frame = null
+            set clickingPlayer = null
         endmethod
 
         static method ConfirmButtonClicked takes nothing returns nothing
@@ -424,6 +427,9 @@ library STKTalentTreeViewModel requires STKITalentSlot
                 endif
                 set i = i + 1
             endloop
+
+            set frame = null
+            set clickingPlayer = null
         endmethod
 
         static method CancelButtonClicked takes nothing returns nothing
@@ -443,6 +449,9 @@ library STKTalentTreeViewModel requires STKITalentSlot
                 endif
                 set i = i + 1
             endloop
+
+            set frame = null
+            set clickingPlayer = null
         endmethod
 
         static method CloseButtonClicked takes nothing returns nothing
@@ -463,6 +472,9 @@ library STKTalentTreeViewModel requires STKITalentSlot
                 endif
                 set i = i + 1
             endloop
+
+            set frame = null
+            set clickingPlayer = null
         endmethod        
 
         method onDestroy takes nothing returns nothing

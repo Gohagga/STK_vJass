@@ -65,10 +65,13 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
         call tree.Initialize()
         if (panelId == 1) then
             call TalentUILeft[playerId].SetTree(tree)
+            call TalentUILeft[playerId].RenderTree()
         elseif (panelId == 2) then
             call TalentUIMiddle[playerId].SetTree(tree)
+            call TalentUIMiddle[playerId].RenderTree()
         elseif (panelId == 3) then
             call TalentUIRight[playerId].SetTree(tree)
+            call TalentUIRight[playerId].RenderTree()
         endif
     endfunction
 

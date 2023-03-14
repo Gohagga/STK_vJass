@@ -53,10 +53,8 @@ globals
     
     
     set TalentMainFrame = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0),0,0) 
-    call BlzFrameSetAbsPoint(TalentMainFrame, FRAMEPOINT_TOPLEFT, 0.050574000, 0.530800) 
-     call BlzFrameSetAbsPoint(TalentMainFrame, FRAMEPOINT_BOTTOMRIGHT, 0.566074, 0.152300)
-    //  call BlzFrameSetAbsPoint(TalentMainFrame, FRAMEPOINT_TOPLEFT, 0.000574000, 0.530800) 
-    //  call BlzFrameSetAbsPoint(TalentMainFrame, FRAMEPOINT_BOTTOMRIGHT, 0.516074, 0.152300)
+     call BlzFrameSetAbsPoint(TalentMainFrame, FRAMEPOINT_TOPLEFT, 0.000574000, 0.530800) // CHANGE THIS TO MOVE/RESIZE THE TALENT SCREEN
+     call BlzFrameSetAbsPoint(TalentMainFrame, FRAMEPOINT_BOTTOMRIGHT, 0.516074, 0.152300)
      call BlzFrameSetVisible(TalentMainFrame, false) // +++++++++++++++++
     
     // set TreeLeft = BlzCreateFrameByType("ListBoxWar3", "TreeLeft", TalentMainFrame, "", 1) 
@@ -100,6 +98,7 @@ globals
      call TriggerAddAction(TriggerConfirmTalentsButton, function ConfirmTalentsButtonFunc) 
     
     set CancelTalentsButton = BlzCreateFrame("ScriptDialogButton", TalentMainFrame,0,0) 
+    call BlzFrameClearAllPoints(CancelTalentsButton)
     call BlzFrameSetPoint(CancelTalentsButton, FRAMEPOINT_TOPLEFT, TalentMainFrame, FRAMEPOINT_BOTTOMRIGHT, -0.123126, 0.02811)
     call BlzFrameSetPoint(CancelTalentsButton, FRAMEPOINT_BOTTOMRIGHT, TalentMainFrame, FRAMEPOINT_BOTTOMRIGHT, -0.020126, -0.0013)
     //  call BlzFrameSetAbsPoint(CancelTalentsButton, FRAMEPOINT_TOPLEFT, 0.389900, 0.180410) 

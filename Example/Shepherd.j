@@ -141,24 +141,24 @@ scope Shepherd initializer init
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // Can use these methods inside Activate/Deactivate/Allocate/Deallocate/Requirements functions
         
-        // Returns unit that owns the talent tree
         // static method GetEventUnit takes nothing returns unit
+        // Returns unit that owns the talent tree
         // thistype.GetEventUnit()
 
-        // Returns talent object that is being resolved
         // static method GetEventTalent takes nothing returns STKTalent_Talent
+        // Returns talent object that is being resolved
         // thistype.GetEventTalent()
 
-        // Returns rank of the talent that is being activated
         // static method GetEventRank takes nothing returns integer
+        // Returns rank of the talent that is being activated
         // thistype.GetEventRank()
 
-        // Returns "this"
         // static method GetEventTalentTree takes nothing returns TalentTree
+        // Returns "this"
         // thistype.GetEventTalentTree()
 
-        // Needs to be called within Requirements function to disable the talent
         // static method SetTalentRequirementsResult takes string requirements returns nothing
+        // Needs to be called within Requirements function to disable the talent
         // thistype.SetTalentRequirementsResult("8 litres of milk")
 
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

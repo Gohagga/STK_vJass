@@ -80,6 +80,16 @@ library STKTalent initializer init
             return this
         endmethod
 
+        method SetIconEnabled takes string path returns Talent
+            set this.iconEnabled = path
+            return this
+        endmethod
+
+        method SetIconDisabled takes string path returns Talent
+            set this.iconDisabled = path
+            return this
+        endmethod
+
         method SetOnAllocate takes code func returns Talent
             set this.onAllocate = CreateTrigger()
             call TriggerAddCondition(this.onAllocate, Condition(func))

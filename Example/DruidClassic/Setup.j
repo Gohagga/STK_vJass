@@ -202,20 +202,20 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
             set TalentUIRight[i] = STKTalentTreeViewModel_TalentTreeViewModel.create(Player(i), talentTreeView3, GenerateTalentSlotRight, 3, OnTalentViewChanged)
 
             // Talents are auto-positioned based on these params and talentree's column/row count ?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=
-            set TalentUILeft[i].boxWidth = STKConstants_boxWidth
-            set TalentUILeft[i].boxHeight = STKConstants_boxHeight
-            set TalentUILeft[i].sideMargin = STKConstants_sideMargin
-            set TalentUILeft[i].verticalMargin = STKConstants_verticalMargin
+            set TalentUILeft[i].boxWidth = STKConstants_BOX_WIDTH
+            set TalentUILeft[i].boxHeight = STKConstants_BOX_HEIGHT
+            set TalentUILeft[i].sideMargin = STKConstants_SIDE_MARGIN
+            set TalentUILeft[i].verticalMargin = STKConstants_VERTICAL_MARGIN
             
-            set TalentUIMiddle[i].boxWidth = STKConstants_boxWidth
-            set TalentUIMiddle[i].boxHeight = STKConstants_boxHeight
-            set TalentUIMiddle[i].sideMargin = STKConstants_sideMargin
-            set TalentUIMiddle[i].verticalMargin = STKConstants_verticalMargin
+            set TalentUIMiddle[i].boxWidth = STKConstants_BOX_WIDTH
+            set TalentUIMiddle[i].boxHeight = STKConstants_BOX_HEIGHT
+            set TalentUIMiddle[i].sideMargin = STKConstants_SIDE_MARGIN
+            set TalentUIMiddle[i].verticalMargin = STKConstants_VERTICAL_MARGIN
 
-            set TalentUIRight[i].boxWidth = STKConstants_boxWidth
-            set TalentUIRight[i].boxHeight = STKConstants_boxHeight
-            set TalentUIRight[i].sideMargin = STKConstants_sideMargin
-            set TalentUIRight[i].verticalMargin = STKConstants_verticalMargin
+            set TalentUIRight[i].boxWidth = STKConstants_BOX_WIDTH
+            set TalentUIRight[i].boxHeight = STKConstants_BOX_HEIGHT
+            set TalentUIRight[i].sideMargin = STKConstants_SIDE_MARGIN
+            set TalentUIRight[i].verticalMargin = STKConstants_VERTICAL_MARGIN
             // =?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=
 
             set i = i + 1

@@ -83,12 +83,11 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
             set TalentUI[i] = STKTalentTreeViewModel_TalentTreeViewModel.createSingleView(Player(i), talentTreeView, GenerateTalentSlot)
 
             // Talents are auto-positioned based on these params and talentree's column/row count ?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=
-            set TalentUI[i].boxWidth = 0.3
-            set TalentUI[i].boxHeight = 0.44
-            set TalentUI[i].sideMargin = 0.1
-            set TalentUI[i].verticalMargin = 0.15
+            set TalentUI[i].boxWidth = STKConstants_BOX_WIDTH
+            set TalentUI[i].boxHeight = STKConstants_BOX_HEIGHT
+            set TalentUI[i].sideMargin = STKConstants_SIDE_MARGIN
+            set TalentUI[i].verticalMargin = STKConstants_VERTICAL_MARGIN
             // =?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=
-
             set i = i + 1
         endloop
     endfunction

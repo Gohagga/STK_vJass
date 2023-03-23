@@ -12,33 +12,33 @@ library STKConstants
         // TalentView Config ============================================================================================
         // (Ignore this if using custom GenerateTalentView function)
         // Talent button height width scaling
-        public constant real buttonWidth = 0.030
-        public constant real buttonHeight = 0.030
+        public constant real TTV_BUTTON_WIDTH = 0.030
+        public constant real TTV_BUTTON_HEIGHT = 0.030
 
         // Talent-hover tooltip box
-        public constant real tooltipWidth = 0.28
-        public constant real tooltipHeight = 0.16
-        public constant real tooltipTextX = 0
-        public constant real tooltipTextY = 0
-        public constant real tooltipTextWidth = 0.25
-        public constant real tooltipTextHeight = 0.13
+        public constant real TOOLTIP_WIDTH = 0.28
+        public constant real TOOLTIP_HEIGHT = 0.16
+        public constant real TOOLTIP_TEXT_X = 0
+        public constant real TOOLTIP_TEXT_Y = 0
+        public constant real TOOLTIP_TEXT_WIDTH = 0.25
+        public constant real TOOLTIP_TEXT_HEIGHT = 0.13
 
         // Small rank box for multi-rank talents
-        public constant real rankX = -0.0006
-        public constant real rankY = 0.0015
-        public constant real rankSizeWidth = 0.016
-        public constant real rankSizeHeight = 0.010
-        public constant real rankTextScale = 0.72
-        public constant string rankTexture = "UI/Widgets/Console/Human/human-transport-slot.blp"
+        public constant real RANK_X = -0.0006
+        public constant real RANK_Y = 0.0015
+        public constant real RANK_SIZE_WIDTH = 0.016
+        public constant real RANK_SIZE_HEIGHT = 0.010
+        public constant real RANK_TEXT_SCALE = 0.72
+        public constant string RANK_TEXTURE = "UI/Widgets/Console/Human/human-transport-slot.blp"
 
         // Highlight when talent is available to put points into
-        public constant real highlightWidth = 0.025
-        public constant real highlightHeight = 0.025
-        public constant string highlightTexture = "UI/Widgets/Console/Human/CommandButton/human-activebutton.blp"
+        public constant real HIGHLIGHT_WIDTH = 0.025
+        public constant real HIGHLIGHT_HEIGHT = 0.025
+        public constant string HIGHLIGHT_TEXTURE = "UI/Widgets/Console/Human/CommandButton/human-activebutton.blp"
 
         // Link between talents (dependency)
-        public constant real linkWidth = 0.006
-        public constant real linkIntersectionScale = 1
+        public constant real LINK_WIDTH = 0.006
+        public constant real LINK_INTERSECTION_SCALE = 1
         // End TalentView Config =========================================================================================
 
 

@@ -3,6 +3,7 @@ library STKConstants
         public constant integer MAX_ROWS                = 7
         public constant integer MAX_COLUMNS             = 4
         public constant integer MAX_TALENT_SLOTS        = 28
+        public constant integer MAX_PLAYER_COUNT        = 24
         public constant string  ACTIVE_LINK_TEXTURE     = "Textures/Water00.blp"
         public constant string  INACTIVE_LINK_TEXTURE   = "UI/Widgets/Console/Human/human-inventory-slotfiller.blp"
                                                         // "UI/Widgets/Glues/GlueScreen-Checkbox-Background.blp"

@@ -10,6 +10,14 @@ library STKTalentTreeViewModel requires STKITalentSlot
         private trigger ConfirmTrigger = null
         private trigger CancelTrigger = null
         private trigger CloseTrigger = null
+
+        // This block is used to update view without lag =============================================
+        private constant integer MAX_PLAYER_ID = 24
+        private STKTalentTreeViewModel_TalentTreeViewModel array talentTreeViewModelsToUpdate[2400]
+        private hashtable Hash = InitHashtable()
+        private constant integer HASH_TIMER_TALENTTREE_KEY = 11
+        private constant integer HASH_TALENTTREE_TIMER_KEY  = 12
+        // ==========================================================================================
     endglobals
 
     function interface TalentSlotFactory takes framehandle parent, integer index, integer panelId returns ITalentSlot
@@ -23,6 +31,43 @@ library STKTalentTreeViewModel requires STKITalentSlot
             return err1
         endif
         return err1 + ", " + err2
+    endfunction
+
+    private function DefaultUpdateTreeViewModelOnViewChanged takes nothing returns nothing
+        local integer i = 0
+        local timer tim = GetExpiredTimer()
+        local integer timerKey = GetHandleId(tim)
+        local STKTalentTree_TalentTree tree = LoadInteger(Hash, HASH_TIMER_TALENTTREE_KEY, timerKey)
+        local STKTalentTreeViewModel_TalentTreeViewModel ttvm
+        call DestroyTimer(tim)
+
+        loop
+            exitwhen i == MAX_PLAYER_ID
+            set ttvm = talentTreeViewModelsToUpdate[i * MAX_PLAYER_ID + tree]
+            if (ttvm != 0 and ttvm != -1) then
+                call ttvm.ResetTalentViewModels()
+            endif
+            set i = i + 1
+        endloop
+
+        set tim = null
+    endfunction
+
+    function DefaultOnTalentViewChanged takes STKTalentTreeViewModel_TalentTreeViewModel ttvm, player watcher, STKTalentTree_TalentTree tree returns nothing
+        local integer playerId
+        local timer tim
+
+        set playerId = GetPlayerId(watcher)
+        set tim = LoadTimerHandle(Hash, HASH_TALENTTREE_TIMER_KEY, tree)
+
+        if (tim == null) then
+            set tim = CreateTimer()
+            call SaveTimerHandle(Hash, HASH_TALENTTREE_TIMER_KEY, tree, tim)
+            call SaveInteger(Hash, HASH_TIMER_TALENTTREE_KEY, GetHandleId(tim), tree)
+            call TimerStart(tim, 0, false, function DefaultUpdateTreeViewModelOnViewChanged)
+        endif
+
+        set tim = null
     endfunction
 
     public struct TalentTreeViewModel
@@ -91,7 +136,7 @@ library STKTalentTreeViewModel requires STKITalentSlot
             endif
         endmethod
 
-        static method create takes player watcher, ITalentTreeView view, TalentSlotFactory talentSlotFactory, integer panelId, ViewChanged onViewChanged returns TalentTreeViewModel
+        private static method create takes player watcher, ITalentTreeView view, TalentSlotFactory talentSlotFactory, integer panelId, ViewChanged onViewChanged returns TalentTreeViewModel
             local TalentTreeViewModel this = TalentTreeViewModel.allocate()
             local ITalentSlot slot
             local integer i = 0
@@ -104,6 +149,10 @@ library STKTalentTreeViewModel requires STKITalentSlot
             set this.panelId = panelId
             set this.onViewChanged = onViewChanged
             
+            if (onViewChanged == -1 or onViewChanged == 0) then
+                set this.onViewChanged = DefaultOnTalentViewChanged
+            endif
+
             call thistype.SetUpTriggersIfNeeded()
 
             // Set up the talent slots
@@ -128,6 +177,14 @@ library STKTalentTreeViewModel requires STKITalentSlot
 
             call this.Hide()
             return this
+        endmethod
+
+        static method createSingleView takes player watcher, ITalentTreeView view, TalentSlotFactory talentSlotFactory returns TalentTreeViewModel
+            return TalentTreeViewModel.create(watcher, view, talentSlotFactory, 1, -1)
+        endmethod
+
+        static method createPanel takes player watcher, ITalentTreeView view, TalentSlotFactory talentSlotFactory, integer panelId, ViewChanged onViewChanged returns TalentTreeViewModel
+            return TalentTreeViewModel.create(watcher, view, talentSlotFactory, panelId, onViewChanged)
         endmethod
 
         method TalentClicked takes integer index returns nothing
@@ -156,9 +213,9 @@ library STKTalentTreeViewModel requires STKITalentSlot
 
                 // Check for link states
                 call this.tree.UpdateLinkStates()
-                // call this.ResetTalentViewModels()
-                if (this.onViewChanged != null) then
-                    call this.onViewChanged.execute(this, this.watcher)
+                
+                if (this.onViewChanged != -1) then
+                    call this.onViewChanged.execute(this, this.watcher, this.tree)
                 endif
             endif
         endmethod
@@ -168,8 +225,8 @@ library STKTalentTreeViewModel requires STKITalentSlot
             if (this.tree != 0) then
                 call this.tree.SaveTalentRankState()
                 // call this.ResetTalentViewModels()
-                if (this.onViewChanged != null) then
-                    call this.onViewChanged.execute(this, this.watcher)
+                if (this.onViewChanged != -1) then
+                    call this.onViewChanged.execute(this, this.watcher, this.tree)
                 endif
             endif
 
@@ -181,8 +238,8 @@ library STKTalentTreeViewModel requires STKITalentSlot
                 call this.tree.ResetTempRankState()
                 call this.tree.UpdateLinkStates()
                 // call this.ResetTalentViewModels()
-                if (this.onViewChanged != null) then
-                    call this.onViewChanged.execute(this, this.watcher)
+                if (this.onViewChanged != -1) then
+                    call this.onViewChanged.execute(this, this.watcher, this.tree)
                 endif
             endif
 
@@ -229,7 +286,25 @@ library STKTalentTreeViewModel requires STKITalentSlot
             call this.UpdatePointsAndTitle()
         endmethod
 
+        method UnregisterFromTreeViewChanges takes STKTalentTree_TalentTree oldWatchedTree returns nothing
+            // call BJDebugMsg("Unregister (" + I2S(GetPlayerId(this.watcher) * MAX_PLAYER_ID + oldWatchedTree) + ") TTVM: " + I2S(this))
+            set talentTreeViewModelsToUpdate[MAX_PLAYER_ID * GetPlayerId(this.watcher) + oldWatchedTree] = -1
+        endmethod
+
+        method RegisterToTreeViewChanges takes STKTalentTree_TalentTree newWatchedTree returns nothing
+            // call BJDebugMsg("Register (" + I2S(GetPlayerId(this.watcher) * MAX_PLAYER_ID + newWatchedTree) + ") TTVM: " + I2S(this))
+            set talentTreeViewModelsToUpdate[MAX_PLAYER_ID * GetPlayerId(this.watcher) + newWatchedTree] = this
+        endmethod
+
         method SetTree takes STKTalentTree_TalentTree tree returns nothing
+            if (this.watched == true) then
+                // Unregister from the old tree
+                if (this.tree != tree) then
+                    call this.UnregisterFromTreeViewChanges(this.tree)
+                    call this.RegisterToTreeViewChanges(tree)
+                endif
+            endif
+
             set this.tree = tree
             call this.ResetTalentViewModels()
         endmethod
@@ -264,22 +339,16 @@ library STKTalentTreeViewModel requires STKITalentSlot
             set xIncrem = (this.boxWidth * (1 - this.sideMargin)) / (cols + 1)
             set yIncrem = (this.boxHeight * (1 - this.verticalMargin)) / (rows + 1)
 
-            // call BJDebugMsg("sidem " + R2S(this.sideMargin) + " vertim " + R2S(this.verticalMargin) + " boxw " + R2S(this.boxWidth) + " boxh " + R2S(this.boxHeight))
-            // call BJDebugMsg("Cols " + I2S(cols) + " Rows " + I2S(rows) + " xinc " + R2S(xIncrem) + " yinc " + R2S(yIncrem))
-            // call BJDebugMsg("Slots Count " + I2S(this.slotCount))
-
             call this.ResetTalentViewModels()
 
             set i = 0
             loop
                 exitwhen i >= this.slotCount
-                // call BJDebugMsg("i " + I2S(i) + " / " + I2S(this.slotCount))
                 set slot = this.slots[i]
                 
                 set x = R2I(ModuloInteger(i, cols)) * xIncrem - ((cols - 1) * 0.5) * xIncrem
                 set y = R2I((i) / cols) * yIncrem - ((rows - 1) * 0.5) * yIncrem
                 
-                // call BJDebugMsg("Moving slot " + I2S(slot) + " x: " + R2S(x) + ", y: " + R2S(y))
                 call slot.MoveTo(FRAMEPOINT_CENTER, this.view.container, FRAMEPOINT_CENTER, x, y, xIncrem, yIncrem)
 
                 if (tree.talents[i] != 0) then
@@ -293,6 +362,9 @@ library STKTalentTreeViewModel requires STKITalentSlot
 
                 set i = i + 1
             endloop
+
+            // Register TalentTreeViewModel to the view changes
+            call this.RegisterToTreeViewChanges(tree)
             
             if (GetLocalPlayer() != this.watcher) then
                 return
@@ -311,6 +383,9 @@ library STKTalentTreeViewModel requires STKITalentSlot
             //     this._slots[i].visible = false;
             // }
     
+            // Unreegister TalentTreeViewModel from the view changes
+            call this.UnregisterFromTreeViewChanges(this.tree)
+
             if (GetLocalPlayer() != this.watcher) then
                 return
             endif
@@ -483,6 +558,6 @@ library STKTalentTreeViewModel requires STKITalentSlot
 
     endstruct
 
-    function interface ViewChanged takes TalentTreeViewModel ttvm, player watcher returns nothing
+    function interface ViewChanged takes TalentTreeViewModel ttvm, player watcher, STKTalentTree_TalentTree tree returns nothing
 endlibrary
 

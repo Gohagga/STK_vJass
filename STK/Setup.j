@@ -63,6 +63,13 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
         call TalentUI[GetPlayerId(GetOwningPlayer(u))].ResetTalentViewModels()
     endfunction
 
+    // Use to reset a unit's talent tree
+    public function ResetUnitTalentTree takes unit u returns nothing
+        local STKTalentTree_TalentTree tree = LoadInteger(Hash, 0, GetHandleId(u))
+        call tree.ResetTalentRankState()
+        call TalentUI[GetPlayerId(GetOwningPlayer(u))].ResetTalentViewModels()
+    endfunction
+
     // Use to make a player watch unit's talent tree
     public function PlayerLookAtUnitsTree takes player p, unit u returns nothing
         local STKTalentTree_TalentTree talentTree = LoadInteger(Hash, 0, GetHandleId(u))

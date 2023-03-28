@@ -59,7 +59,7 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
     // Use to add or remove available talent points from a unit
     public function UpdateUnitTalentPoints takes unit u, integer points returns nothing
         local STKTalentTree_TalentTree tree = LoadInteger(Hash, 0, GetHandleId(u))
-        call tree.SetTalentPoints(tree.GetTalentPoints() + points)
+	call tree.SetTalentPoints(tree.GetTalentPoints() + points)
         call TalentUI[GetPlayerId(GetOwningPlayer(u))].ResetTalentViewModels()
     endfunction
 
@@ -67,7 +67,6 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
     public function ResetUnitTalentTree takes unit u returns nothing
         local STKTalentTree_TalentTree tree = LoadInteger(Hash, 0, GetHandleId(u))
         call tree.ResetTalentRankState()
-        call TalentUI[GetPlayerId(GetOwningPlayer(u))].ResetTalentViewModels()
     endfunction
 
     // Use to make a player watch unit's talent tree
@@ -87,13 +86,13 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
 
         loop
             exitwhen i >= 24 // Generating talent view for all 24 players. It's recommended to only do it for necessary playerIds
-            set TalentUI[i] = STKTalentTreeViewModel_TalentTreeViewModel.create(Player(i), talentTreeView, GenerateTalentSlot, 1)
+            set TalentUI[i] = STKTalentTreeViewModel_TalentTreeViewModel.createSingleView(Player(i), talentTreeView, GenerateTalentSlot)
 
             // Talents are auto-positioned based on these params and talentree's column/row count ?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=
-            set TalentUI[i].boxWidth = 0.3
-            set TalentUI[i].boxHeight = 0.44
-            set TalentUI[i].sideMargin = 0.1
-            set TalentUI[i].verticalMargin = 0.15
+            set TalentUI[i].boxWidth = STKConstants_BOX_WIDTH
+            set TalentUI[i].boxHeight = STKConstants_BOX_HEIGHT
+            set TalentUI[i].sideMargin = STKConstants_SIDE_MARGIN
+            set TalentUI[i].verticalMargin = STKConstants_VERTICAL_MARGIN
             // =?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=
 
             set i = i + 1

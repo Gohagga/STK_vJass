@@ -44,10 +44,10 @@ library STKConstants
 
         // TalentTreeViewModel Config ====================================================================================
         // Affects automatic positioning of the talents
-        public constant real BOX_WIDTH = 0.1547
-        public constant real BOX_HEIGHT = 0.3103
-        public constant real SIDE_MARGIN = -0.05
-        public constant real VERTICAL_MARGIN = 0
+        public constant real BOX_WIDTH = 0.3
+        public constant real BOX_HEIGHT = 0.44
+        public constant real SIDE_MARGIN = 0.1
+        public constant real VERTICAL_MARGIN = 0.15
         // End TalentTreeViewModel Config ================================================================================
     endglobals
 endlibrary

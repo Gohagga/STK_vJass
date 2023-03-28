@@ -286,7 +286,6 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
         method ResetTalentRankState takes nothing returns nothing
             local integer i = 0
             
-            call BJDebugMsg("ResetTalentRankState called")
             loop
                 exitwhen i == this.maxTalents
 

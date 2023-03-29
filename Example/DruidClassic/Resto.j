@@ -37,6 +37,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effects of your Mark of the Wild and Gift of the Wild spells by 7%%.")
             call t.SetIcon("spell_nature_regeneration")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -44,6 +45,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effects of your Mark of the Wild and Gift of the Wild spells by 14%%.")
             call t.SetIcon("spell_nature_regeneration")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -51,6 +53,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effects of your Mark of the Wild and Gift of the Wild spells by 21%%.")
             call t.SetIcon("spell_nature_regeneration")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // Rank 4
             set t = this.CreateTalent()
@@ -58,6 +61,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effects of your Mark of the Wild and Gift of the Wild spells by 28%%.")
             call t.SetIcon("spell_nature_regeneration")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // Rank 5
             set t = this.CreateTalent()
@@ -65,6 +69,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effects of your Mark of the Wild and Gift of the Wild spells by 35%%.")
             call t.SetIcon("spell_nature_regeneration")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Furor <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -74,6 +79,7 @@ scope Restoration initializer init
             call t.SetDescription("Gives you 20%% chance to gain 10 Rage when you shapeshift into Bear and Dire Bear Form or 40 Energy when you shapeshift into Cat Form.")
             call t.SetIcon("spell_holy_blessingofstamina")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -81,6 +87,7 @@ scope Restoration initializer init
             call t.SetDescription("Gives you 40%% chance to gain 10 Rage when you shapeshift into Bear and Dire Bear Form or 40 Energy when you shapeshift into Cat Form.")
             call t.SetIcon("spell_holy_blessingofstamina")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -88,6 +95,7 @@ scope Restoration initializer init
             call t.SetDescription("Gives you 60%% chance to gain 10 Rage when you shapeshift into Bear and Dire Bear Form or 40 Energy when you shapeshift into Cat Form.")
             call t.SetIcon("spell_holy_blessingofstamina")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
             // Rank 4
             set t = this.CreateTalent()
@@ -95,6 +103,7 @@ scope Restoration initializer init
             call t.SetDescription("Gives you 80%% chance to gain 10 Rage when you shapeshift into Bear and Dire Bear Form or 40 Energy when you shapeshift into Cat Form.")
             call t.SetIcon("spell_holy_blessingofstamina")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
             // Rank 5
             set t = this.CreateTalent()
@@ -102,6 +111,7 @@ scope Restoration initializer init
             call t.SetDescription("Gives you 100%% chance to gain 10 Rage when you shapeshift into Bear and Dire Bear Form or 40 Energy when you shapeshift into Cat Form.")
             call t.SetIcon("spell_holy_blessingofstamina")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Improved Healing Touch <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -111,6 +121,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the cast time of your Healing Touch spell by 0.1 sec.")
             call t.SetIcon("spell_nature_healingtouch")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -118,6 +129,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the cast time of your Healing Touch spell by 0.2 sec.")
             call t.SetIcon("spell_nature_healingtouch")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -125,6 +137,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the cast time of your Healing Touch spell by 0.3 sec.")
             call t.SetIcon("spell_nature_healingtouch")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // Rank 4
             set t = this.CreateTalent()
@@ -132,6 +145,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the cast time of your Healing Touch spell by 0.4 sec.")
             call t.SetIcon("spell_nature_healingtouch")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // Rank 5
             set t = this.CreateTalent()
@@ -139,6 +153,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the cast time of your Healing Touch spell by 0.5 sec.")
             call t.SetIcon("spell_nature_healingtouch")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Nature's Focus <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -148,6 +163,7 @@ scope Restoration initializer init
             call t.SetDescription("Gives you a 14%% chance to avoid interruption caused by damage while casting the Healing Touch, Regrowth and Tranquility spells.")
             call t.SetIcon("MagicImmunity")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -155,6 +171,7 @@ scope Restoration initializer init
             call t.SetDescription("Gives you a 28%% chance to avoid interruption caused by damage while casting the Healing Touch, Regrowth and Tranquility spells.")
             call t.SetIcon("MagicImmunity")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -162,6 +179,7 @@ scope Restoration initializer init
             call t.SetDescription("Gives you a 42%% chance to avoid interruption caused by damage while casting the Healing Touch, Regrowth and Tranquility spells.")
             call t.SetIcon("MagicImmunity")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
             // Rank 4
             set t = this.CreateTalent()
@@ -169,6 +187,7 @@ scope Restoration initializer init
             call t.SetDescription("Gives you a 56%% chance to avoid interruption caused by damage while casting the Healing Touch, Regrowth and Tranquility spells.")
             call t.SetIcon("MagicImmunity")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
             // Rank 5
             set t = this.CreateTalent()
@@ -176,6 +195,7 @@ scope Restoration initializer init
             call t.SetDescription("Gives you a 70%% chance to avoid interruption caused by damage while casting the Healing Touch, Regrowth and Tranquility spells.")
             call t.SetIcon("MagicImmunity")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Improved Enrage <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -185,6 +205,7 @@ scope Restoration initializer init
             call t.SetDescription("The Enrage ability now instantly generates 5 Rage.")
             call t.SetIcon("ability_druid_enrage")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 5, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -192,6 +213,7 @@ scope Restoration initializer init
             call t.SetDescription("The Enrage ability now instantly generates 10 Rage.")
             call t.SetIcon("ability_druid_enrage")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 5, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -212,6 +234,7 @@ scope Restoration initializer init
             call t.SetDescription("Allows 5%% of your Mana regeneration to continue while casting.")
             call t.SetIcon("WindWalkOn")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 4, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -219,6 +242,7 @@ scope Restoration initializer init
             call t.SetDescription("Allows 10%% of your Mana regeneration to continue while casting.")
             call t.SetIcon("WindWalkOn")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 4, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -226,6 +250,7 @@ scope Restoration initializer init
             call t.SetDescription("Allows 15%% of your Mana regeneration to continue while casting.")
             call t.SetIcon("WindWalkOn")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 4, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Insect Swarm <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -235,6 +260,7 @@ scope Restoration initializer init
             call t.SetDescription("The enemy target is swarmed by insects, decreasing their chance to hit by 2%% and causing 66 Nature damage over 12 sec.")
             call t.SetIcon("spell_nature_insectswarm")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 4, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Subtlety <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -244,6 +270,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the threat generated by your Healing spells by 4%%.")
             call t.SetIcon("Scout")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 4, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -251,6 +278,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the threat generated by your Healing spells by 8%%.")
             call t.SetIcon("Scout")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 4, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -258,6 +286,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the threat generated by your Healing spells by 12%%.")
             call t.SetIcon("Scout")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 4, t)
             // Rank 4
             set t = this.CreateTalent()
@@ -265,6 +294,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the threat generated by your Healing spells by 16%%.")
             call t.SetIcon("Scout")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 4, t)
             // Rank 5
             set t = this.CreateTalent()
@@ -272,6 +302,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the threat generated by your Healing spells by 20%%.")
             call t.SetIcon("Scout")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 4, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -292,6 +323,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the mana cost of your Healing Touch and Tranquility spells by 2%%.")
             call t.SetIcon("ElunesBlessing")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 3, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -299,6 +331,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the mana cost of your Healing Touch and Tranquility spells by 4%%.")
             call t.SetIcon("ElunesBlessing")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 3, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -306,6 +339,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the mana cost of your Healing Touch and Tranquility spells by 6%%.")
             call t.SetIcon("ElunesBlessing")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 3, t)
             // Rank 4
             set t = this.CreateTalent()
@@ -313,6 +347,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the mana cost of your Healing Touch and Tranquility spells by 8%%.")
             call t.SetIcon("ElunesBlessing")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 3, t)
             // Rank 5
             set t = this.CreateTalent()
@@ -320,6 +355,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces the mana cost of your Healing Touch and Tranquility spells by 10%%.")
             call t.SetIcon("ElunesBlessing")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 3, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -340,6 +376,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effect of your Rejuvenation spell by 5%%.")
             call t.SetIcon("Rejuvenation")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 3, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -347,6 +384,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effect of your Rejuvenation spell by 10%%.")
             call t.SetIcon("Rejuvenation")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 3, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -354,6 +392,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effect of your Rejuvenation spell by 15%%.")
             call t.SetIcon("Rejuvenation")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 3, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Nature's Swiftness <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -363,6 +402,7 @@ scope Restoration initializer init
             call t.SetDescription("When activated, your next Nature spell becomes an instant cast spell.")
             call t.SetIcon("RavenForm")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(0, 2, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -384,6 +424,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effect of all healing spells by 2%%.")
             call t.SetIcon("spell_nature_protectionformnature")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(2, 2, t)
             // Rank 2
@@ -392,6 +433,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effect of all healing spells by 4%%.")
             call t.SetIcon("spell_nature_protectionformnature")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(2, 2, t)
             // Rank 3
@@ -400,6 +442,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effect of all healing spells by 6%%.")
             call t.SetIcon("spell_nature_protectionformnature")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(2, 2, t)
             // Rank 4
@@ -408,6 +451,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effect of all healing spells by 8%%.")
             call t.SetIcon("spell_nature_protectionformnature")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(2, 2, t)
             // Rank 5
@@ -416,6 +460,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the effect of all healing spells by 10%%.")
             call t.SetIcon("spell_nature_protectionformnature")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(2, 2, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -426,6 +471,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces threat caused by Tranquility by 50%%.")
             call t.SetIcon("Tranquility")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 2, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -433,6 +479,7 @@ scope Restoration initializer init
             call t.SetDescription("Reduces threat caused by Tranquility by 100%%.")
             call t.SetIcon("Tranquility")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 2, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -453,6 +500,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the critical effect chance of your Regrowth spell by 10%%.")
             call t.SetIcon("spell_nature_resistnature")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 1, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -460,6 +508,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the critical effect chance of your Regrowth spell by 20%%.")
             call t.SetIcon("spell_nature_resistnature")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 1, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -467,6 +516,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the critical effect chance of your Regrowth spell by 30%%.")
             call t.SetIcon("spell_nature_resistnature")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 1, t)
             // Rank 4
             set t = this.CreateTalent()
@@ -474,6 +524,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the critical effect chance of your Regrowth spell by 40%%.")
             call t.SetIcon("spell_nature_resistnature")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 1, t)
             // Rank 5
             set t = this.CreateTalent()
@@ -481,6 +532,7 @@ scope Restoration initializer init
             call t.SetDescription("Increases the critical effect chance of your Regrowth spell by 50%%.")
             call t.SetIcon("spell_nature_resistnature")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 1, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -491,6 +543,7 @@ scope Restoration initializer init
             call t.SetDescription("Consumes a Rejuvenation or Regrowth effect on a friendly target to instantly heal them an amount equal to 12 sec. of Rejuvenation or 18 sec. of Regrowth.")
             call t.SetIcon("inv_relics_idolofrejuvenation")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(1, 0, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -578,6 +631,13 @@ scope Restoration initializer init
             if (CountUnitsInGroup(g) < 8) then
                 call thistype.SetTalentRequirementsResult("8 nearby sheep")
             endif
+        endmethod
+
+        static method Deactivate_Generic takes nothing returns nothing
+            local unit u = thistype.GetEventUnit()
+            local STKTalent_Talent t = thistype.GetEventTalent()
+            local integer r = thistype.GetEventRank()
+            call BJDebugMsg("Deactivated " + t.name + " " + I2S(r))
         endmethod
     endstruct
 

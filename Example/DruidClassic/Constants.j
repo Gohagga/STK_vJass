@@ -3,6 +3,7 @@ library STKConstants
         public constant integer MAX_ROWS                = 7
         public constant integer MAX_COLUMNS             = 4
         public constant integer MAX_TALENT_SLOTS        = 28
+        public constant integer MAX_PLAYER_COUNT        = 24
         public constant string  ACTIVE_LINK_TEXTURE     = "Textures/Water00.blp"
         public constant string  INACTIVE_LINK_TEXTURE   = "UI/Widgets/Console/Human/human-inventory-slotfiller.blp"
                                                         // "UI/Widgets/Glues/GlueScreen-Checkbox-Background.blp"
@@ -41,13 +42,12 @@ library STKConstants
         public constant real LINK_INTERSECTION_SCALE = 1
         // End TalentView Config =========================================================================================
 
-
         // TalentTreeViewModel Config ====================================================================================
         // Affects automatic positioning of the talents
-        public constant real boxWidth = 0.1547
-        public constant real boxHeight = 0.3103
-        public constant real sideMargin = -0.05
-        public constant real verticalMargin = 0
+        public constant real BOX_WIDTH = 0.1547
+        public constant real BOX_HEIGHT = 0.3103
+        public constant real SIDE_MARGIN = -0.05
+        public constant real VERTICAL_MARGIN = 0
         // End TalentTreeViewModel Config ================================================================================
     endglobals
 endlibrary

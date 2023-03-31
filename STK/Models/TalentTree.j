@@ -298,12 +298,13 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
                             call this.DeactivateTalentRecursively(this.talents[i], this.rankState[i] - 0, this.rankState[i] + 1)
                         endif
                         set this.rankState[i] = 0
-                        set this.tempRankState[i] = 0
+                        // set this.tempRankState[i] = 0
                     endif
                 endif
 
                 set i = i + 1
             endloop
+            set this.isDirty = true
 
             call this.ResetTempRankState()
         endmethod

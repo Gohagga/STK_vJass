@@ -81,7 +81,6 @@ scope Feral initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
-            // Feral Aggression <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 2
             set t = this.CreateTalent()
             call t.SetName("Feral Aggression")
@@ -90,7 +89,6 @@ scope Feral initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
-            // Feral Aggression <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 3
             set t = this.CreateTalent()
             call t.SetName("Feral Aggression")
@@ -99,7 +97,6 @@ scope Feral initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
-            // Feral Aggression <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 4
             set t = this.CreateTalent()
             call t.SetName("Feral Aggression")
@@ -108,7 +105,6 @@ scope Feral initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
-            // Feral Aggression <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 5
             set t = this.CreateTalent()
             call t.SetName("Feral Aggression")
@@ -339,7 +335,7 @@ scope Feral initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 3, 0, 0)
             call this.AddTalent(2, 3, t)
-            // Rank 1
+            // Rank 2
             set t = this.CreateTalent()
             call t.SetName("Blood Frenzy")
             call t.SetDescription("Requires Cat Form\nYour critical strikes from Cat Form abilities that add combo points  have a 100%% chance to add an additional combo point.")

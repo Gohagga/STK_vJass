@@ -101,7 +101,7 @@ scope Balance initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(1, 0, 0, 0) // left 1 (left up right down)
             call this.AddTalent(2, 6, t)
-            // Rank 2
+            // Rank 3
             set t = this.CreateTalent()
             call t.SetName("Improved Nature's Grasp")
             call t.SetDescription("Increases the chance for your Nature's Grasp to entangle an enemy by 45%%.")
@@ -110,7 +110,7 @@ scope Balance initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(1, 0, 0, 0) // left 1 (left up right down)
             call this.AddTalent(2, 6, t)
-            // Rank 2
+            // Rank 4
             set t = this.CreateTalent()
             call t.SetName("Improved Nature's Grasp")
             call t.SetDescription("Increases the chance for your Nature's Grasp to entangle an enemy by 65%%.")
@@ -120,7 +120,7 @@ scope Balance initializer init
             call t.SetDependencies(1, 0, 0, 0) // left 1 (left up right down)
             call this.AddTalent(2, 6, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            // Improved Nature's Grasp <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            // Improved Entangling Roots <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
             set t = this.CreateTalent()
             call t.SetName("Improved Entangling Roots")
@@ -129,7 +129,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
-            // Rank 1
+            // Rank 2
             set t = this.CreateTalent()
             call t.SetName("Improved Entangling Roots")
             call t.SetDescription("Gives you a 70%% chance to avoid interruption caused by damage while casting Entangling Roots.")
@@ -137,7 +137,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
-            // Rank 1
+            // Rank 3
             set t = this.CreateTalent()
             call t.SetName("Improved Entangling Roots")
             call t.SetDescription("Gives you a 100%% chance to avoid interruption caused by damage while casting Entangling Roots.")
@@ -155,7 +155,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
-           // Rank 1
+           // Rank 2
             set t = this.CreateTalent()
             call t.SetName("Improved Moonfire")
             call t.SetDescription("Increases the damage and critical strike chance of your Moonfire spell by 4%%.")
@@ -163,7 +163,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
-            // Rank 1
+            // Rank 3
             set t = this.CreateTalent()
             call t.SetName("Improved Moonfire")
             call t.SetDescription("Increases the damage and critical strike chance of your Moonfire spell by 6%%.")
@@ -171,7 +171,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
-            // Rank 1
+            // Rank 4
             set t = this.CreateTalent()
             call t.SetName("Improved Moonfire")
             call t.SetDescription("Increases the damage and critical strike chance of your Moonfire spell by 8%%.")
@@ -179,7 +179,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
-            // Rank 1
+            // Rank 5
             set t = this.CreateTalent()
             call t.SetName("Improved Moonfire")
             call t.SetDescription("Increases the damage and critical strike chance of your Moonfire spell by 10%%.")
@@ -197,7 +197,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 5, t)
-            // Rank 1
+            // Rank 2
             set t = this.CreateTalent()
             call t.SetName("Natural Weapons")
             call t.SetDescription("Increases the damage you deal with physical attacks in all forms by 4%%.")
@@ -205,7 +205,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 5, t)
-            // Rank 1
+            // Rank 3
             set t = this.CreateTalent()
             call t.SetName("Natural Weapons")
             call t.SetDescription("Increases the damage you deal with physical attacks in all forms by 6%%.")
@@ -213,7 +213,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 5, t)
-            // Rank 1
+            // Rank 4
             set t = this.CreateTalent()
             call t.SetName("Natural Weapons")
             call t.SetDescription("Increases the damage you deal with physical attacks in all forms by 8%%.")
@@ -221,7 +221,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 5, t)
-            // Rank 1
+            // Rank 5
             set t = this.CreateTalent()
             call t.SetName("Natural Weapons")
             call t.SetDescription("Increases the damage you deal with physical attacks in all forms by 10%%.")
@@ -239,7 +239,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 5, t)
-            // Rank 1
+            // Rank 2
             set t = this.CreateTalent()
             call t.SetName("Natural Shapeshifter")
             call t.SetDescription("Reduces the mana cost of all shapeshifting by 20%%.")
@@ -247,7 +247,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 5, t)
-            // Rank 1
+            // Rank 3
             set t = this.CreateTalent()
             call t.SetName("Natural Shapeshifter")
             call t.SetDescription("Reduces the mana cost of all shapeshifting by 30%%.")
@@ -265,7 +265,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 4, t)
-            // Rank 1
+            // Rank 2
             set t = this.CreateTalent()
             call t.SetName("Improved Thorns")
             call t.SetDescription("Increases damage caused by your Thorns spell by 50%%.")
@@ -273,7 +273,7 @@ scope Balance initializer init
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 4, t)
-            // Rank 1
+            // Rank 3
             set t = this.CreateTalent()
             call t.SetName("Improved Thorns")
             call t.SetDescription("Increases damage caused by your Thorns spell by 75%%.")

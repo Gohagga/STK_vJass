@@ -166,7 +166,6 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
             endif
 
             call this.DeactivateTalent(talent, rank - count)
-            call this.SetTalentPoints(this.GetTalentPoints() + talent.cost)
         endmethod
 
         method CalculateTalentRequirements takes STKTalent_Talent talent, integer index returns string
@@ -298,7 +297,6 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
                             call this.DeactivateTalentRecursively(this.talents[i], this.rankState[i] - 0, this.rankState[i] + 1)
                         endif
                         set this.rankState[i] = 0
-                        // set this.tempRankState[i] = 0
                     endif
                 endif
 

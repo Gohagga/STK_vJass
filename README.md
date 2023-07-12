@@ -37,6 +37,9 @@ If a different player has to see/modify the same talent tree, adjust and execute
 
 Make sure it works and then continue onto the actual consumption of the system.
 
+When your player is looking at a certain unit's talent tree, call this line to open the UI
+> call STK_OpenTalentsView(GetTriggerPlayer())
+
 ### Create a talent tree implementation and hook it up
 
 /Example/Shepherd script contains one way of implementing a talent tree struct. Define the name, add talents, define their effects etc. Hook it up to the system.

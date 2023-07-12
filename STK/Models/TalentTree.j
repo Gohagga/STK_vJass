@@ -332,6 +332,7 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
 
         method CheckDependencyKey takes integer requiredLevel, integer index, integer depIndex returns string
             local STKTalent_Talent talent = this.talents[index]
+            local STKTalent_Talent talentDependency = this.talents[depIndex]
             local string errorText = null
 
             if (requiredLevel == 0 or talent == 0) then
@@ -343,7 +344,7 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
             if (this.tempRankState[depIndex] < requiredLevel) then
                 set errorText = errorText + this.talents[depIndex].name
 
-                if (talent.maxRank > 1) then
+                if (talentDependency.maxRank > 1) then
                     set errorText = errorText + " (" + I2S(requiredLevel) + ")"
                 endif
             endif

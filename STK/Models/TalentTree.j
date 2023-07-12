@@ -119,6 +119,17 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
             endif
         endmethod
 
+        method DeactivateTalent takes STKTalent_Talent talent, integer rank returns nothing
+            set EventUnit = this.ownerUnit
+            set EventTalentTree = this
+            set EventTalent = talent
+            set EventRank = rank
+
+            if (talent.onActivate != null) then
+                call TriggerEvaluate(talent.onDeactivate)
+            endif
+        endmethod
+
         method AllocateTalent takes STKTalent_Talent talent returns nothing
             set EventUnit = this.ownerUnit
             set EventTalentTree = this
@@ -147,6 +158,14 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
             endif
 
             call this.ActivateTalent(talent, rank - count)
+        endmethod
+
+        method DeactivateTalentRecursively takes STKTalent_Talent talent, integer count, integer rank returns nothing
+            if (talent.previousRank != 0 and count > 1) then
+                call this.DeactivateTalentRecursively(talent.previousRank, count - 1, rank)
+            endif
+
+            call this.DeactivateTalent(talent, rank - count)
         endmethod
 
         method CalculateTalentRequirements takes STKTalent_Talent talent, integer index returns string
@@ -263,6 +282,31 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
             set this.isDirty = false
         endmethod
 
+        method ResetTalentRankState takes nothing returns nothing
+            local integer i = 0
+            
+            loop
+                exitwhen i == this.maxTalents
+
+                if (this.talents[i] != 0) then
+                    if (this.rankState[i] != 0) then
+
+                        if (this.talents[i].previousRank != 0) then
+                            call this.DeactivateTalentRecursively(this.talents[i].previousRank, this.rankState[i] - 0, this.rankState[i] + 1)
+                        else
+                            call this.DeactivateTalentRecursively(this.talents[i], this.rankState[i] - 0, this.rankState[i] + 1)
+                        endif
+                        set this.rankState[i] = 0
+                    endif
+                endif
+
+                set i = i + 1
+            endloop
+            set this.isDirty = true
+
+            call this.ResetTempRankState()
+        endmethod
+
         method ApplyTalentTemporary takes integer index returns nothing
             local STKTalent_Talent talent = this.talents[index]
             // We assume there is definitely a talent on this index
@@ -288,6 +332,7 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
 
         method CheckDependencyKey takes integer requiredLevel, integer index, integer depIndex returns string
             local STKTalent_Talent talent = this.talents[index]
+            local STKTalent_Talent talentDependency = this.talents[depIndex]
             local string errorText = null
 
             if (requiredLevel == 0 or talent == 0) then
@@ -299,7 +344,7 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
             if (this.tempRankState[depIndex] < requiredLevel) then
                 set errorText = errorText + this.talents[depIndex].name
 
-                if (talent.maxRank > 1) then
+                if (talentDependency.maxRank > 1) then
                     set errorText = errorText + " (" + I2S(requiredLevel) + ")"
                 endif
             endif

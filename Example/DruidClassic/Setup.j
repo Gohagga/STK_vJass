@@ -13,6 +13,10 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
         private constant integer PANEL_INIT_KEY = 13
         private constant integer PLAYER_KEY  = 14
 
+        private constant integer HASH_UNIT_TREE_LEFT_KEY = 21
+        private constant integer HASH_UNIT_TREE_MID_KEY = 22
+        private constant integer HASH_UNIT_TREE_RIGHT_KEY = 23
+
         ITalentView array TalentSlotFramesLeft[MAX_TALENT_SLOTS]
         ITalentView array TalentSlotFramesMiddle[MAX_TALENT_SLOTS]
         ITalentView array TalentSlotFramesRight[MAX_TALENT_SLOTS]
@@ -65,13 +69,13 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
         call tree.Initialize()
         if (panelId == 1) then
             call TalentUILeft[playerId].SetTree(tree)
-            call TalentUILeft[playerId].RenderTree()
+            // call TalentUILeft[playerId].RenderTree()
         elseif (panelId == 2) then
             call TalentUIMiddle[playerId].SetTree(tree)
-            call TalentUIMiddle[playerId].RenderTree()
+            // call TalentUIMiddle[playerId].RenderTree()
         elseif (panelId == 3) then
             call TalentUIRight[playerId].SetTree(tree)
-            call TalentUIRight[playerId].RenderTree()
+            // call TalentUIRight[playerId].RenderTree()
         endif
     endfunction
 
@@ -100,6 +104,7 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
         call SaveUnitHandle(Hash, UNIT_INIT_KEY, GetHandleId(tim), u)
         call SaveInteger(Hash, TREE_INIT_KEY, GetHandleId(tim), talentTree)
         call SaveInteger(Hash, PANEL_INIT_KEY, GetHandleId(tim), 1)
+        call SaveInteger(Hash, HASH_UNIT_TREE_LEFT_KEY, GetHandleId(u), talentTree)
         call TimerStart(tim, 0, false, function InitializeTreeDelayed)
     endfunction
 
@@ -111,6 +116,7 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
         call SaveUnitHandle(Hash, UNIT_INIT_KEY, GetHandleId(tim), u)
         call SaveInteger(Hash, TREE_INIT_KEY, GetHandleId(tim), talentTree)
         call SaveInteger(Hash, PANEL_INIT_KEY, GetHandleId(tim), 2)
+        call SaveInteger(Hash, HASH_UNIT_TREE_MID_KEY, GetHandleId(u), talentTree)
         call TimerStart(tim, 0, false, function InitializeTreeDelayed)
     endfunction
 
@@ -122,6 +128,7 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
         call SaveUnitHandle(Hash, UNIT_INIT_KEY, GetHandleId(tim), u)
         call SaveInteger(Hash, TREE_INIT_KEY, GetHandleId(tim), talentTree)
         call SaveInteger(Hash, PANEL_INIT_KEY, GetHandleId(tim), 3)
+        call SaveInteger(Hash, HASH_UNIT_TREE_RIGHT_KEY, GetHandleId(u), talentTree)
         call TimerStart(tim, 0, false, function InitializeTreeDelayed)
     endfunction
 
@@ -178,6 +185,23 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
         call TalentUIRight[GetPlayerId(GetOwningPlayer(u))].ResetTalentViewModels()
     endfunction
 
+    // Use to reset a unit's talent tree
+    public function ResetUnitTalentTree takes unit u returns nothing
+        local STKTalentTree_TalentTree tree
+        local player owner = GetOwningPlayer(u)
+        local integer playerId = GetPlayerId(owner)
+        
+        set tree = LoadInteger(Hash, HASH_UNIT_TREE_LEFT_KEY, GetHandleId(u))
+        call tree.ResetTalentRankState()
+        call TalentUILeft[playerId].ResetTalentViewModels()
+        set tree = LoadInteger(Hash, HASH_UNIT_TREE_MID_KEY, GetHandleId(u))
+        call tree.ResetTalentRankState()
+        call TalentUIMiddle[playerId].ResetTalentViewModels()
+        set  tree = LoadInteger(Hash, HASH_UNIT_TREE_RIGHT_KEY, GetHandleId(u))
+        call tree.ResetTalentRankState()
+        call TalentUIRight[playerId].ResetTalentViewModels()
+    endfunction
+
     // Use to make a player watch unit's talent tree
     // public function PlayerLookAtUnitsTree takes player p, unit u returns nothing
     //     local STKTalentTree_TalentTree talentTree = LoadInteger(Hash, 0, GetHandleId(u))
@@ -197,25 +221,25 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
 
         loop
             exitwhen i >= 24 // Generating talent view for all 24 players. It's recommended to only do it for necessary playerIds
-            set TalentUILeft[i] = STKTalentTreeViewModel_TalentTreeViewModel.create(Player(i), talentTreeView1, GenerateTalentSlotLeft, 1, OnTalentViewChanged)
-            set TalentUIMiddle[i] = STKTalentTreeViewModel_TalentTreeViewModel.create(Player(i), talentTreeView2, GenerateTalentSlotMiddle, 2, OnTalentViewChanged)
-            set TalentUIRight[i] = STKTalentTreeViewModel_TalentTreeViewModel.create(Player(i), talentTreeView3, GenerateTalentSlotRight, 3, OnTalentViewChanged)
+            set TalentUILeft[i] = STKTalentTreeViewModel_TalentTreeViewModel.createPanel(Player(i), talentTreeView1, GenerateTalentSlotLeft, 1, -1)
+            set TalentUIMiddle[i] = STKTalentTreeViewModel_TalentTreeViewModel.createPanel(Player(i), talentTreeView2, GenerateTalentSlotMiddle, 2, -1)
+            set TalentUIRight[i] = STKTalentTreeViewModel_TalentTreeViewModel.createPanel(Player(i), talentTreeView3, GenerateTalentSlotRight, 3, -1)
 
             // Talents are auto-positioned based on these params and talentree's column/row count ?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=
-            set TalentUILeft[i].boxWidth = STKConstants_boxWidth
-            set TalentUILeft[i].boxHeight = STKConstants_boxHeight
-            set TalentUILeft[i].sideMargin = STKConstants_sideMargin
-            set TalentUILeft[i].verticalMargin = STKConstants_verticalMargin
+            set TalentUILeft[i].boxWidth = STKConstants_BOX_WIDTH
+            set TalentUILeft[i].boxHeight = STKConstants_BOX_HEIGHT
+            set TalentUILeft[i].sideMargin = STKConstants_SIDE_MARGIN
+            set TalentUILeft[i].verticalMargin = STKConstants_VERTICAL_MARGIN
             
-            set TalentUIMiddle[i].boxWidth = STKConstants_boxWidth
-            set TalentUIMiddle[i].boxHeight = STKConstants_boxHeight
-            set TalentUIMiddle[i].sideMargin = STKConstants_sideMargin
-            set TalentUIMiddle[i].verticalMargin = STKConstants_verticalMargin
+            set TalentUIMiddle[i].boxWidth = STKConstants_BOX_WIDTH
+            set TalentUIMiddle[i].boxHeight = STKConstants_BOX_HEIGHT
+            set TalentUIMiddle[i].sideMargin = STKConstants_SIDE_MARGIN
+            set TalentUIMiddle[i].verticalMargin = STKConstants_VERTICAL_MARGIN
 
-            set TalentUIRight[i].boxWidth = STKConstants_boxWidth
-            set TalentUIRight[i].boxHeight = STKConstants_boxHeight
-            set TalentUIRight[i].sideMargin = STKConstants_sideMargin
-            set TalentUIRight[i].verticalMargin = STKConstants_verticalMargin
+            set TalentUIRight[i].boxWidth = STKConstants_BOX_WIDTH
+            set TalentUIRight[i].boxHeight = STKConstants_BOX_HEIGHT
+            set TalentUIRight[i].sideMargin = STKConstants_SIDE_MARGIN
+            set TalentUIRight[i].verticalMargin = STKConstants_VERTICAL_MARGIN
             // =?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=
 
             set i = i + 1

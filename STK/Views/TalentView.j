@@ -31,30 +31,30 @@ library STKTalentView requires STKTalentViewModel, STKConstants
     public function GenerateTalentView takes framehandle parent returns ITalentView
 
         // ========= SETUP ===============================================================================
-        local real buttonWidth = STKConstants_buttonWidth
-        local real buttonHeight = STKConstants_buttonHeight
+        local real buttonWidth = STKConstants_TTV_BUTTON_WIDTH
+        local real buttonHeight = STKConstants_TTV_BUTTON_HEIGHT
         local string buttonTexture = "ReplaceableTextures/CommandButtons/BTNPeasant.blp"
-        local real tooltipWidth = STKConstants_tooltipWidth
-        local real tooltipHeight = STKConstants_tooltipHeight
-        local real tooltipTextX = STKConstants_tooltipTextX
-        local real tooltipTextY = STKConstants_tooltipTextY
-        local real tooltipTextWidth = STKConstants_tooltipTextWidth
-        local real tooltipTextHeight = STKConstants_tooltipTextHeight
+        local real tooltipWidth = STKConstants_TOOLTIP_WIDTH
+        local real tooltipHeight = STKConstants_TOOLTIP_HEIGHT
+        local real tooltipTextX = STKConstants_TOOLTIP_TEXT_X
+        local real tooltipTextY = STKConstants_TOOLTIP_TEXT_Y
+        local real tooltipTextWidth = STKConstants_TOOLTIP_TEXT_WIDTH
+        local real tooltipTextHeight = STKConstants_TOOLTIP_TEXT_HEIGHT
         local string tooltipDefaultText = "Default talent name \n\nDefault talent description"
 
-        local real rankX = STKConstants_rankX
-        local real rankY = STKConstants_rankY
-        local real rankSizeWidth = STKConstants_rankSizeWidth
-        local real rankSizeHeight = STKConstants_rankSizeHeight
-        local real rankTextScale = STKConstants_rankTextScale
-        local string rankTexture = STKConstants_rankTexture
+        local real rankX = STKConstants_RANK_X
+        local real rankY = STKConstants_RANK_Y
+        local real rankSizeWidth = STKConstants_RANK_SIZE_WIDTH
+        local real rankSizeHeight = STKConstants_RANK_SIZE_HEIGHT
+        local real rankTextScale = STKConstants_RANK_TEXT_SCALE
+        local string rankTexture = STKConstants_RANK_TEXTURE
 
-        local real highlightWidth = STKConstants_highlightWidth
-        local real highlightHeight = STKConstants_highlightHeight
-        local string highlightTexture = STKConstants_highlightTexture
+        local real highlightWidth = STKConstants_HIGHLIGHT_WIDTH
+        local real highlightHeight = STKConstants_HIGHLIGHT_HEIGHT
+        local string highlightTexture = STKConstants_HIGHLIGHT_TEXTURE
 
-        local real linkWidth = STKConstants_linkWidth
-        local real linkIntersectionScale = STKConstants_linkIntersectionScale
+        local real linkWidth = STKConstants_LINK_WIDTH
+        local real linkIntersectionScale = STKConstants_LINK_INTERSECTION_SCALE
         // ========= ENDSETUP ============================================================================
 
         // Creating the view

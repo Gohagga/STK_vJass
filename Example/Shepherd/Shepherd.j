@@ -2,18 +2,18 @@ scope Shepherd initializer init
 
     public struct Shepherd extends STKTalentTree_TalentTree
 
-        // Overriden stub methods ==================================================
-        method GetTalentPoints takes nothing returns integer
-            return GetPlayerState(this.ownerPlayer, PLAYER_STATE_RESOURCE_LUMBER)
-        endmethod
+        // Overriden stub methods, can delete this =================================
+        // method GetTalentPoints takes nothing returns integer
+        //     return GetPlayerState(this.ownerPlayer, PLAYER_STATE_RESOURCE_LUMBER)
+        // endmethod
 
-        method SetTalentPoints takes integer points returns nothing
-            call SetPlayerState(this.ownerPlayer, PLAYER_STATE_RESOURCE_LUMBER, points)
-        endmethod
+        // method SetTalentPoints takes integer points returns nothing
+        //     call SetPlayerState(this.ownerPlayer, PLAYER_STATE_RESOURCE_LUMBER, points)
+        // endmethod
 
-        method GetTitle takes nothing returns string
-            return this.title
-        endmethod
+        // method GetTitle takes nothing returns string
+        //     return this.title
+        // endmethod
         // =========================================================================
 
         method Initialize takes nothing returns nothing
@@ -22,9 +22,9 @@ scope Shepherd initializer init
             call this.SetColumnsRows(3, 4)
             set this.title = "Shepherd"
             call this.SetTalentPoints(6)
-            set this.backgroundImage = "arms.dds"
             // set this.icon = "FireBolt"
             // TODO: set tree background texture here
+            // set this.backgroundImage = "arms.dds"
 
             // The tree should be built with talents here
             // ==============================================
@@ -36,6 +36,7 @@ scope Shepherd initializer init
             call t.SetDescription("Calls a sheep to your side.")
             call t.SetIcon("AlleriaFlute")
             call t.SetOnActivate(function thistype.Activate_CallSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetCost(0) // First level of this talent is free
             call this.AddTalent(0, 0, t)
 
@@ -45,6 +46,7 @@ scope Shepherd initializer init
             call t.SetDescription("Calls another sheep to your side.")
             call t.SetIcon("AlleriaFlute")
             call t.SetOnActivate(function thistype.Activate_CallSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 0, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Soothing Song <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -54,6 +56,7 @@ scope Shepherd initializer init
             call t.SetDescription("Calls a flying sheep to your side.")
             call t.SetIcon("DispelMagic")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(1, 0, 0, 0) // left 1 (left up right down)
             call this.AddTalent(1, 0, t)
 
@@ -63,6 +66,7 @@ scope Shepherd initializer init
             call t.SetDescription("Calls another flying sheep to your side.")
             call t.SetIcon("DispelMagic")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(1, 0, 0, 0) // left 1 (left up right down)
             call this.AddTalent(1, 0, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -73,6 +77,7 @@ scope Shepherd initializer init
             call t.SetDescription("Gain an apprentice.")
             call t.SetIcon("Peasant")
             call t.SetOnActivate(function thistype.Activate_GainApprentice)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 0, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Lots of Apprentices <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -82,6 +87,7 @@ scope Shepherd initializer init
             call t.SetDescription("Gain 2 guard apprentices.")
             call t.SetIcon("Footman")
             call t.SetOnActivate(function thistype.Activate_Gain2Guards)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 0, 0, 1) // down 1 (left up right down)
             call this.AddTalent(2, 1, t)
 
@@ -91,6 +97,7 @@ scope Shepherd initializer init
             call t.SetDescription("Gain 2 guard apprentices.")
             call t.SetIcon("Footman")
             call t.SetOnActivate(function thistype.Activate_Gain2Guards)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 0, 0, 1) // down 1 (left up right down)
             call this.AddTalent(2, 1, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -101,6 +108,7 @@ scope Shepherd initializer init
             call t.SetDescription("Gain a Sheep and a Flying Sheep.")
             call t.SetIcon("Sheep")
             call t.SetOnActivate(function thistype.Activate_ComingOfTheLambs)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 0, 1, 1) // right 1 down 1 (left up right down)
             call this.AddTalent(1, 1, t)
 
@@ -110,6 +118,7 @@ scope Shepherd initializer init
             call t.SetDescription("Gain 2 Sheep and 2 Flying Sheep.")
             call t.SetIcon("Sheep")
             call t.SetOnActivate(function thistype.Activate_ComingOfTheLambs)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 0, 1, 1) // right 1 down 1 (left up right down)
             call this.AddTalent(1, 1, t)
 
@@ -119,6 +128,7 @@ scope Shepherd initializer init
             call t.SetDescription("Gain 3 Sheep and 3 Flying Sheep.")
             call t.SetIcon("Sheep")
             call t.SetOnActivate(function thistype.Activate_ComingOfTheLambs)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 0, 1, 1) // right 1 down 1 (left up right down)
             call this.AddTalent(1, 1, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -129,6 +139,7 @@ scope Shepherd initializer init
             call t.SetDescription("Five hostile wolves appear.")
             call t.SetIcon("TimberWolf")
             call t.SetOnActivate(function thistype.Activate_CallOfTheWilds)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetRequirements(function thistype.Requirement_CallOfTheWilds)
             call this.AddTalent(1, 2, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -141,24 +152,24 @@ scope Shepherd initializer init
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // Can use these methods inside Activate/Deactivate/Allocate/Deallocate/Requirements functions
         
-        // Returns unit that owns the talent tree
         // static method GetEventUnit takes nothing returns unit
+        // Returns unit that owns the talent tree
         // thistype.GetEventUnit()
 
-        // Returns talent object that is being resolved
         // static method GetEventTalent takes nothing returns STKTalent_Talent
-        // thistype.GetEventTalent()
+        // Returns talent object that is being resolved
+        // local STKTalent_Talent t = thistype.GetEventTalent()
 
-        // Returns rank of the talent that is being activated
         // static method GetEventRank takes nothing returns integer
-        // thistype.GetEventRank()
+        // Returns rank of the talent that is being activated
+        // local integer r = thistype.GetEventRank()
 
-        // Returns "this"
         // static method GetEventTalentTree takes nothing returns TalentTree
-        // thistype.GetEventTalentTree()
+        // Returns "this"
+        // local STKTalentTree_TalentTree tt = thistype.GetEventTalentTree()
 
-        // Needs to be called within Requirements function to disable the talent
         // static method SetTalentRequirementsResult takes string requirements returns nothing
+        // Needs to be called within Requirements function to disable the talent
         // thistype.SetTalentRequirementsResult("8 litres of milk")
 
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -216,6 +227,13 @@ scope Shepherd initializer init
             if (CountUnitsInGroup(g) < 8) then
                 call thistype.SetTalentRequirementsResult("8 nearby sheep")
             endif
+        endmethod
+
+        static method Deactivate_Generic takes nothing returns nothing
+            local unit u = thistype.GetEventUnit()
+            local STKTalent_Talent t = thistype.GetEventTalent()
+            local integer r = thistype.GetEventRank()
+            call BJDebugMsg("Deactivated " + t.name + " " + I2S(r))
         endmethod
     endstruct
 

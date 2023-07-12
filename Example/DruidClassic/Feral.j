@@ -37,6 +37,7 @@ scope Feral initializer init
             call t.SetDescription("Reduces the cost of your Maul, Swipe, Claw, and Rake abilities by 1 Rage or Energy.")
             call t.SetIcon("ability_hunter_pet_hyena")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -44,6 +45,7 @@ scope Feral initializer init
             call t.SetDescription("Reduces the cost of your Maul, Swipe, Claw, and Rake abilities by 2 Rage or Energy.")
             call t.SetIcon("ability_hunter_pet_hyena")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -51,6 +53,7 @@ scope Feral initializer init
             call t.SetDescription("Reduces the cost of your Maul, Swipe, Claw, and Rake abilities by 3 Rage or Energy.")
             call t.SetIcon("ability_hunter_pet_hyena")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // Rank 4
             set t = this.CreateTalent()
@@ -58,6 +61,7 @@ scope Feral initializer init
             call t.SetDescription("Reduces the cost of your Maul, Swipe, Claw, and Rake abilities by 4 Rage or Energy.")
             call t.SetIcon("ability_hunter_pet_hyena")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // Rank 5
             set t = this.CreateTalent()
@@ -65,6 +69,7 @@ scope Feral initializer init
             call t.SetDescription("Reduces the cost of your Maul, Swipe, Claw, and Rake abilities by 5 Rage or Energy.")
             call t.SetIcon("ability_hunter_pet_hyena")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Feral Aggression <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -74,38 +79,39 @@ scope Feral initializer init
             call t.SetDescription("Increases the Attack Power reduction of your Demoralizing Roar by 8%% and the damage caused by your Ferocious Bite by 3%%.")
             call t.SetIcon("ability_druid_demoralizingroar")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
-            // Feral Aggression <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 2
             set t = this.CreateTalent()
             call t.SetName("Feral Aggression")
             call t.SetDescription("Increases the Attack Power reduction of your Demoralizing Roar by 16%% and the damage caused by your Ferocious Bite by 6%%.")
             call t.SetIcon("ability_druid_demoralizingroar")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
-            // Feral Aggression <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 3
             set t = this.CreateTalent()
             call t.SetName("Feral Aggression")
             call t.SetDescription("Increases the Attack Power reduction of your Demoralizing Roar by 24%% and the damage caused by your Ferocious Bite by 9%%.")
             call t.SetIcon("ability_druid_demoralizingroar")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
-            // Feral Aggression <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 4
             set t = this.CreateTalent()
             call t.SetName("Feral Aggression")
             call t.SetDescription("Increases the Attack Power reduction of your Demoralizing Roar by 32%% and the damage caused by your Ferocious Bite by 12%%.")
             call t.SetIcon("ability_druid_demoralizingroar")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
-            // Feral Aggression <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 5
             set t = this.CreateTalent()
             call t.SetName("Feral Aggression")
             call t.SetDescription("Increases the Attack Power reduction of your Demoralizing Roar by 40%% and the damage caused by your Ferocious Bite by 15%%.")
             call t.SetIcon("ability_druid_demoralizingroar")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Feral Instinct <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -115,6 +121,7 @@ scope Feral initializer init
             call t.SetDescription("Increases threat caused in Bear and Dire Bear Form by 3%% and reduces the chance enemies have to detect you while Prowling.")
             call t.SetIcon("Ambush")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -122,6 +129,7 @@ scope Feral initializer init
             call t.SetDescription("Increases threat caused in Bear and Dire Bear Form by 6%% and reduces the chance enemies have to detect you while Prowling.")
             call t.SetIcon("Ambush")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -129,6 +137,7 @@ scope Feral initializer init
             call t.SetDescription("Increases threat caused in Bear and Dire Bear Form by 9%% and reduces the chance enemies have to detect you while Prowling.")
             call t.SetIcon("Ambush")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // Rank 4
             set t = this.CreateTalent()
@@ -136,6 +145,7 @@ scope Feral initializer init
             call t.SetDescription("Increases threat caused in Bear and Dire Bear Form by 12%% and reduces the chance enemies have to detect you while Prowling.")
             call t.SetIcon("Ambush")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // Rank 5
             set t = this.CreateTalent()
@@ -143,6 +153,7 @@ scope Feral initializer init
             call t.SetDescription("Increases threat caused in Bear and Dire Bear Form by 15%% and reduces the chance enemies have to detect you while Prowling.")
             call t.SetIcon("Ambush")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Brutal Impact <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -152,6 +163,7 @@ scope Feral initializer init
             call t.SetDescription("Increases the stun duration of your Bash and Pounce abilities by 0.5 sec.")
             call t.SetIcon("ability_druid_bash")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -159,6 +171,7 @@ scope Feral initializer init
             call t.SetDescription("Increases the stun duration of your Bash and Pounce abilities by 1 sec.")
             call t.SetIcon("ability_druid_bash")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Thick Hide <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -168,6 +181,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your Armor contribution from items by 2%%.")
             call t.SetIcon("inv_misc_pelt_bear_03")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 5, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -175,6 +189,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your Armor contribution from items by 4%%.")
             call t.SetIcon("inv_misc_pelt_bear_03")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 5, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -182,6 +197,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your Armor contribution from items by 6%%.")
             call t.SetIcon("inv_misc_pelt_bear_03")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 5, t)
             // Rank 4
             set t = this.CreateTalent()
@@ -189,6 +205,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your Armor contribution from items by 8%%.")
             call t.SetIcon("inv_misc_pelt_bear_03")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 5, t)
             // Rank 5
             set t = this.CreateTalent()
@@ -196,6 +213,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your Armor contribution from items by 10%%.")
             call t.SetIcon("inv_misc_pelt_bear_03")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 5, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Feline Swiftness <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -205,6 +223,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your movement speed by 15%% while outdoors in Cat Form and increases your chance to dodge while in Cat Form by 2%%.")
             call t.SetIcon("SpiritWolf")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 4, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -212,6 +231,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your movement speed by 30%% while outdoors in Cat Form and increases your chance to dodge while in Cat Form by 4%%.")
             call t.SetIcon("SpiritWolf")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 4, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Feral Charge <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -221,6 +241,7 @@ scope Feral initializer init
             call t.SetDescription("Causes you to charge an enemy, immobilizing and interrupting any spell being cast for 4 sec.")
             call t.SetIcon("ability_hunter_pet_bear")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 4, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Sharpened Claws <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -230,6 +251,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your critical strike chance while in Bear, Dire Bear or Cat Form by 2%%.")
             call t.SetIcon("inv_misc_monsterclaw_04")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 4, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -237,6 +259,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your critical strike chance while in Bear, Dire Bear or Cat Form by 4%%.")
             call t.SetIcon("inv_misc_monsterclaw_04")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 4, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -244,6 +267,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your critical strike chance while in Bear, Dire Bear or Cat Form by 6%%.")
             call t.SetIcon("inv_misc_monsterclaw_04")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 4, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -264,6 +288,7 @@ scope Feral initializer init
             call t.SetDescription("Reduces the Energy cost of your Shred ability by 6.")
             call t.SetIcon("VampiricAura")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 3, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -271,6 +296,7 @@ scope Feral initializer init
             call t.SetDescription("Reduces the Energy cost of your Shred ability by 12.")
             call t.SetIcon("VampiricAura")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 3, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Predatory Strikes <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -280,6 +306,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your melee attack power in Cat, Bear and Dire Bear Forms by 50%% of your level.")
             call t.SetIcon("ability_hunter_pet_cat")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 3, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -287,6 +314,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your melee attack power in Cat, Bear and Dire Bear Forms by 100%% of your level.")
             call t.SetIcon("ability_hunter_pet_cat")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 3, t)
             // Rank 3
             set t = this.CreateTalent()
@@ -294,6 +322,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your melee attack power in Cat, Bear and Dire Bear Forms by 150%% of your level.")
             call t.SetIcon("ability_hunter_pet_cat")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 3, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Blood Frenzy <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -303,14 +332,16 @@ scope Feral initializer init
             call t.SetDescription("Requires Cat Form\nYour critical strikes from Cat Form abilities that add combo points  have a 50%% chance to add an additional combo point.")
             call t.SetIcon("GhoulFrenzy")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 3, 0, 0)
             call this.AddTalent(2, 3, t)
-            // Rank 1
+            // Rank 2
             set t = this.CreateTalent()
             call t.SetName("Blood Frenzy")
             call t.SetDescription("Requires Cat Form\nYour critical strikes from Cat Form abilities that add combo points  have a 100%% chance to add an additional combo point.")
             call t.SetIcon("GhoulFrenzy")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 3, 0, 0)
             call this.AddTalent(2, 3, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -321,6 +352,7 @@ scope Feral initializer init
             call t.SetDescription("Requires Bear Form, Dire Bear Form\nGives you a 50%% chance to gain an additional 5 Rage anytime you get a critical strike while in Bear and Dire Bear Form.")
             call t.SetIcon("Cannibalize")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(3, 3, t)
             // Rank 2
@@ -329,6 +361,7 @@ scope Feral initializer init
             call t.SetDescription("Requires Bear Form, Dire Bear Form\nGives you a 100%% chance to gain an additional 5 Rage anytime you get a critical strike while in Bear and Dire Bear Form.")
             call t.SetIcon("Cannibalize")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(3, 3, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -339,6 +372,7 @@ scope Feral initializer init
             call t.SetDescription("Increases the damage caused by your Claw, Rake, Maul and Swipe abilities by 10%%.")
             call t.SetIcon("ability_druid_ravage")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 2, t)
             // Rank 2
             set t = this.CreateTalent()
@@ -346,6 +380,7 @@ scope Feral initializer init
             call t.SetDescription("Increases the damage caused by your Claw, Rake, Maul and Swipe abilities by 20%%.")
             call t.SetIcon("ability_druid_ravage")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 2, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -366,6 +401,7 @@ scope Feral initializer init
             call t.SetDescription("Requires Cat Form, Bear Form, Dire Bear Form\nDecrease the armor of the target by 175 for 40 sec.  While affected, the target cannot stealth or turn invisible.")
             call t.SetIcon("FaerieFire")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 2, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Heart of the Wild <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -375,6 +411,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your Intellect by 4%%.  In addition, while in Bear or Dire Bear Form your Stamina is increased by 4%% and while in Cat Form your Strength is increased by 4%%.")
             call t.SetIcon("spell_holy_blessingofagility")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(1, 1, t)
             // Rank 2
@@ -383,6 +420,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your Intellect by 8%%.  In addition, while in Bear or Dire Bear Form your Stamina is increased by 8%% and while in Cat Form your Strength is increased by 4%%.")
             call t.SetIcon("spell_holy_blessingofagility")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(1, 1, t)
             // Rank 3
@@ -391,6 +429,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your Intellect by 12%%.  In addition, while in Bear or Dire Bear Form your Stamina is increased by 12%% and while in Cat Form your Strength is increased by 4%%.")
             call t.SetIcon("spell_holy_blessingofagility")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(1, 1, t)
             // Rank 4
@@ -399,6 +438,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your Intellect by 16%%.  In addition, while in Bear or Dire Bear Form your Stamina is increased by 16%% and while in Cat Form your Strength is increased by 4%%.")
             call t.SetIcon("spell_holy_blessingofagility")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(1, 1, t)
             // Rank 5
@@ -407,6 +447,7 @@ scope Feral initializer init
             call t.SetDescription("Increases your Intellect by 20%%.  In addition, while in Bear or Dire Bear Form your Stamina is increased by 20%% and while in Cat Form your Strength is increased by 4%%.")
             call t.SetIcon("spell_holy_blessingofagility")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(1, 1, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -417,6 +458,7 @@ scope Feral initializer init
             call t.SetDescription("While in Cat, Bear or Dire Bear Form, the Leader of the Pack increases ranged and melee critical chance of all party members within 45 yards by 3%%.")
             call t.SetIcon("spell_nature_unyeildingstamina")
             call t.SetOnActivate(function thistype.Activate_CallFlyingSheep)
+            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 0, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -503,6 +545,13 @@ scope Feral initializer init
             if (CountUnitsInGroup(g) < 8) then
                 call thistype.SetTalentRequirementsResult("8 nearby sheep")
             endif
+        endmethod
+
+        static method Deactivate_Generic takes nothing returns nothing
+            local unit u = thistype.GetEventUnit()
+            local STKTalent_Talent t = thistype.GetEventTalent()
+            local integer r = thistype.GetEventRank()
+            call BJDebugMsg("Deactivated " + t.name + " " + I2S(r))
         endmethod
     endstruct
 

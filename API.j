@@ -49,6 +49,10 @@ After creating a new type of TalentTree, override "Initialize", and other method
     Creates an unmodified Talent object, ready to be configured
     local STKTalent_Talent t = this.CreateTalent()
 
+-> method CreateTalentCopy tales STKTalent_Talent data returns STKTalent_Talent
+    Creates a copy of given talent and returns it, ready to be tweaked.
+    local STKTalent_Talent t = this.CreateTalentCopy(t)
+
 -> method AddTalent takes integer x, integer y, STKTalent_Talent talent returns STKTalent_Talent
     Adds talent to the talent tree at grid position (starts from bottom left being (0, 0))
     Given talent object should be configured
@@ -127,6 +131,9 @@ Created inside Initialize method of a TalentTree, it contains all necessary data
 
 -> method SetCost takes integer cost returns Talent
     Cost is how much points the talent requires to be taken
+
+-> method SetChainId takes integer saveId returns Talent
+    Important for save-loading, each talent chain should have its own id (unique per talent tree). Do not reuse old ids for new talents.
 ===========================================================================================
 
 

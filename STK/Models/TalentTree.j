@@ -107,6 +107,11 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
             return talent
         endmethod
 
+        method CreateTalentCopy takes STKTalent_Talent data returns STKTalent_Talent
+            local STKTalent_Talent talent = STKTalent_Talent.createCopy(data)
+            return talent
+        endmethod
+
         // Talent callbacks =======================================================================================
         method ActivateTalent takes STKTalent_Talent talent, integer rank returns nothing
             set EventUnit = this.ownerUnit

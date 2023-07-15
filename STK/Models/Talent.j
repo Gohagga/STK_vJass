@@ -35,6 +35,7 @@ library STKTalent initializer init
         public Talent previousRank          = 0
         public integer maxRank              = 0
         private integer rank                = 0
+        private integer chainId              = 0
         // Tag?: any;
         
         static method create takes nothing returns Talent
@@ -60,6 +61,7 @@ library STKTalent initializer init
             set new.startingLevel = talent.startingLevel
             set new.cost = talent.cost
             set new.isLink = talent.isLink
+            set new.chainId = talent.chainId
 
             return new
         endmethod
@@ -130,6 +132,11 @@ library STKTalent initializer init
 
         method SetCost takes integer cost returns Talent
             set this.cost = cost
+            return this
+        endmethod
+
+        method SetChainId takes integer chainId returns Talent
+            set this.chainId = chainId
             return this
         endmethod
 

@@ -106,7 +106,7 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
         loop
             exitwhen i >= MAX_PLAYER_COUNT // Generating talent view for all 24 players. It's recommended to only do it for necessary playerIds
             set ttvm = STKTalentTreeViewModel_TalentTreeViewModel.createSingleView(Player(i), talentTreeView, GenerateTalentSlot)
-            call Store.SetPlayerTalentTreeViewModel(0, i, ttvm)
+            call Store.SetPlayerTalentTreeViewModel(PANEL_ID, i, ttvm)
 
             // Talents are auto-positioned based on these params and talentree's column/row count ?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=
             set ttvm.boxWidth = STKConstants_BOX_WIDTH
@@ -124,6 +124,6 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
         call TimerStart(tim, 1, false, function GameBeginningSetup)
 
         set Store = STKStore.create()
-        call STKSaveLoad_Initialize(Store)
+        call STKSaveLoad_Initialize(Store, AssignTalentTree)
     endfunction
 endlibrary

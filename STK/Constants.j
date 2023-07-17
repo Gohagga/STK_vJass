@@ -51,6 +51,7 @@ library STKConstants
         // End TalentTreeViewModel Config ================================================================================
 
         // Save-Load Config ==============================================================================================
+        public constant integer MAX_SAVED_TALENT_POINTS = 32
         public constant integer TALENTTREE_ID_THRESHOLD_SMALL = 16
         public constant integer TALENTTREE_ID_THRESHOLD_LARGE = 64
 

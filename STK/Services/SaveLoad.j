@@ -1,7 +1,8 @@
-library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentSlot, STKITalentView, STKTalentView, STKTalentTreeView, STKConstants
+library STKSaveLoad requires BSRW // STKTalentTreeViewModel //, STKITalentSlot, STKITalentView, STKTalentView, STKTalentTreeView, STKConstants
 
     globals
         public constant integer MAX_TALENT_SLOTS = STKConstants_MAX_TALENT_SLOTS
+        public constant integer MAX_SAVED_TALENT_POINTS = STKConstants_MAX_SAVED_TALENT_POINTS
         
         public constant integer TALENTTREE_ID_THRESHOLD_SMALL = STKConstants_TALENTTREE_ID_THRESHOLD_SMALL
         public constant integer TALENTTREE_ID_THRESHOLD_LARGE = STKConstants_TALENTTREE_ID_THRESHOLD_LARGE
@@ -14,6 +15,9 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         public constant integer TALENT_RANK_THRESHOLD_LARGE = STKConstants_TALENT_RANK_THRESHOLD_LARGE
         public constant integer TALENT_RANK_THRESHOLD_EXTRA = STKConstants_TALENT_RANK_THRESHOLD_EXTRA
     endglobals
+
+    function interface AssignTalentTreeFunction takes integer panelId, unit u, STKTalentTree_TalentTree createdTalentTree returns nothing
+    function interface TalentTreeFactory takes unit u returns STKTalentTree_TalentTree
 
     // Private globals
     globals
@@ -31,9 +35,8 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         private string SaveCodeCharset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$#0123456789"
         private integer SaveCodeCharsetBase = 6
         private STKStore Store
+        private AssignTalentTreeFunction AssignTalentTree
     endglobals
-
-    function interface TalentTreeFactory takes unit u returns STKTalentTree_TalentTree
 
     private function getCharIndex takes string char returns integer
         local integer i = 0
@@ -62,6 +65,8 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
             set value = TalentIdThreshold[size]
         elseif (whichThreshold == 2) then // talentRank
             set value = TalentRankThreshold[size]
+        elseif (whichThreshold == 3) then // talentPoints
+            set value = MAX_SAVED_TALENT_POINTS
         endif
         return value
     endfunction
@@ -115,8 +120,9 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         return true
     endfunction
     
-    public function LoadTalentTree takes integer panelId, BSRW_BitStreamReader stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits, unit owner returns STKTalentTree_TalentTree
+    public function LoadTalentTree takes integer panelId, BSRW_BitStreamReader stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits, integer talentPointBits, unit owner returns STKTalentTree_TalentTree
         local integer talentTreeId = 0
+        local integer talentPoints = 0
         local integer readMode = 0
         local integer talentCount = 0
         local integer talentId = 0
@@ -129,9 +135,13 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         set talentTreeId = stream.readInt(talentTreeIdBits)
         call BJDebugMsg(stream.lastReadChunk + " - Talent Tree Id: " + I2S(talentTreeId))
 
+        set talentPoints = stream.readInt(talentPointBits)
+        call BJDebugMsg(stream.lastReadChunk + " - Talent Points: " + I2S(talentPoints))
+
         set tree = TalentTreeFactories[talentTreeId].evaluate(owner)
-        call STK_AssignTalentTree(panelId, owner, tree)
+        call AssignTalentTree.execute(panelId, owner, tree)
         call tree.UpdateChainIdTalentIndex()
+        call tree.SetTalentPoints(talentPoints)
 
         set readMode = stream.readInt(1)
 
@@ -185,9 +195,11 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         return tree
     endfunction
 
-    public function SaveTalentTree takes BSRW_BitStreamWriter stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits, STKTalentTree_TalentTree tree returns nothing
+    public function SaveTalentTree takes BSRW_BitStreamWriter stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits, integer talentPointBits, STKTalentTree_TalentTree tree returns nothing
         local integer i = 0
         local integer talentCount = 0
+        local integer minChainId = 0
+        local integer maxChainId = 0
         local integer chainId = 0
         local string seq = ""
         local string pos = ""
@@ -200,7 +212,10 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
             set i = i + 1
         endloop
 
+        // Talent Tree Id
         call stream.write(tree.GetId(), talentTreeIdBits)
+        // Talent Points
+        call stream.write(tree.GetTalentPoints(), talentPointBits)
 
         // Sequential
         set talentCount = 0
@@ -219,15 +234,19 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         set seq = tempWriter.get() + seq
 
         // Positional
-        set talentCount = 0
+        set maxChainId = 0
+        set minChainId = MAX_TALENT_SLOTS
         set i = 0
         loop
             exitwhen i == MAX_TALENT_SLOTS
             if (tree.rankState[i] > 0 and tree.talents[i] > 0) then
                 set chainId = tree.talents[i].GetChainId()
-                if (chainId > talentCount) then
+                if (chainId > maxChainId) then
                     // Highest chain id
-                    set talentCount = chainId
+                    set maxChainId = chainId
+                endif
+                if (chainId < minChainId) then
+                    set minChainId = chainId
                 endif
                 if (TempArrayChainIndex[chainId] > 0) then
                     call BJDebugMsg("|cffdd0808STK-Error: Talents on different grid positions should not share Chain ID " + I2S(chainId) + " (" + tree.talents[i].name + "). (SaveLoad.SaveTalentTree)")
@@ -238,13 +257,17 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         endloop
 
         call tempWriter.flush().write(talentCount, talentIdBits)
-        set i = 0
+        call BJDebugMsg(tempWriter.lastWrittenChunk + " Talent Count: " + I2S(talentCount))
+        set i = minChainId
         loop
-            exitwhen i == talentCount
+            exitwhen i > maxChainId
+            call BJDebugMsg("i." + I2S(i) + " chainIndex " + I2S(TempArrayChainIndex[i]) + " bits " + I2S(talentRankBits))
             call tempWriter.write(tree.rankState[TempArrayChainIndex[i]], talentRankBits)
+            call BJDebugMsg(tempWriter.lastWrittenChunk + " Çhain: " + I2S(i) + " Rank: " + I2S(tree.rankState[TempArrayChainIndex[i]]))
             set i = i + 1
         endloop
         set pos = tempWriter.get()
+        call BJDebugMsg("Pos " + pos)
         
         if (StringLength(seq) < StringLength(pos)) then
             call stream.write(0, 1)
@@ -269,6 +292,7 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         local integer talentTreeIdBits = 0
         local integer talentIdBits = 0
         local integer talentRankBits = 0        
+        local integer talentPointBits = 0
         
         local integer talentTreeId = 0
         local integer talentTreeCount = 0
@@ -292,12 +316,13 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         set talentTreeIdBits = findSizeBits(talentTreeIdSize, 0)
         set talentIdBits = findSizeBits(talentIdSize, 1)
         set talentRankBits = findSizeBits(talentRankSize, 2)
+        set talentPointBits = findSizeBits(0, 3)
 
         // Talent Trees
         set i = 0
         loop
             exitwhen i == talentTreeCount
-            set tt = LoadTalentTree(i + 1, stream, talentTreeIdBits, talentIdBits, talentRankBits, owner)
+            set tt = LoadTalentTree(i + 1, stream, talentTreeIdBits, talentIdBits, talentRankBits, talentPointBits, owner)
             set i = i + 1
         endloop
 
@@ -317,6 +342,7 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         local integer talentTreeIdBits = 0
         local integer talentIdBits = 0
         local integer talentRankBits = 0
+        local integer talentPointBits = 0
         
         local STKTalentTree_TalentTree tt
         local integer talentTreeId = 0
@@ -327,7 +353,7 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         // And find maxTalentRank, maxTalentId
         set j = 1
         loop
-            set tt = STK_Store.GetUnitTalentTree(j, owner)
+            set tt = Store.GetUnitTalentTree(j, owner)
             exitwhen tt <= 0
 
             set talentTreeCount = talentTreeCount + 1
@@ -369,14 +395,15 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         set talentTreeIdBits = findSizeBits(talentTreeIdSize, 0)
         set talentIdBits = findSizeBits(talentIdSize, 1)
         set talentRankBits = findSizeBits(talentRankSize, 2)
+        set talentPointBits = findSizeBits(0, 3)
 
         // Talent Trees
         set i = 1
         loop
-            set tt = STK_Store.GetUnitTalentTree(i, owner)
+            set tt = Store.GetUnitTalentTree(i, owner)
             exitwhen tt <= 0
             call BJDebugMsg("Saving Talent tree " + I2S(i) + " - " + tt.title)
-            call SaveTalentTree(stream, talentTreeIdBits, talentIdBits, talentRankBits, tt)
+            call SaveTalentTree(stream, talentTreeIdBits, talentIdBits, talentRankBits, talentPointBits, tt)
             set i = i + 1
         endloop
 
@@ -441,7 +468,7 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         return encoded
     endfunction
 
-    private function Initialize takes STKStore_STKStore store returns nothing
+    public function Initialize takes STKStore store, AssignTalentTreeFunction assignTalentTree returns nothing
         local integer i = 0
         local string char = ""
 
@@ -469,5 +496,6 @@ library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentS
         set TalentRankThreshold[4] = 0
 
         set Store = store
+        set AssignTalentTree = assignTalentTree
     endfunction
 endlibrary

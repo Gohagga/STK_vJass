@@ -175,15 +175,18 @@ Does not have an interface because it's not recommended or intended to write you
 
 -> function LoadForUnit takes unit owner, string bitString returns nothing
     Takes the bitString string, creates TalentTree instances for the unit, loads the ranks and activates talents
-    call STKSaveLoad_LoadForUnit(udg_Hero, udg_BitStream)
+    call STKSaveLoad_LoadForUnit(udg_Hero, udg_BitString)
 
 -> function SaveForUnit takes unit owner returns string
     Takes the unit's TalentTree objects and creates a bit string with rank data
-    call STKSaveLoad_SaveForUnit(udg_Hero)
+    set udg_BitString = STKSaveLoad_SaveForUnit(udg_Hero)
 
--> function LoadTalentTree takes integer panelId, BSRW_BitStreamReader stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits, unit owner returns STKTalentTree_TalentTree
-    Used internally by LoadForUnit
+-> function LoadForUnitEncoded takes unit owner, string saveCode returns nothing
+    Does the same thing as LoadForUnit, but it expect saveCode to be in base64 charset abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$#0123456789
+    call STKSaveLoad_LoadForUnitEncoded(udg_Hero, udg_SaveCode)
 
--> function SaveTalentTree takes BSRW_BitStreamWriter stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits, STKTalentTree_TalentTree tree returns nothing
-    Used internally by SaveForUnit
+-> function SaveForUnitEncoded takes unit owner returns string
+    Does the same thing as SaveForUnit, but it returns a string encoded in base64 charset abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$#0123456789
+    set udg_SaveCode = STKSaveLoad_SaveForUnitEncoded(udg_Hero)
+
 */

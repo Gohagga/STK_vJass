@@ -1,4 +1,4 @@
-library STKSaveLoad requires BSRW // STKTalentTreeViewModel //, STKITalentSlot, STKITalentView, STKTalentView, STKTalentTreeView, STKConstants
+library STKSaveLoad requires BSRW
 
     globals
         public constant integer MAX_TALENT_SLOTS = STKConstants_MAX_TALENT_SLOTS

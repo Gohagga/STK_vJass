@@ -1,14 +1,11 @@
-library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, STKITalentView, STKTalentView, RuidTalentTreeView, STKConstants
+library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, STKITalentView, STKTalentView, RuidTalentTreeView, STKConstants, STKStore
 
     globals
 
         public constant integer MAX_TALENT_SLOTS = STKConstants_MAX_TALENT_SLOTS
         public constant integer MAX_PLAYER_COUNT = STKConstants_MAX_PLAYER_COUNT
 
-        public constant integer PANEL_1 = 1
-        public constant integer PANEL_2 = 2
-        public constant integer PANEL_3 = 3
-
+        public constant integer PANEL_ID = 1
         public STKStore Store
     endglobals
 
@@ -54,19 +51,19 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
     function OnTalentViewChanged takes STKTalentTreeViewModel_TalentTreeViewModel ttvm, player watcher, STKTalentTree_TalentTree tree returns nothing
         local integer playerId = GetPlayerId(watcher)
 
-        set ttvm = Store.GetPlayerTalentTreeViewModel(PANEL_1, playerId)
+        set ttvm = Store.GetPlayerTalentTreeViewModel(PANEL_ID, playerId)
         call ttvm.ScheduleRedraw()
-        set ttvm = Store.GetPlayerTalentTreeViewModel(PANEL_2, playerId)
+        set ttvm = Store.GetPlayerTalentTreeViewModel(PANEL_ID + 1, playerId)
         call ttvm.ScheduleRedraw()
-        set ttvm = Store.GetPlayerTalentTreeViewModel(PANEL_3, playerId)
+        set ttvm = Store.GetPlayerTalentTreeViewModel(PANEL_ID + 2, playerId)
         call ttvm.ScheduleRedraw()
     endfunction
 
     // Use to show the talent tree view to a player
     public function OpenTalentScreen takes player p returns nothing
         local integer playerId = GetPlayerId(p)
-        local integer i = PANEL_1
-        local STKTalentTreeViewModel_TalentTreeViewModel ttvm = 0
+        local STKTalentTreeViewModel_TalentTreeViewModel ttvm
+        local integer i = PANEL_ID
         loop
             set ttvm = Store.GetPlayerTalentTreeViewModel(i, playerId)
             exitwhen ttvm == 0
@@ -77,14 +74,14 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
 
     public function ToggleTalentsView takes player p returns nothing
         local integer playerId = GetPlayerId(p)
-        if (Store.GetPlayerTalentTreeViewModel(PANEL_1, playerId).IsWatched() or Store.GetPlayerTalentTreeViewModel(PANEL_2, playerId).IsWatched() or Store.GetPlayerTalentTreeViewModel(PANEL_3, playerId).IsWatched()) then
-            call Store.GetPlayerTalentTreeViewModel(PANEL_1, playerId).Hide()
-            call Store.GetPlayerTalentTreeViewModel(PANEL_2, playerId).Hide()
-            call Store.GetPlayerTalentTreeViewModel(PANEL_3, playerId).Hide()
+        if (Store.GetPlayerTalentTreeViewModel(PANEL_ID, playerId).IsWatched() or Store.GetPlayerTalentTreeViewModel(PANEL_ID + 1, playerId).IsWatched() or Store.GetPlayerTalentTreeViewModel(PANEL_ID + 2, playerId).IsWatched()) then
+            call Store.GetPlayerTalentTreeViewModel(PANEL_ID, playerId).Hide()
+            call Store.GetPlayerTalentTreeViewModel(PANEL_ID + 1, playerId).Hide()
+            call Store.GetPlayerTalentTreeViewModel(PANEL_ID + 2, playerId).Hide()
         else
-            call Store.GetPlayerTalentTreeViewModel(PANEL_1, playerId).RenderTree()
-            call Store.GetPlayerTalentTreeViewModel(PANEL_2, playerId).RenderTree()
-            call Store.GetPlayerTalentTreeViewModel(PANEL_3, playerId).RenderTree()
+            call Store.GetPlayerTalentTreeViewModel(PANEL_ID, playerId).RenderTree()
+            call Store.GetPlayerTalentTreeViewModel(PANEL_ID + 1, playerId).RenderTree()
+            call Store.GetPlayerTalentTreeViewModel(PANEL_ID + 2, playerId).RenderTree()
         endif
     endfunction
 
@@ -94,7 +91,7 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
         local STKTalentTree_TalentTree tree = Store.GetUnitTalentTree(panelId, u)
         local STKTalentTreeViewModel_TalentTreeViewModel ttvm
 	    call tree.SetTalentPoints(tree.GetTalentPoints() + points)
-        set panelId = PANEL_1
+        set panelId = PANEL_ID
         loop
             set ttvm = Store.GetPlayerTalentTreeViewModel(panelId, playerId)
             exitwhen ttvm == 0
@@ -122,8 +119,7 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
         local STKTalentTreeViewModel_TalentTreeViewModel ttvmMiddle
         local STKTalentTreeViewModel_TalentTreeViewModel ttvmRight
 
-        // Initialize Talent UI for all players
-        
+        // Initialize Talent UI for all players        
         // Can substitute with your own TalentTreeView generating function =?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=
         // It creates the box, confirm cancel and close buttons
         local ITalentTreeView talentTreeView1 = RuidTalentTreeView_GenerateTalentTreeViewLeft(BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0))
@@ -132,13 +128,13 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
 
         loop
             exitwhen i >= MAX_PLAYER_COUNT // Generating talent view for all 24 players. It's recommended to only do it for necessary playerIds
-            set ttvmLeft = STKTalentTreeViewModel_TalentTreeViewModel.createPanel(Player(i), talentTreeView1, GenerateTalentSlot, PANEL_1, OnTalentViewChanged)
-            set ttvmMiddle = STKTalentTreeViewModel_TalentTreeViewModel.createPanel(Player(i), talentTreeView2, GenerateTalentSlot, PANEL_2, OnTalentViewChanged)
-            set ttvmRight = STKTalentTreeViewModel_TalentTreeViewModel.createPanel(Player(i), talentTreeView3, GenerateTalentSlot, PANEL_3, OnTalentViewChanged)
+            set ttvmLeft = STKTalentTreeViewModel_TalentTreeViewModel.createPanel(Player(i), talentTreeView1, GenerateTalentSlot, PANEL_ID, OnTalentViewChanged)
+            set ttvmMiddle = STKTalentTreeViewModel_TalentTreeViewModel.createPanel(Player(i), talentTreeView2, GenerateTalentSlot, PANEL_ID + 1, OnTalentViewChanged)
+            set ttvmRight = STKTalentTreeViewModel_TalentTreeViewModel.createPanel(Player(i), talentTreeView3, GenerateTalentSlot, PANEL_ID + 2, OnTalentViewChanged)
             
-            call Store.SetPlayerTalentTreeViewModel(PANEL_1, i, ttvmLeft)
-            call Store.SetPlayerTalentTreeViewModel(PANEL_2, i, ttvmMiddle)
-            call Store.SetPlayerTalentTreeViewModel(PANEL_3, i, ttvmRight)
+            call Store.SetPlayerTalentTreeViewModel(PANEL_ID, i, ttvmLeft)
+            call Store.SetPlayerTalentTreeViewModel(PANEL_ID + 1, i, ttvmMiddle)
+            call Store.SetPlayerTalentTreeViewModel(PANEL_ID + 2, i, ttvmRight)
             
             // Talents are auto-positioned based on these params and talentree's column/row count ?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=?=
             set ttvmLeft.boxWidth = STKConstants_BOX_WIDTH
@@ -163,7 +159,11 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
 
     function init takes nothing returns nothing
         local timer tim = CreateTimer()
-        set Store = STKStore.create()
         call TimerStart(tim, 0, false, function GameBeginningSetup)
+
+        set Store = STKStore.create()
+
+        // Initialize Save-Loading
+        call STKSaveLoad_Initialize(Store, AssignTalentTree)
     endfunction
 endlibrary

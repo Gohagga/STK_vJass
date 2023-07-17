@@ -1,4 +1,4 @@
-library BSR // initializer init
+library BSR
 
     globals
         public constant integer MAX_BIT_LENGTH = 1000

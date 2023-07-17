@@ -1,4 +1,4 @@
-library STKSaveLoad initializer init requires BSR // STKTalentTreeViewModel //, STKITalentSlot, STKITalentView, STKTalentView, STKTalentTreeView, STKConstants
+library STKSaveLoad initializer init requires BSR, STK // STKTalentTreeViewModel //, STKITalentSlot, STKITalentView, STKTalentView, STKTalentTreeView, STKConstants
 
     globals
         public constant integer TALENTTREE_ID_THRESHOLD_SMALL = 16
@@ -21,7 +21,11 @@ library STKSaveLoad initializer init requires BSR // STKTalentTreeViewModel //, 
         private constant integer array talentTreeIdThreshold[2]
         private constant integer array talentIdThreshold[2]
         private constant integer array talentRankThreshold[4]
+
+        private TalentTreeFactory array talentTreeFactories[TALENT_ID_THRESHOLD_LARGE]
     endglobals
+
+    function interface TalentTreeFactory takes unit u returns STKTalentTree_TalentTree
 
     private function nextPowerOfTwo takes integer n returns integer
         local integer value = 1
@@ -64,19 +68,38 @@ library STKSaveLoad initializer init requires BSR // STKTalentTreeViewModel //, 
         endloop
         return bits
     endfunction
+
+    public function RegisterTalentTree takes integer id, TalentTreeFactory factoryMethod returns boolean
+        local TalentTreeFactory f = talentTreeFactories[id]
+        if (id == 0) then
+            call BJDebugMsg("|cffdd0808STK-Error: IDs should start from 1, not 0. (SaveLoad.RegisterTalentTree)")
+            return false
+        endif
+        if (f != 0) then
+            call BJDebugMsg("|cffdd0808STK-Error: " + I2S(id) + " is already used. (SaveLoad.RegisterTalentTree)")
+            return false
+        endif
+        set talentTreeFactories[id] = factoryMethod
+        return true
+    endfunction
     
-    public function LoadTalentTree takes BSR_BitStreamReader stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits returns nothing// STKTalentTree_TalentTree
+    public function LoadTalentTree takes BSR_BitStreamReader stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits, unit owner returns STKTalentTree_TalentTree
         local integer talentTreeId = 0
         local integer readMode = 0
         local integer talentCount = 0
         local integer talentId = 0
         local integer talentRank = 0
         local integer i = 0
+        local STKTalentTree_TalentTree tree
 
         call BJDebugMsg("Loading Talent Tree")
 
         set talentTreeId = stream.readInt(talentTreeIdBits)
         call BJDebugMsg(stream.lastReadChunk + " - Talent Tree Id: " + I2S(talentTreeId))
+
+        set tree = talentTreeFactories[talentTreeId].evaluate(owner)
+        call STK_AssignTalentTree(0, owner, tree)
+        call tree.UpdateChainIdTalentIndex()
 
         set readMode = stream.readInt(1)
 
@@ -96,6 +119,8 @@ library STKSaveLoad initializer init requires BSR // STKTalentTreeViewModel //, 
 
                 set talentRank = stream.readInt(talentRankBits)
                 call BJDebugMsg(stream.lastReadChunk + " - Talent [" + I2S(talentId) + "] Rank: " + I2S(talentRank))
+
+                call tree.ApplyTalentChainTemporary(talentId, talentRank)
                 
                 set i = i + 1
             endloop
@@ -112,16 +137,25 @@ library STKSaveLoad initializer init requires BSR // STKTalentTreeViewModel //, 
             loop
                 exitwhen i == talentCount
 
+                set talentId = i + 1
                 set talentRank = stream.readInt(talentRankBits)
-                call BJDebugMsg(stream.lastReadChunk + " - Talent [" + I2S(i) + "] Rank: " + I2S(talentRank))
+                call BJDebugMsg(stream.lastReadChunk + " - Talent [" + I2S(talentId) + "] Rank: " + I2S(talentRank))
+
+                if (talentRank > 0) then
+                    call tree.ApplyTalentChainTemporary(talentId, talentRank)
+                endif
                 
                 set i = i + 1
             endloop
         endif
+
+        call tree.SaveTalentRankState()
+        return tree
     endfunction
 
-    public function LoadForUnit takes /*unit owner,*/ string bitStream returns nothing
+    public function LoadForUnit takes unit owner, string bitStream returns nothing
         local integer i = 0
+        local STKTalentTree_TalentTree tt
         
         local integer talentTreeIdSize = 0
         local integer talentRankSize = 0
@@ -158,7 +192,7 @@ library STKSaveLoad initializer init requires BSR // STKTalentTreeViewModel //, 
         set i = 0
         loop
             exitwhen i == talentTreeCount
-            call LoadTalentTree(stream, talentTreeIdBits, talentIdBits, talentRankBits)
+            set tt = LoadTalentTree(stream, talentTreeIdBits, talentIdBits, talentRankBits, owner)
             set i = i + 1
         endloop
 

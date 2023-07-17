@@ -19,7 +19,7 @@ scope Shepherd initializer init
         method Initialize takes nothing returns nothing
             local STKTalent_Talent t
 
-            call this.SetColumnsRows(3, 4)
+            call this.SetIdColumnsRows(1, 3, 4)
             set this.title = "Shepherd"
             call this.SetTalentPoints(6)
             // set this.icon = "FireBolt"

@@ -49,5 +49,18 @@ library STKConstants
         public constant real SIDE_MARGIN = 0.1
         public constant real VERTICAL_MARGIN = 0.15
         // End TalentTreeViewModel Config ================================================================================
+
+        // Save-Load Config ==============================================================================================
+        public constant integer TALENTTREE_ID_THRESHOLD_SMALL = 16
+        public constant integer TALENTTREE_ID_THRESHOLD_LARGE = 64
+
+        public constant integer TALENT_ID_THRESHOLD_SMALL = 32
+        public constant integer TALENT_ID_THRESHOLD_LARGE = 128
+        
+        public constant integer TALENT_RANK_THRESHOLD_SMALL = 16
+        public constant integer TALENT_RANK_THRESHOLD_MEDIUM = 32
+        public constant integer TALENT_RANK_THRESHOLD_LARGE = 64
+        public constant integer TALENT_RANK_THRESHOLD_EXTRA = 256
+        // End Save-Load Config ==========================================================================================
     endglobals
 endlibrary

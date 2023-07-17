@@ -29,8 +29,9 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
         public integer array rankState[MAX_TALENTS]
         public integer array tempRankState [MAX_TALENTS]
         private boolean isDirty = false
-
+        
         private integer array linkTalentIndex[MAX_TALENTS]
+        public integer array chainIdTalentIndex [MAX_TALENTS]
         private integer linkTalentCount = 0
 
         public integer rows = MAX_ROWS
@@ -335,6 +336,12 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
 
         endmethod
 
+        method ApplyTalentChainTemporary takes integer chainId, integer rank returns nothing
+            local integer index = this.chainIdTalentIndex[chainId]
+            set this.isDirty = true
+            set this.tempRankState[index] = rank
+        endmethod
+
         method CheckDependencyKey takes integer requiredLevel, integer index, integer depIndex returns string
             local STKTalent_Talent talent = this.talents[index]
             local STKTalent_Talent talentDependency = this.talents[depIndex]
@@ -444,6 +451,20 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
                     call this.UpdateLinkState(this.linkTalentIndex[i])
                 endif
 
+                set i = i + 1
+            endloop
+        endmethod
+
+        method UpdateChainIdTalentIndex takes nothing returns nothing
+            local integer i = 0
+            local STKTalent_Talent t
+
+            loop
+                exitwhen i == this.maxTalents
+                set t = this.talents[i]
+                if (t != 0) then
+                    set chainIdTalentIndex[t.GetChainId()] = i
+                endif
                 set i = i + 1
             endloop
         endmethod

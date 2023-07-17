@@ -140,6 +140,10 @@ library STKTalent initializer init
             return this
         endmethod
 
+        method GetChainId takes nothing returns integer
+            return this.chainId
+        endmethod
+
         method GetNextRank takes nothing returns Talent
             if (this.nextRank != 0) then
                 return this.nextRank

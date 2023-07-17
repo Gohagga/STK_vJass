@@ -11,8 +11,6 @@ library STKStore requires STKConstants, STKTalentTree
         private constant integer MAX_TALENT_VIEW_MODELS = MAX_PLAYER_COUNT * MAX_PANELS_VISIBLE
 
         private constant integer HASH_UNIT_TREE_KEY = 100
-        private constant integer HASH_INDEX_TALENTVIEW_KEY = 600
-        private constant integer HASH_PLAYER_TALENTTREEVIEWMODEL_KEY = 5000
     endglobals
 
     struct STKStore

@@ -1,46 +1,45 @@
-library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewModel //, STKITalentSlot, STKITalentView, STKTalentView, STKTalentTreeView, STKConstants
+library STKSaveLoad requires BSRW, STK // STKTalentTreeViewModel //, STKITalentSlot, STKITalentView, STKTalentView, STKTalentTreeView, STKConstants
 
     globals
         public constant integer MAX_TALENT_SLOTS = STKConstants_MAX_TALENT_SLOTS
         
-        public constant integer TALENTTREE_ID_THRESHOLD_SMALL = 16
-        public constant integer TALENTTREE_ID_THRESHOLD_LARGE = 64
+        public constant integer TALENTTREE_ID_THRESHOLD_SMALL = STKConstants_TALENTTREE_ID_THRESHOLD_SMALL
+        public constant integer TALENTTREE_ID_THRESHOLD_LARGE = STKConstants_TALENTTREE_ID_THRESHOLD_LARGE
 
-        public constant integer TALENT_ID_THRESHOLD_SMALL = 32
-        public constant integer TALENT_ID_THRESHOLD_LARGE = 128
+        public constant integer TALENT_ID_THRESHOLD_SMALL = STKConstants_TALENT_ID_THRESHOLD_SMALL
+        public constant integer TALENT_ID_THRESHOLD_LARGE = STKConstants_TALENT_ID_THRESHOLD_LARGE
         
-        public constant integer TALENT_RANK_THRESHOLD_SMALL = 16
-        public constant integer TALENT_RANK_THRESHOLD_MEDIUM = 32
-        public constant integer TALENT_RANK_THRESHOLD_LARGE = 64
-        public constant integer TALENT_RANK_THRESHOLD_EXTRA = 256
+        public constant integer TALENT_RANK_THRESHOLD_SMALL = STKConstants_TALENT_RANK_THRESHOLD_SMALL
+        public constant integer TALENT_RANK_THRESHOLD_MEDIUM = STKConstants_TALENT_RANK_THRESHOLD_MEDIUM
+        public constant integer TALENT_RANK_THRESHOLD_LARGE = STKConstants_TALENT_RANK_THRESHOLD_LARGE
+        public constant integer TALENT_RANK_THRESHOLD_EXTRA = STKConstants_TALENT_RANK_THRESHOLD_EXTRA
     endglobals
 
     // Private globals
     globals
-        private constant string array threshold2SizeName[2]
-        private constant string array threshold4SizeName[4]
+        private constant string array Threshold2SizeName[2]
+        private constant string array Threshold4SizeName[4]
 
-        private constant integer array talentTreeIdThreshold[2]
-        private constant integer array talentIdThreshold[2]
-        private constant integer array talentRankThreshold[4]
+        private constant integer array TalentTreeIdThreshold[2]
+        private constant integer array TalentIdThreshold[2]
+        private constant integer array TalentRankThreshold[4]
 
-        private TalentTreeFactory array talentTreeFactories[TALENT_ID_THRESHOLD_LARGE]
-        private integer maxTalentTreeId = 0
+        private TalentTreeFactory array TalentTreeFactories[TALENT_ID_THRESHOLD_LARGE]
+        private integer MaxTalentTreeId = 0
 
-        private integer array tempArrayChainIndex[TALENT_ID_THRESHOLD_LARGE]
-        private string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$#0123456789"
-        private integer charsetBase = 6
-        private integer array charsetMap[100]
-        private hashtable hash
+        private integer array TempArrayChainIndex[TALENT_ID_THRESHOLD_LARGE]
+        private string SaveCodeCharset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$#0123456789"
+        private integer SaveCodeCharsetBase = 6
+        private STKStore Store
     endglobals
 
     function interface TalentTreeFactory takes unit u returns STKTalentTree_TalentTree
 
     private function getCharIndex takes string char returns integer
         local integer i = 0
-        local integer length = StringLength(charset)
+        local integer length = StringLength(SaveCodeCharset)
         loop
-            exitwhen i >= length or char == SubString(charset, i, i+1)
+            exitwhen i >= length or char == SubString(SaveCodeCharset, i, i+1)
             set i = i + 1
         endloop
         return i
@@ -58,11 +57,11 @@ library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewMode
     private function getThresholdValue takes integer size, integer whichThreshold returns integer
         local integer value = -1
         if (whichThreshold == 0) then // talentTreeId
-            set value = talentTreeIdThreshold[size]
+            set value = TalentTreeIdThreshold[size]
         elseif (whichThreshold == 1) then // talentId
-            set value = talentIdThreshold[size]
+            set value = TalentIdThreshold[size]
         elseif (whichThreshold == 2) then // talentRank
-            set value = talentRankThreshold[size]
+            set value = TalentRankThreshold[size]
         endif
         return value
     endfunction
@@ -100,7 +99,7 @@ library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewMode
     endfunction
 
     public function RegisterTalentTree takes integer id, TalentTreeFactory factoryMethod returns boolean
-        local TalentTreeFactory f = talentTreeFactories[id]
+        local TalentTreeFactory f = TalentTreeFactories[id]
         if (id == 0) then
             call BJDebugMsg("|cffdd0808STK-Error: IDs should start from 1, not 0. (SaveLoad.RegisterTalentTree)")
             return false
@@ -109,9 +108,9 @@ library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewMode
             call BJDebugMsg("|cffdd0808STK-Error: " + I2S(id) + " is already used. (SaveLoad.RegisterTalentTree)")
             return false
         endif
-        set talentTreeFactories[id] = factoryMethod
-        if (id > maxTalentTreeId) then
-            set maxTalentTreeId = id
+        set TalentTreeFactories[id] = factoryMethod
+        if (id > MaxTalentTreeId) then
+            set MaxTalentTreeId = id
         endif
         return true
     endfunction
@@ -130,7 +129,7 @@ library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewMode
         set talentTreeId = stream.readInt(talentTreeIdBits)
         call BJDebugMsg(stream.lastReadChunk + " - Talent Tree Id: " + I2S(talentTreeId))
 
-        set tree = talentTreeFactories[talentTreeId].evaluate(owner)
+        set tree = TalentTreeFactories[talentTreeId].evaluate(owner)
         call STK_AssignTalentTree(panelId, owner, tree)
         call tree.UpdateChainIdTalentIndex()
 
@@ -197,7 +196,7 @@ library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewMode
         set i = 0
         loop
             exitwhen i == MAX_TALENT_SLOTS
-            set tempArrayChainIndex[i] = 0
+            set TempArrayChainIndex[i] = 0
             set i = i + 1
         endloop
 
@@ -230,10 +229,10 @@ library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewMode
                     // Highest chain id
                     set talentCount = chainId
                 endif
-                if (tempArrayChainIndex[chainId] > 0) then
+                if (TempArrayChainIndex[chainId] > 0) then
                     call BJDebugMsg("|cffdd0808STK-Error: Talents on different grid positions should not share Chain ID " + I2S(chainId) + " (" + tree.talents[i].name + "). (SaveLoad.SaveTalentTree)")
                 endif
-                set tempArrayChainIndex[chainId] = i
+                set TempArrayChainIndex[chainId] = i
             endif
             set i = i + 1
         endloop
@@ -242,7 +241,7 @@ library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewMode
         set i = 0
         loop
             exitwhen i == talentCount
-            call tempWriter.write(tree.rankState[tempArrayChainIndex[i]], talentRankBits)
+            call tempWriter.write(tree.rankState[TempArrayChainIndex[i]], talentRankBits)
             set i = i + 1
         endloop
         set pos = tempWriter.get()
@@ -277,13 +276,13 @@ library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewMode
         local BSRW_BitStreamReader stream = BSRW_BitStreamReader.create(bitString)
 
         set talentTreeIdSize = stream.readInt(1)
-        call BJDebugMsg(stream.lastReadChunk + " - Talent Tree Id size: " + threshold2SizeName[talentTreeIdSize] + " threshold: " + I2S(talentTreeIdThreshold[talentTreeIdSize]))
+        call BJDebugMsg(stream.lastReadChunk + " - Talent Tree Id size: " + Threshold2SizeName[talentTreeIdSize] + " threshold: " + I2S(TalentTreeIdThreshold[talentTreeIdSize]))
 
         set talentRankSize = stream.readInt(2)
-        call BJDebugMsg(stream.lastReadChunk + " - Talent Rank size: " + threshold4SizeName[talentRankSize] + " threshold: " + I2S(talentRankThreshold[talentRankSize]))
+        call BJDebugMsg(stream.lastReadChunk + " - Talent Rank size: " + Threshold4SizeName[talentRankSize] + " threshold: " + I2S(TalentRankThreshold[talentRankSize]))
 
         set talentIdSize = stream.readInt(1)
-        call BJDebugMsg(stream.lastReadChunk + " - Talent Id size: " + threshold2SizeName[talentIdSize] + " threshold: " + I2S(talentIdThreshold[talentIdSize]))
+        call BJDebugMsg(stream.lastReadChunk + " - Talent Id size: " + Threshold2SizeName[talentIdSize] + " threshold: " + I2S(TalentIdThreshold[talentIdSize]))
 
         // Talent Tree Count
         set talentTreeCount = stream.readInt(4)
@@ -347,20 +346,20 @@ library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewMode
             set j = j + 1
         endloop
 
-        set talentTreeIdSize = findThresholdSize(maxTalentTreeId, 0)
+        set talentTreeIdSize = findThresholdSize(MaxTalentTreeId, 0)
         set talentIdSize = findThresholdSize(maxTalentId, 1)
         set talentRankSize = findThresholdSize(maxTalentRank, 2)
 
         set stream = BSRW_BitStreamWriter.create()
 
         call stream.write(talentTreeIdSize, 1)
-        call BJDebugMsg(stream.lastWrittenChunk + " - Talent Tree Id size: " + threshold2SizeName[talentTreeIdSize] + " threshold: " + I2S(talentTreeIdThreshold[talentTreeIdSize]))
+        call BJDebugMsg(stream.lastWrittenChunk + " - Talent Tree Id size: " + Threshold2SizeName[talentTreeIdSize] + " threshold: " + I2S(TalentTreeIdThreshold[talentTreeIdSize]))
 
         call stream.write(talentRankSize, 2)
-        call BJDebugMsg(stream.lastWrittenChunk + " - Talent Rank size: " + threshold4SizeName[talentRankSize] + " threshold: " + I2S(talentRankThreshold[talentRankSize]))
+        call BJDebugMsg(stream.lastWrittenChunk + " - Talent Rank size: " + Threshold4SizeName[talentRankSize] + " threshold: " + I2S(TalentRankThreshold[talentRankSize]))
 
         call stream.write(talentIdSize, 1)
-        call BJDebugMsg(stream.lastWrittenChunk + " - Talent Id size: " + threshold2SizeName[talentIdSize] + " threshold: " + I2S(talentIdThreshold[talentIdSize]))
+        call BJDebugMsg(stream.lastWrittenChunk + " - Talent Id size: " + Threshold2SizeName[talentIdSize] + " threshold: " + I2S(TalentIdThreshold[talentIdSize]))
 
         // Talent Tree Count
         call stream.write(talentTreeCount, 4)
@@ -399,7 +398,7 @@ library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewMode
             set index = getCharIndex(character)
         
             if (index >= 0) then
-                call writer.write(index, charsetBase)
+                call writer.write(index, SaveCodeCharsetBase)
             endif
             set i = i + 1
         endloop
@@ -415,14 +414,14 @@ library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewMode
         local string encoded = ""
         local string bitString = SaveForUnit(owner)
         local integer bitStringLength = StringLength(bitString)
-        local integer remainder = ModuloInteger(bitStringLength, charsetBase)
+        local integer remainder = ModuloInteger(bitStringLength, SaveCodeCharsetBase)
         local integer i = 0
         local integer value = 0
         local BSRW_BitStreamReader reader
 
-        // Padding up to the charset base
+        // Padding up to the SaveCodeCharset base
         if (remainder != 0) then
-            set i = charsetBase - remainder
+            set i = SaveCodeCharsetBase - remainder
             loop
                 exitwhen i <= 0
                 set bitString = bitString + "0"
@@ -434,52 +433,41 @@ library STKSaveLoad initializer init requires BSRW, STK // STKTalentTreeViewMode
         set i = 0
         loop
             exitwhen i >= bitStringLength
-            set value = reader.readInt(charsetBase)
-            set encoded = encoded + SubString(charset, value, value + 1)
-            set i = i + charsetBase
+            set value = reader.readInt(SaveCodeCharsetBase)
+            set encoded = encoded + SubString(SaveCodeCharset, value, value + 1)
+            set i = i + SaveCodeCharsetBase
         endloop
 
         return encoded
     endfunction
 
-    private function init takes nothing returns nothing
+    private function Initialize takes STKStore_STKStore store returns nothing
         local integer i = 0
         local string char = ""
 
-        set threshold2SizeName[0] = "SMALL"
-        set threshold2SizeName[1] = "LARGE"
+        set Threshold2SizeName[0] = "SMALL"
+        set Threshold2SizeName[1] = "LARGE"
 
-        set threshold4SizeName[0] = "SMALL"
-        set threshold4SizeName[1] = "MEDIUM"
-        set threshold4SizeName[2] = "LARGE"
-        set threshold4SizeName[3] = "EXTRA"
+        set Threshold4SizeName[0] = "SMALL"
+        set Threshold4SizeName[1] = "MEDIUM"
+        set Threshold4SizeName[2] = "LARGE"
+        set Threshold4SizeName[3] = "EXTRA"
 
-        set talentTreeIdThreshold[0] = TALENTTREE_ID_THRESHOLD_SMALL
-        set talentTreeIdThreshold[1] = TALENTTREE_ID_THRESHOLD_LARGE
+        set TalentTreeIdThreshold[0] = TALENTTREE_ID_THRESHOLD_SMALL
+        set TalentTreeIdThreshold[1] = TALENTTREE_ID_THRESHOLD_LARGE
 
-        set talentIdThreshold[0] = TALENT_ID_THRESHOLD_SMALL
-        set talentIdThreshold[1] = TALENT_ID_THRESHOLD_LARGE
+        set TalentIdThreshold[0] = TALENT_ID_THRESHOLD_SMALL
+        set TalentIdThreshold[1] = TALENT_ID_THRESHOLD_LARGE
         
-        set talentRankThreshold[0] = TALENT_RANK_THRESHOLD_SMALL
-        set talentRankThreshold[1] = TALENT_RANK_THRESHOLD_MEDIUM
-        set talentRankThreshold[2] = TALENT_RANK_THRESHOLD_LARGE
-        set talentRankThreshold[3] = TALENT_RANK_THRESHOLD_EXTRA
+        set TalentRankThreshold[0] = TALENT_RANK_THRESHOLD_SMALL
+        set TalentRankThreshold[1] = TALENT_RANK_THRESHOLD_MEDIUM
+        set TalentRankThreshold[2] = TALENT_RANK_THRESHOLD_LARGE
+        set TalentRankThreshold[3] = TALENT_RANK_THRESHOLD_EXTRA
 
-        set talentTreeIdThreshold[2] = 0
-        set talentIdThreshold[2] = 0
-        set talentRankThreshold[4] = 0
+        set TalentTreeIdThreshold[2] = 0
+        set TalentIdThreshold[2] = 0
+        set TalentRankThreshold[4] = 0
 
-        // set hash = InitHashtable()
-        // loop
-        //     exitwhen i == StringLength(charset)
-        //     set char = SubString(charset, i, i+1)
-        //     call BJDebugMsg("Hashing " + char + " hash " + I2S(StringHash(char)))
-        //     if (65 <= StringHash(char) and StringHash(char) <= 90) then
-        //         call SaveInteger(hash, 0, 32 + StringHash(char), i)
-        //     else
-        //         call SaveInteger(hash, 0, StringHash(char), i)
-        //     endif
-        //     set i = i + 1
-        // endloop
+        set Store = store
     endfunction
 endlibrary

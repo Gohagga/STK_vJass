@@ -50,12 +50,12 @@ library STKStore requires STKConstants, STKTalentTree
 
         // Talent Tree View Models
         public method SetPlayerTalentTreeViewModel takes integer panelId, integer playerId, STKTalentTreeViewModel_TalentTreeViewModel talentTreeViewModel returns STKTalentTreeViewModel_TalentTreeViewModel
-            local integer index = MAX_PLAYER_COUNT * panelId + playerId
+            local integer index = MAX_PANELS_VISIBLE * playerId + panelId
             set this.talentTreeViewModels[index] = talentTreeViewModel
             return talentTreeViewModel
         endmethod
         public method GetPlayerTalentTreeViewModel takes integer panelId, integer playerId returns STKTalentTreeViewModel_TalentTreeViewModel
-            local integer index = MAX_PLAYER_COUNT * panelId + playerId
+            local integer index = MAX_PANELS_VISIBLE * playerId + panelId
             return this.talentTreeViewModels[index]
         endmethod
     endstruct

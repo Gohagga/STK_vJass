@@ -225,9 +225,15 @@ scope Shepherd initializer init
             local integer r = thistype.GetEventRank()
             call BJDebugMsg("Deactivated " + t.name + " " + I2S(r))
         endmethod
+
+        static method LoadCreate takes unit u returns Shepherd
+            return thistype.create(u)
+        endmethod
     endstruct
 
     private function init takes nothing returns nothing
+        // Register Talent Trees
+        call STKSaveLoad_RegisterTalentTree(1, Shepherd.LoadCreate)
     endfunction
 
 endscope

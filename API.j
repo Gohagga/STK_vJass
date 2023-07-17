@@ -41,7 +41,8 @@ After creating a new type of TalentTree, override "Initialize", and other method
     Override when you want to show some dynamic info in the title, e.g. number of Talent points
 
 [Public methods used during Initialize]
--> method SetColumnsRows takes integer columns, integer rows returns nothing
+-> method SetIdColumnsRows takes integer id, integer columns, integer rows returns nothing
+    Sets TalentTree Id which is important for save-loading
     Sets number of columns and rows according which Talents will be rendered on the grid
     call this.SetColumnsRows(4, 7)
 
@@ -164,4 +165,25 @@ Internal class that holds most of the system logic, connecting TalentView, Talen
 
 Does not have an interface because it's not recommended or intended to write your own version.
 ===========================================================================================
+*/
+
+/* Save Load API
+-> function RegisterTalentTree takes integer id, TalentTreeFactory factoryMethod returns boolean
+    Should be called on init for every type of TalentTree implementation. This must be done so that system knows which TalentTree to
+    create for the unit when loading
+    call STKSaveLoad_RegisterTalentTree(1, Shepherd.LoadCreate)
+
+-> function LoadForUnit takes unit owner, string bitString returns nothing
+    Takes the bitString string, creates TalentTree instances for the unit, loads the ranks and activates talents
+    call STKSaveLoad_LoadForUnit(udg_Hero, udg_BitStream)
+
+-> function SaveForUnit takes unit owner returns string
+    Takes the unit's TalentTree objects and creates a bit string with rank data
+    call STKSaveLoad_SaveForUnit(udg_Hero)
+
+-> function LoadTalentTree takes integer panelId, BSRW_BitStreamReader stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits, unit owner returns STKTalentTree_TalentTree
+    Used internally by LoadForUnit
+
+-> function SaveTalentTree takes BSRW_BitStreamWriter stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits, STKTalentTree_TalentTree tree returns nothing
+    Used internally by SaveForUnit
 */

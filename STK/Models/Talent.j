@@ -201,7 +201,7 @@ library STKTalent initializer init
             endloop
         endmethod
 
-        method GetTalentRank takes nothing returns Talent
+        method GetTalentRank takes nothing returns integer
             return this.rank
         endmethod
 
@@ -217,6 +217,7 @@ library STKTalent initializer init
             set talent.dependencyRight = this.dependencyRight
             set talent.dependencyDown = this.dependencyDown
             set talent.maxRank = 0
+            set talent.chainId = this.chainId
             set talent.isFinalDescription = true
             
             call this.SetNextRank(talent)

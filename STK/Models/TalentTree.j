@@ -21,9 +21,10 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
         public unit ownerUnit
         public player ownerPlayer
         public string icon              = ""
+        private integer id
         public string title             = ""
         public integer talentPoints     = 0
-        public string backgroundImage    = ""
+        public string backgroundImage   = ""
 
         public STKTalent_Talent array talents[MAX_TALENTS]
         public integer array rankState[MAX_TALENTS]
@@ -111,6 +112,10 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
         method CreateTalentCopy takes STKTalent_Talent data returns STKTalent_Talent
             local STKTalent_Talent talent = STKTalent_Talent.createCopy(data)
             return talent
+        endmethod
+
+        method GetId takes nothing returns integer
+            return this.id
         endmethod
 
         // Talent callbacks =======================================================================================
@@ -509,7 +514,8 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
             return tt
         endmethod
 
-        method SetColumnsRows takes integer columns, integer rows returns nothing
+        method SetIdColumnsRows takes integer id, integer columns, integer rows returns nothing
+            set this.id = id
             set this.columns = columns
             set this.rows = rows
         endmethod

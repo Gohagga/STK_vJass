@@ -35,6 +35,7 @@ library STKTalent initializer init
         public Talent previousRank          = 0
         public integer maxRank              = 0
         private integer rank                = 0
+        private integer chainId              = 0
         // Tag?: any;
         
         static method create takes nothing returns Talent
@@ -60,6 +61,7 @@ library STKTalent initializer init
             set new.startingLevel = talent.startingLevel
             set new.cost = talent.cost
             set new.isLink = talent.isLink
+            set new.chainId = talent.chainId
 
             return new
         endmethod
@@ -133,6 +135,15 @@ library STKTalent initializer init
             return this
         endmethod
 
+        method SetChainId takes integer chainId returns Talent
+            set this.chainId = chainId
+            return this
+        endmethod
+
+        method GetChainId takes nothing returns integer
+            return this.chainId
+        endmethod
+
         method GetNextRank takes nothing returns Talent
             if (this.nextRank != 0) then
                 return this.nextRank
@@ -190,7 +201,7 @@ library STKTalent initializer init
             endloop
         endmethod
 
-        method GetTalentRank takes nothing returns Talent
+        method GetTalentRank takes nothing returns integer
             return this.rank
         endmethod
 
@@ -206,6 +217,7 @@ library STKTalent initializer init
             set talent.dependencyRight = this.dependencyRight
             set talent.dependencyDown = this.dependencyDown
             set talent.maxRank = 0
+            set talent.chainId = this.chainId
             set talent.isFinalDescription = true
             
             call this.SetNextRank(talent)

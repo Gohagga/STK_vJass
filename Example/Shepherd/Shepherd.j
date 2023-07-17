@@ -19,7 +19,7 @@ scope Shepherd initializer init
         method Initialize takes nothing returns nothing
             local STKTalent_Talent t
 
-            call this.SetColumnsRows(3, 4)
+            call this.SetIdColumnsRows(1, 3, 4)
             set this.title = "Shepherd"
             call this.SetTalentPoints(6)
             // set this.icon = "FireBolt"
@@ -31,7 +31,7 @@ scope Shepherd initializer init
 
             // Wondrous Flute <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(1)
             call t.SetName("Wondrous Flute")
             call t.SetDescription("Calls a sheep to your side.")
             call t.SetIcon("AlleriaFlute")
@@ -41,7 +41,7 @@ scope Shepherd initializer init
             call this.AddTalent(0, 0, t)
 
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(1)
             call t.SetName("Wondrous Flute")
             call t.SetDescription("Calls another sheep to your side.")
             call t.SetIcon("AlleriaFlute")
@@ -51,7 +51,7 @@ scope Shepherd initializer init
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Soothing Song <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(2)
             call t.SetName("Soothing Song")
             call t.SetDescription("Calls a flying sheep to your side.")
             call t.SetIcon("DispelMagic")
@@ -61,7 +61,7 @@ scope Shepherd initializer init
             call this.AddTalent(1, 0, t)
 
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(2)
             call t.SetName("Soothing Song")
             call t.SetDescription("Calls another flying sheep to your side.")
             call t.SetIcon("DispelMagic")
@@ -72,7 +72,7 @@ scope Shepherd initializer init
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Shepherd Apprentice <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(3)
             call t.SetName("Shepherd Apprentice")
             call t.SetDescription("Gain an apprentice.")
             call t.SetIcon("Peasant")
@@ -82,7 +82,7 @@ scope Shepherd initializer init
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Lots of Apprentices <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(4)
             call t.SetName("Lots of Apprentices")
             call t.SetDescription("Gain 2 guard apprentices.")
             call t.SetIcon("Footman")
@@ -92,7 +92,7 @@ scope Shepherd initializer init
             call this.AddTalent(2, 1, t)
 
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(4)
             call t.SetName("Lots of Apprentices")
             call t.SetDescription("Gain 2 guard apprentices.")
             call t.SetIcon("Footman")
@@ -103,7 +103,7 @@ scope Shepherd initializer init
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Coming of the Lambs <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(5)
             call t.SetName("Coming of the Lambs")
             call t.SetDescription("Gain a Sheep and a Flying Sheep.")
             call t.SetIcon("Sheep")
@@ -113,28 +113,18 @@ scope Shepherd initializer init
             call this.AddTalent(1, 1, t)
 
             // Rank 2
-            set t = this.CreateTalent()
-            call t.SetName("Coming of the Lambs")
+            set t = this.CreateTalentCopy(t)
             call t.SetDescription("Gain 2 Sheep and 2 Flying Sheep.")
-            call t.SetIcon("Sheep")
-            call t.SetOnActivate(function thistype.Activate_ComingOfTheLambs)
-            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
-            call t.SetDependencies(0, 0, 1, 1) // right 1 down 1 (left up right down)
             call this.AddTalent(1, 1, t)
 
             // Rank 3
-            set t = this.CreateTalent()
-            call t.SetName("Coming of the Lambs")
+            set t = this.CreateTalentCopy(t)
             call t.SetDescription("Gain 3 Sheep and 3 Flying Sheep.")
-            call t.SetIcon("Sheep")
-            call t.SetOnActivate(function thistype.Activate_ComingOfTheLambs)
-            call t.SetOnDeactivate(function thistype.Deactivate_Generic)
-            call t.SetDependencies(0, 0, 1, 1) // right 1 down 1 (left up right down)
             call this.AddTalent(1, 1, t)
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Call of the Wilds <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(6)
             call t.SetName("Call of the Wilds")
             call t.SetDescription("Five hostile wolves appear.")
             call t.SetIcon("TimberWolf")
@@ -235,9 +225,15 @@ scope Shepherd initializer init
             local integer r = thistype.GetEventRank()
             call BJDebugMsg("Deactivated " + t.name + " " + I2S(r))
         endmethod
+
+        static method LoadCreate takes unit u returns Shepherd
+            return thistype.create(u)
+        endmethod
     endstruct
 
     private function init takes nothing returns nothing
+        // Register Talent Trees
+        call STKSaveLoad_RegisterTalentTree(1, Shepherd.LoadCreate)
     endfunction
 
 endscope

@@ -52,7 +52,7 @@ library STKTalentTreeViewModel requires STKITalentSlot
 
         set tim = null
     endfunction
-
+    
     function DefaultOnTalentViewChanged takes STKTalentTreeViewModel_TalentTreeViewModel ttvm, player watcher, STKTalentTree_TalentTree tree returns nothing
         local integer playerId
         local timer tim
@@ -296,6 +296,10 @@ library STKTalentTreeViewModel requires STKITalentSlot
             set talentTreeViewModelsToUpdate[MAX_PLAYER_ID * GetPlayerId(this.watcher) + newWatchedTree] = this
         endmethod
 
+        method ScheduleRedraw takes nothing returns nothing            
+            call DefaultOnTalentViewChanged(this, this.watcher, this.tree)
+        endmethod
+
         method SetTree takes STKTalentTree_TalentTree tree returns nothing
             if (this.watched == true) then
                 // Unregister from the old tree
@@ -307,6 +311,10 @@ library STKTalentTreeViewModel requires STKITalentSlot
 
             set this.tree = tree
             call this.ResetTalentViewModels()
+        endmethod
+
+        method GetTree takes nothing returns STKTalentTree_TalentTree
+            return this.tree
         endmethod
 
         method IsWatched takes nothing returns boolean

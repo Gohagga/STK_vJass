@@ -29,9 +29,9 @@ When a hero is chosen, first create a talent tree for them and store it into an 
 
 > set udg_TempTalentTree =  Shepherd_Shepherd.create(GetTriggerUnit())
 
-Then initialize the talent tree and set the unit owner player's UI to watch that talent tree
+Then initialize the talent tree and set the unit owner player's UI to watch that talent tree.
 
-> call STK_AssignTalentTree(GetTriggerUnit(), udg_TempTalentTree)
+> call STK_AssignTalentTree(1, GetTriggerUnit(), udg_TempTalentTree)
 
 If a different player has to see/modify the same talent tree, adjust and execute next
 
@@ -40,7 +40,7 @@ If a different player has to see/modify the same talent tree, adjust and execute
 Make sure it works and then continue onto the actual consumption of the system.
 
 When your player is looking at a certain unit's talent tree, call this line to open the UI
-> call STK_OpenTalentsView(GetTriggerPlayer())
+> call STK_OpenTalentScreen(GetTriggerPlayer())
 
 Watch out, it might not work on Map Initialization, so try 0 seconds passed.
 

@@ -41,13 +41,18 @@ After creating a new type of TalentTree, override "Initialize", and other method
     Override when you want to show some dynamic info in the title, e.g. number of Talent points
 
 [Public methods used during Initialize]
--> method SetColumnsRows takes integer columns, integer rows returns nothing
+-> method SetIdColumnsRows takes integer id, integer columns, integer rows returns nothing
+    Sets TalentTree Id which is important for save-loading
     Sets number of columns and rows according which Talents will be rendered on the grid
     call this.SetColumnsRows(4, 7)
 
 -> method CreateTalent takes nothing returns STKTalent_Talent
     Creates an unmodified Talent object, ready to be configured
     local STKTalent_Talent t = this.CreateTalent()
+
+-> method CreateTalentCopy tales STKTalent_Talent data returns STKTalent_Talent
+    Creates a copy of given talent and returns it, ready to be tweaked.
+    local STKTalent_Talent t = this.CreateTalentCopy(t)
 
 -> method AddTalent takes integer x, integer y, STKTalent_Talent talent returns STKTalent_Talent
     Adds talent to the talent tree at grid position (starts from bottom left being (0, 0))
@@ -127,6 +132,9 @@ Created inside Initialize method of a TalentTree, it contains all necessary data
 
 -> method SetCost takes integer cost returns Talent
     Cost is how much points the talent requires to be taken
+
+-> method SetChainId takes integer saveId returns Talent
+    Important for save-loading, each talent chain should have its own id (unique per talent tree). Do not reuse old ids for new talents.
 ===========================================================================================
 
 
@@ -157,4 +165,28 @@ Internal class that holds most of the system logic, connecting TalentView, Talen
 
 Does not have an interface because it's not recommended or intended to write your own version.
 ===========================================================================================
+*/
+
+/* Save Load API
+-> function RegisterTalentTree takes integer id, TalentTreeFactory factoryMethod returns boolean
+    Should be called on init for every type of TalentTree implementation. This must be done so that system knows which TalentTree to
+    create for the unit when loading
+    call STKSaveLoad_RegisterTalentTree(1, Shepherd.LoadCreate)
+
+-> function LoadForUnit takes unit owner, string bitString returns nothing
+    Takes the bitString string, creates TalentTree instances for the unit, loads the ranks and activates talents
+    call STKSaveLoad_LoadForUnit(udg_Hero, udg_BitString)
+
+-> function SaveForUnit takes unit owner returns string
+    Takes the unit's TalentTree objects and creates a bit string with rank data
+    set udg_BitString = STKSaveLoad_SaveForUnit(udg_Hero)
+
+-> function LoadForUnitEncoded takes unit owner, string saveCode returns nothing
+    Does the same thing as LoadForUnit, but it expect saveCode to be in base64 charset abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$#0123456789
+    call STKSaveLoad_LoadForUnitEncoded(udg_Hero, udg_SaveCode)
+
+-> function SaveForUnitEncoded takes unit owner returns string
+    Does the same thing as SaveForUnit, but it returns a string encoded in base64 charset abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$#0123456789
+    set udg_SaveCode = STKSaveLoad_SaveForUnitEncoded(udg_Hero)
+
 */

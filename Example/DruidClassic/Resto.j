@@ -20,7 +20,7 @@ scope Restoration initializer init
         method Initialize takes nothing returns nothing
             local STKTalent_Talent t
 
-            call this.SetColumnsRows(4, 7)
+            call this.SetIdColumnsRows(3, 4, 7)
             set this.title = "Restoration"
             call this.SetTalentPoints(6)
             set this.backgroundImage = "resto.blp"
@@ -32,7 +32,7 @@ scope Restoration initializer init
 
             // Improved Mark of the Wild <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(1)
             call t.SetName("Improved Mark of the Wild")
             call t.SetDescription("Increases the effects of your Mark of the Wild and Gift of the Wild spells by 7%%.")
             call t.SetIcon("spell_nature_regeneration")
@@ -40,7 +40,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(1)
             call t.SetName("Improved Mark of the Wild")
             call t.SetDescription("Increases the effects of your Mark of the Wild and Gift of the Wild spells by 14%%.")
             call t.SetIcon("spell_nature_regeneration")
@@ -48,7 +48,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // Rank 3
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(1)
             call t.SetName("Improved Mark of the Wild")
             call t.SetDescription("Increases the effects of your Mark of the Wild and Gift of the Wild spells by 21%%.")
             call t.SetIcon("spell_nature_regeneration")
@@ -56,7 +56,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // Rank 4
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(1)
             call t.SetName("Improved Mark of the Wild")
             call t.SetDescription("Increases the effects of your Mark of the Wild and Gift of the Wild spells by 28%%.")
             call t.SetIcon("spell_nature_regeneration")
@@ -64,7 +64,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 6, t)
             // Rank 5
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(1)
             call t.SetName("Improved Mark of the Wild")
             call t.SetDescription("Increases the effects of your Mark of the Wild and Gift of the Wild spells by 35%%.")
             call t.SetIcon("spell_nature_regeneration")
@@ -74,7 +74,7 @@ scope Restoration initializer init
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Furor <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(2)
             call t.SetName("Furor")
             call t.SetDescription("Gives you 20%% chance to gain 10 Rage when you shapeshift into Bear and Dire Bear Form or 40 Energy when you shapeshift into Cat Form.")
             call t.SetIcon("spell_holy_blessingofstamina")
@@ -82,7 +82,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(2)
             call t.SetName("Furor")
             call t.SetDescription("Gives you 40%% chance to gain 10 Rage when you shapeshift into Bear and Dire Bear Form or 40 Energy when you shapeshift into Cat Form.")
             call t.SetIcon("spell_holy_blessingofstamina")
@@ -90,7 +90,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
             // Rank 3
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(2)
             call t.SetName("Furor")
             call t.SetDescription("Gives you 60%% chance to gain 10 Rage when you shapeshift into Bear and Dire Bear Form or 40 Energy when you shapeshift into Cat Form.")
             call t.SetIcon("spell_holy_blessingofstamina")
@@ -98,7 +98,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
             // Rank 4
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(2)
             call t.SetName("Furor")
             call t.SetDescription("Gives you 80%% chance to gain 10 Rage when you shapeshift into Bear and Dire Bear Form or 40 Energy when you shapeshift into Cat Form.")
             call t.SetIcon("spell_holy_blessingofstamina")
@@ -106,7 +106,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 6, t)
             // Rank 5
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(2)
             call t.SetName("Furor")
             call t.SetDescription("Gives you 100%% chance to gain 10 Rage when you shapeshift into Bear and Dire Bear Form or 40 Energy when you shapeshift into Cat Form.")
             call t.SetIcon("spell_holy_blessingofstamina")
@@ -116,7 +116,7 @@ scope Restoration initializer init
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Improved Healing Touch <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(3)
             call t.SetName("Improved Healing Touch")
             call t.SetDescription("Reduces the cast time of your Healing Touch spell by 0.1 sec.")
             call t.SetIcon("spell_nature_healingtouch")
@@ -124,7 +124,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(3)
             call t.SetName("Improved Healing Touch")
             call t.SetDescription("Reduces the cast time of your Healing Touch spell by 0.2 sec.")
             call t.SetIcon("spell_nature_healingtouch")
@@ -132,7 +132,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // Rank 3
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(3)
             call t.SetName("Improved Healing Touch")
             call t.SetDescription("Reduces the cast time of your Healing Touch spell by 0.3 sec.")
             call t.SetIcon("spell_nature_healingtouch")
@@ -140,7 +140,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // Rank 4
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(3)
             call t.SetName("Improved Healing Touch")
             call t.SetDescription("Reduces the cast time of your Healing Touch spell by 0.4 sec.")
             call t.SetIcon("spell_nature_healingtouch")
@@ -148,7 +148,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(0, 5, t)
             // Rank 5
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(3)
             call t.SetName("Improved Healing Touch")
             call t.SetDescription("Reduces the cast time of your Healing Touch spell by 0.5 sec.")
             call t.SetIcon("spell_nature_healingtouch")
@@ -158,7 +158,7 @@ scope Restoration initializer init
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Nature's Focus <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(4)
             call t.SetName("Nature's Focus")
             call t.SetDescription("Gives you a 14%% chance to avoid interruption caused by damage while casting the Healing Touch, Regrowth and Tranquility spells.")
             call t.SetIcon("MagicImmunity")
@@ -166,7 +166,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(4)
             call t.SetName("Nature's Focus")
             call t.SetDescription("Gives you a 28%% chance to avoid interruption caused by damage while casting the Healing Touch, Regrowth and Tranquility spells.")
             call t.SetIcon("MagicImmunity")
@@ -174,7 +174,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
             // Rank 3
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(4)
             call t.SetName("Nature's Focus")
             call t.SetDescription("Gives you a 42%% chance to avoid interruption caused by damage while casting the Healing Touch, Regrowth and Tranquility spells.")
             call t.SetIcon("MagicImmunity")
@@ -182,7 +182,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
             // Rank 4
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(4)
             call t.SetName("Nature's Focus")
             call t.SetDescription("Gives you a 56%% chance to avoid interruption caused by damage while casting the Healing Touch, Regrowth and Tranquility spells.")
             call t.SetIcon("MagicImmunity")
@@ -190,7 +190,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 5, t)
             // Rank 5
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(4)
             call t.SetName("Nature's Focus")
             call t.SetDescription("Gives you a 70%% chance to avoid interruption caused by damage while casting the Healing Touch, Regrowth and Tranquility spells.")
             call t.SetIcon("MagicImmunity")
@@ -200,7 +200,7 @@ scope Restoration initializer init
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Improved Enrage <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(5)
             call t.SetName("Improved Enrage")
             call t.SetDescription("The Enrage ability now instantly generates 5 Rage.")
             call t.SetIcon("ability_druid_enrage")
@@ -208,7 +208,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 5, t)
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(5)
             call t.SetName("Improved Enrage")
             call t.SetDescription("The Enrage ability now instantly generates 10 Rage.")
             call t.SetIcon("ability_druid_enrage")
@@ -219,7 +219,7 @@ scope Restoration initializer init
 
             // TalentName <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(6)
             call t.SetName("Link Top left")
             call t.SetDescription("Links")
             call t.SetDependencies(0, 5, 0, 0)
@@ -229,7 +229,7 @@ scope Restoration initializer init
 
             // Reflection <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(7)
             call t.SetName("Reflection")
             call t.SetDescription("Allows 5%% of your Mana regeneration to continue while casting.")
             call t.SetIcon("WindWalkOn")
@@ -237,7 +237,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 4, t)
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(7)
             call t.SetName("Reflection")
             call t.SetDescription("Allows 10%% of your Mana regeneration to continue while casting.")
             call t.SetIcon("WindWalkOn")
@@ -245,7 +245,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 4, t)
             // Rank 3
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(7)
             call t.SetName("Reflection")
             call t.SetDescription("Allows 15%% of your Mana regeneration to continue while casting.")
             call t.SetIcon("WindWalkOn")
@@ -255,7 +255,7 @@ scope Restoration initializer init
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Insect Swarm <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(8)
             call t.SetName("Insect Swarm")
             call t.SetDescription("The enemy target is swarmed by insects, decreasing their chance to hit by 2%% and causing 66 Nature damage over 12 sec.")
             call t.SetIcon("spell_nature_insectswarm")
@@ -265,7 +265,7 @@ scope Restoration initializer init
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Subtlety <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(9)
             call t.SetName("Subtlety")
             call t.SetDescription("Reduces the threat generated by your Healing spells by 4%%.")
             call t.SetIcon("Scout")
@@ -273,7 +273,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 4, t)
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(9)
             call t.SetName("Subtlety")
             call t.SetDescription("Reduces the threat generated by your Healing spells by 8%%.")
             call t.SetIcon("Scout")
@@ -281,7 +281,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 4, t)
             // Rank 3
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(9)
             call t.SetName("Subtlety")
             call t.SetDescription("Reduces the threat generated by your Healing spells by 12%%.")
             call t.SetIcon("Scout")
@@ -289,7 +289,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 4, t)
             // Rank 4
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(9)
             call t.SetName("Subtlety")
             call t.SetDescription("Reduces the threat generated by your Healing spells by 16%%.")
             call t.SetIcon("Scout")
@@ -297,7 +297,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 4, t)
             // Rank 5
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(9)
             call t.SetName("Subtlety")
             call t.SetDescription("Reduces the threat generated by your Healing spells by 20%%.")
             call t.SetIcon("Scout")
@@ -308,7 +308,7 @@ scope Restoration initializer init
 
             // TalentName <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(10)
             call t.SetName("Link left")
             call t.SetDescription("Links")
             call t.SetDependencies(0, 1, 0, 0)
@@ -318,7 +318,7 @@ scope Restoration initializer init
 
             // Tranquil Spirit <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(11)
             call t.SetName("Tranquil Spirit")
             call t.SetDescription("Reduces the mana cost of your Healing Touch and Tranquility spells by 2%%.")
             call t.SetIcon("ElunesBlessing")
@@ -326,7 +326,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 3, t)
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(11)
             call t.SetName("Tranquil Spirit")
             call t.SetDescription("Reduces the mana cost of your Healing Touch and Tranquility spells by 4%%.")
             call t.SetIcon("ElunesBlessing")
@@ -334,7 +334,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 3, t)
             // Rank 3
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(11)
             call t.SetName("Tranquil Spirit")
             call t.SetDescription("Reduces the mana cost of your Healing Touch and Tranquility spells by 6%%.")
             call t.SetIcon("ElunesBlessing")
@@ -342,7 +342,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 3, t)
             // Rank 4
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(11)
             call t.SetName("Tranquil Spirit")
             call t.SetDescription("Reduces the mana cost of your Healing Touch and Tranquility spells by 8%%.")
             call t.SetIcon("ElunesBlessing")
@@ -350,7 +350,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(1, 3, t)
             // Rank 5
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(11)
             call t.SetName("Tranquil Spirit")
             call t.SetDescription("Reduces the mana cost of your Healing Touch and Tranquility spells by 10%%.")
             call t.SetIcon("ElunesBlessing")
@@ -361,7 +361,7 @@ scope Restoration initializer init
 
             // Link <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(12)
             call t.SetName("Link Middle")
             call t.SetDescription("Links")
             call t.SetDependencies(0, 1, 0, 0)
@@ -371,7 +371,7 @@ scope Restoration initializer init
 
             // Improved Rejuvenation <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(13)
             call t.SetName("Improved Rejuvenation")
             call t.SetDescription("Increases the effect of your Rejuvenation spell by 5%%.")
             call t.SetIcon("Rejuvenation")
@@ -379,7 +379,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 3, t)
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(13)
             call t.SetName("Improved Rejuvenation")
             call t.SetDescription("Increases the effect of your Rejuvenation spell by 10%%.")
             call t.SetIcon("Rejuvenation")
@@ -387,7 +387,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 3, t)
             // Rank 3
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(13)
             call t.SetName("Improved Rejuvenation")
             call t.SetDescription("Increases the effect of your Rejuvenation spell by 15%%.")
             call t.SetIcon("Rejuvenation")
@@ -397,7 +397,7 @@ scope Restoration initializer init
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Nature's Swiftness <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(14)
             call t.SetName("Nature's Swiftness")
             call t.SetDescription("When activated, your next Nature spell becomes an instant cast spell.")
             call t.SetIcon("RavenForm")
@@ -409,7 +409,7 @@ scope Restoration initializer init
 
             // Link <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(15)
             call t.SetName("Link Tranquil 1")
             call t.SetDescription("Links")
             call t.SetDependencies(0, 5, 0, 0)
@@ -419,7 +419,7 @@ scope Restoration initializer init
 
             // Gift of Nature <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(16)
             call t.SetName("Gift of Nature")
             call t.SetDescription("Increases the effect of all healing spells by 2%%.")
             call t.SetIcon("spell_nature_protectionformnature")
@@ -428,7 +428,7 @@ scope Restoration initializer init
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(2, 2, t)
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(16)
             call t.SetName("Gift of Nature")
             call t.SetDescription("Increases the effect of all healing spells by 4%%.")
             call t.SetIcon("spell_nature_protectionformnature")
@@ -437,7 +437,7 @@ scope Restoration initializer init
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(2, 2, t)
             // Rank 3
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(16)
             call t.SetName("Gift of Nature")
             call t.SetDescription("Increases the effect of all healing spells by 6%%.")
             call t.SetIcon("spell_nature_protectionformnature")
@@ -446,7 +446,7 @@ scope Restoration initializer init
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(2, 2, t)
             // Rank 4
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(16)
             call t.SetName("Gift of Nature")
             call t.SetDescription("Increases the effect of all healing spells by 8%%.")
             call t.SetIcon("spell_nature_protectionformnature")
@@ -455,7 +455,7 @@ scope Restoration initializer init
             call t.SetDependencies(0, 1, 0, 0)
             call this.AddTalent(2, 2, t)
             // Rank 5
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(16)
             call t.SetName("Gift of Nature")
             call t.SetDescription("Increases the effect of all healing spells by 10%%.")
             call t.SetIcon("spell_nature_protectionformnature")
@@ -466,7 +466,7 @@ scope Restoration initializer init
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Improved Tranquility <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(17)
             call t.SetName("Improved Tranquility")
             call t.SetDescription("Reduces threat caused by Tranquility by 50%%.")
             call t.SetIcon("Tranquility")
@@ -474,7 +474,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(3, 2, t)
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(17)
             call t.SetName("Improved Tranquility")
             call t.SetDescription("Reduces threat caused by Tranquility by 100%%.")
             call t.SetIcon("Tranquility")
@@ -485,7 +485,7 @@ scope Restoration initializer init
 
             // Link <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(18)
             call t.SetName("Link Bottom")
             call t.SetDescription("Links")
             call t.SetDependencies(0, 1, 0, 0)
@@ -495,7 +495,7 @@ scope Restoration initializer init
 
             // Improved Regrowth <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(19)
             call t.SetName("Improved Regrowth")
             call t.SetDescription("Increases the critical effect chance of your Regrowth spell by 10%%.")
             call t.SetIcon("spell_nature_resistnature")
@@ -503,7 +503,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 1, t)
             // Rank 2
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(19)
             call t.SetName("Improved Regrowth")
             call t.SetDescription("Increases the critical effect chance of your Regrowth spell by 20%%.")
             call t.SetIcon("spell_nature_resistnature")
@@ -511,7 +511,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 1, t)
             // Rank 3
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(19)
             call t.SetName("Improved Regrowth")
             call t.SetDescription("Increases the critical effect chance of your Regrowth spell by 30%%.")
             call t.SetIcon("spell_nature_resistnature")
@@ -519,7 +519,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 1, t)
             // Rank 4
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(19)
             call t.SetName("Improved Regrowth")
             call t.SetDescription("Increases the critical effect chance of your Regrowth spell by 40%%.")
             call t.SetIcon("spell_nature_resistnature")
@@ -527,7 +527,7 @@ scope Restoration initializer init
             call t.SetOnDeactivate(function thistype.Deactivate_Generic)
             call this.AddTalent(2, 1, t)
             // Rank 5
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(19)
             call t.SetName("Improved Regrowth")
             call t.SetDescription("Increases the critical effect chance of your Regrowth spell by 50%%.")
             call t.SetIcon("spell_nature_resistnature")
@@ -538,7 +538,7 @@ scope Restoration initializer init
 
             // Swiftmend <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // Rank 1
-            set t = this.CreateTalent()
+            set t = this.CreateTalent().SetChainId(20)
             call t.SetName("Swiftmend")
             call t.SetDescription("Consumes a Rejuvenation or Regrowth effect on a friendly target to instantly heal them an amount equal to 12 sec. of Rejuvenation or 18 sec. of Regrowth.")
             call t.SetIcon("inv_relics_idolofrejuvenation")
@@ -639,9 +639,15 @@ scope Restoration initializer init
             local integer r = thistype.GetEventRank()
             call BJDebugMsg("Deactivated " + t.name + " " + I2S(r))
         endmethod
+
+        static method LoadCreate takes unit u returns Restoration
+            return thistype.create(u)
+        endmethod
     endstruct
 
     private function init takes nothing returns nothing
+        // Register Talent Trees
+        call STKSaveLoad_RegisterTalentTree(3, Restoration.LoadCreate)
     endfunction
 
 endscope

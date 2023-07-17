@@ -13,6 +13,8 @@ Talent system for Warcraft III games written in vJass, superset of a Warcraft II
 - Talent-tree based **configurable rows and columns count**, for example Pyromancer can have 6 rows, 3 columns and Fighter can have 4x4
 - **Grid based** talent positioning (X, Y) and **automatic button placement** based on rows/columns
 - Can support **multiple talent tree panels** opened at the same time such as 3-spec in wow classic
+- **Talent tree reset**, deactivates all talents and refunds all points spent.
+- Provides **Save-Load API** for integration with save-load systems
 
 ## To Install
 

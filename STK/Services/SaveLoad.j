@@ -120,7 +120,7 @@ library STKSaveLoad requires BSRW
         return true
     endfunction
     
-    public function LoadTalentTree takes integer panelId, BSRW_BitStreamReader stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits, integer talentPointBits, unit owner returns STKTalentTree_TalentTree
+    public function InspectTalentTree takes integer panelId, BSRW_BitStreamReader stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits, integer talentPointBits returns nothing
         local integer talentTreeId = 0
         local integer talentPoints = 0
         local integer readMode = 0
@@ -128,20 +128,12 @@ library STKSaveLoad requires BSRW
         local integer talentId = 0
         local integer talentRank = 0
         local integer i = 0
-        local STKTalentTree_TalentTree tree
-
-        call BJDebugMsg("Loading Talent Tree")
 
         set talentTreeId = stream.readInt(talentTreeIdBits)
         call BJDebugMsg(stream.lastReadChunk + " - Talent Tree Id: " + I2S(talentTreeId))
 
         set talentPoints = stream.readInt(talentPointBits)
         call BJDebugMsg(stream.lastReadChunk + " - Talent Points: " + I2S(talentPoints))
-
-        set tree = TalentTreeFactories[talentTreeId].evaluate(owner)
-        call AssignTalentTree.execute(panelId, owner, tree)
-        call tree.UpdateChainIdTalentIndex()
-        call tree.SetTalentPoints(talentPoints)
 
         set readMode = stream.readInt(1)
 
@@ -161,8 +153,6 @@ library STKSaveLoad requires BSRW
 
                 set talentRank = stream.readInt(talentRankBits)
                 call BJDebugMsg(stream.lastReadChunk + " - Talent [" + I2S(talentId) + "] Rank: " + I2S(talentRank))
-
-                call tree.ApplyTalentChainTemporary(talentId, talentRank)
                 
                 set i = i + 1
             endloop
@@ -182,6 +172,57 @@ library STKSaveLoad requires BSRW
                 set talentId = i + 1
                 set talentRank = stream.readInt(talentRankBits)
                 call BJDebugMsg(stream.lastReadChunk + " - Talent [" + I2S(talentId) + "] Rank: " + I2S(talentRank))
+                
+                set i = i + 1
+            endloop
+        endif
+    endfunction
+
+    public function LoadTalentTree takes integer panelId, BSRW_BitStreamReader stream, integer talentTreeIdBits, integer talentIdBits, integer talentRankBits, integer talentPointBits, unit owner returns STKTalentTree_TalentTree
+        local integer talentTreeId = 0
+        local integer talentPoints = 0
+        local integer readMode = 0
+        local integer talentCount = 0
+        local integer talentId = 0
+        local integer talentRank = 0
+        local integer i = 0
+        local STKTalentTree_TalentTree tree
+
+        set talentTreeId = stream.readInt(talentTreeIdBits)
+        set talentPoints = stream.readInt(talentPointBits)
+
+        set tree = TalentTreeFactories[talentTreeId].evaluate(owner)
+        call AssignTalentTree.execute(panelId, owner, tree)
+        call tree.UpdateChainIdTalentIndex()
+        call tree.SetTalentPoints(talentPoints)
+
+        set readMode = stream.readInt(1)
+
+        // Sequential
+        if (readMode == 0) then
+            set talentCount = stream.readInt(talentIdBits)
+
+            set i = 0
+            loop
+                exitwhen i == talentCount
+                set talentId = stream.readInt(talentIdBits)
+                set talentRank = stream.readInt(talentRankBits)
+                call tree.ApplyTalentChainTemporary(talentId, talentRank)
+                
+                set i = i + 1
+            endloop
+        endif
+
+        // Positional
+        if (readMode == 1) then
+            set talentCount = stream.readInt(talentIdBits)
+
+            set i = 0
+            loop
+                exitwhen i == talentCount
+
+                set talentId = i + 1
+                set talentRank = stream.readInt(talentRankBits)
 
                 if (talentRank > 0) then
                     call tree.ApplyTalentChainTemporary(talentId, talentRank)
@@ -257,17 +298,13 @@ library STKSaveLoad requires BSRW
         endloop
 
         call tempWriter.flush().write(talentCount, talentIdBits)
-        call BJDebugMsg(tempWriter.lastWrittenChunk + " Talent Count: " + I2S(talentCount))
         set i = minChainId
         loop
             exitwhen i > maxChainId
-            call BJDebugMsg("i." + I2S(i) + " chainIndex " + I2S(TempArrayChainIndex[i]) + " bits " + I2S(talentRankBits))
             call tempWriter.write(tree.rankState[TempArrayChainIndex[i]], talentRankBits)
-            call BJDebugMsg(tempWriter.lastWrittenChunk + " Çhain: " + I2S(i) + " Rank: " + I2S(tree.rankState[TempArrayChainIndex[i]]))
             set i = i + 1
         endloop
         set pos = tempWriter.get()
-        call BJDebugMsg("Pos " + pos)
         
         if (StringLength(seq) < StringLength(pos)) then
             call stream.write(0, 1)
@@ -277,13 +314,13 @@ library STKSaveLoad requires BSRW
             call stream.writeStream(pos)
         endif
 
+        call tempWriter.destroy()
         set seq = null
         set pos = null
     endfunction
 
-    public function LoadForUnit takes unit owner, string bitString returns nothing
+    public function Inspect takes string bitString returns nothing
         local integer i = 0
-        local STKTalentTree_TalentTree tt
         
         local integer talentTreeIdSize = 0
         local integer talentRankSize = 0
@@ -322,10 +359,53 @@ library STKSaveLoad requires BSRW
         set i = 0
         loop
             exitwhen i == talentTreeCount
+            call InspectTalentTree(i + 1, stream, talentTreeIdBits, talentIdBits, talentRankBits, talentPointBits)
+            set i = i + 1
+        endloop
+
+        call stream.destroy()
+    endfunction
+
+    public function LoadForUnit takes unit owner, string bitString returns nothing
+        local integer i = 0
+        local STKTalentTree_TalentTree tt
+        
+        local integer talentTreeIdSize = 0
+        local integer talentRankSize = 0
+        local integer talentIdSize = 0
+        
+        local integer talentTreeIdBits = 0
+        local integer talentIdBits = 0
+        local integer talentRankBits = 0        
+        local integer talentPointBits = 0
+        
+        local integer talentTreeId = 0
+        local integer talentTreeCount = 0
+
+        local BSRW_BitStreamReader stream = BSRW_BitStreamReader.create(bitString)
+
+        set talentTreeIdSize = stream.readInt(1)
+        set talentRankSize = stream.readInt(2)
+        set talentIdSize = stream.readInt(1)
+
+        // Talent Tree Count
+        set talentTreeCount = stream.readInt(4)
+
+        // Bit sizes
+        set talentTreeIdBits = findSizeBits(talentTreeIdSize, 0)
+        set talentIdBits = findSizeBits(talentIdSize, 1)
+        set talentRankBits = findSizeBits(talentRankSize, 2)
+        set talentPointBits = findSizeBits(0, 3)
+
+        // Talent Trees
+        set i = 0
+        loop
+            exitwhen i == talentTreeCount
             set tt = LoadTalentTree(i + 1, stream, talentTreeIdBits, talentIdBits, talentRankBits, talentPointBits, owner)
             set i = i + 1
         endloop
 
+        call stream.destroy()
     endfunction
 
     public function SaveForUnit takes unit owner returns string
@@ -348,6 +428,7 @@ library STKSaveLoad requires BSRW
         local integer talentTreeId = 0
 
         local BSRW_BitStreamWriter stream
+        local string bitString
 
         // Loop over unit's talent trees
         // And find maxTalentRank, maxTalentId
@@ -379,17 +460,11 @@ library STKSaveLoad requires BSRW
         set stream = BSRW_BitStreamWriter.create()
 
         call stream.write(talentTreeIdSize, 1)
-        call BJDebugMsg(stream.lastWrittenChunk + " - Talent Tree Id size: " + Threshold2SizeName[talentTreeIdSize] + " threshold: " + I2S(TalentTreeIdThreshold[talentTreeIdSize]))
-
         call stream.write(talentRankSize, 2)
-        call BJDebugMsg(stream.lastWrittenChunk + " - Talent Rank size: " + Threshold4SizeName[talentRankSize] + " threshold: " + I2S(TalentRankThreshold[talentRankSize]))
-
         call stream.write(talentIdSize, 1)
-        call BJDebugMsg(stream.lastWrittenChunk + " - Talent Id size: " + Threshold2SizeName[talentIdSize] + " threshold: " + I2S(TalentIdThreshold[talentIdSize]))
 
         // Talent Tree Count
         call stream.write(talentTreeCount, 4)
-        call BJDebugMsg(stream.lastWrittenChunk + " - Talent Tree count: " + I2S(talentTreeCount))
 
         // Bit sizes
         set talentTreeIdBits = findSizeBits(talentTreeIdSize, 0)
@@ -402,12 +477,38 @@ library STKSaveLoad requires BSRW
         loop
             set tt = Store.GetUnitTalentTree(i, owner)
             exitwhen tt <= 0
-            call BJDebugMsg("Saving Talent tree " + I2S(i) + " - " + tt.title)
             call SaveTalentTree(stream, talentTreeIdBits, talentIdBits, talentRankBits, talentPointBits, tt)
             set i = i + 1
         endloop
 
-        return stream.get()
+        set bitString = stream.get()
+        call stream.destroy()
+        return bitString
+    endfunction
+
+    public function InspectEncoded takes string saveCode returns nothing
+        local BSRW_BitStreamWriter writer = BSRW_BitStreamWriter.create()
+        local integer length = StringLength(saveCode)
+        local integer index = 0
+        local integer i = 0
+        local string char = ""
+    
+        set i = 0
+        loop
+            exitwhen i >= length
+            set char = SubString(saveCode, i, i+1)
+            
+            set index = getCharIndex(char)
+        
+            if (index >= 0) then
+                call writer.write(index, SaveCodeCharsetBase)
+            endif
+            set i = i + 1
+        endloop
+
+        call Inspect(writer.get())
+        call writer.destroy()
+        set char = null
     endfunction
 
     public function LoadForUnitEncoded takes unit owner, string saveCode returns nothing
@@ -465,6 +566,7 @@ library STKSaveLoad requires BSRW
             set i = i + SaveCodeCharsetBase
         endloop
 
+        call reader.destroy()
         return encoded
     endfunction
 

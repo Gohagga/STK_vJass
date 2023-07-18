@@ -189,4 +189,10 @@ Does not have an interface because it's not recommended or intended to write you
     Does the same thing as SaveForUnit, but it returns a string encoded in base64 charset abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$#0123456789
     set udg_SaveCode = STKSaveLoad_SaveForUnitEncoded(udg_Hero)
 
+-> function Inspect takes string bitString returns nothing
+    Prints out the structure of bitString, used for check and debugging.
+
+-> function InspectEncoded takes string saveCode returns nothing
+    Decodes the saveCode and prints out the structure of bitString, used for check and debugging.
+
 */

@@ -163,20 +163,20 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
             endif
         endmethod
 
-        method ActivateTalentRecursively takes STKTalent_Talent talent, integer count, integer rank returns nothing
+        method ActivateTalentRecursively takes STKTalent_Talent talent, integer count, integer initialRank returns nothing
             if (talent.previousRank != 0 and count > 1) then
-                call this.ActivateTalentRecursively(talent.previousRank, count - 1, rank)
+                call this.ActivateTalentRecursively(talent.previousRank, count - 1, initialRank)
             endif
 
-            call this.ActivateTalent(talent, rank - count)
+            call this.ActivateTalent(talent, initialRank + count)
         endmethod
 
-        method DeactivateTalentRecursively takes STKTalent_Talent talent, integer count, integer rank returns nothing
+        method DeactivateTalentRecursively takes STKTalent_Talent talent, integer count, integer targetRank returns nothing
             if (talent.previousRank != 0 and count > 1) then
-                call this.DeactivateTalentRecursively(talent.previousRank, count - 1, rank)
+                call this.DeactivateTalentRecursively(talent.previousRank, count - 1, targetRank)
             endif
 
-            call this.DeactivateTalent(talent, rank - count)
+            call this.DeactivateTalent(talent, targetRank + count)
         endmethod
 
         method CalculateTalentRequirements takes STKTalent_Talent talent, integer index returns string
@@ -210,9 +210,9 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
                     if (this.rankState[i] != this.tempRankState[i]) then
 
                         if (this.talents[i].previousRank != 0) then
-                            call this.ActivateTalentRecursively(this.talents[i].previousRank, this.tempRankState[i] - this.rankState[i], this.tempRankState[i] + 1)
+                            call this.ActivateTalentRecursively(this.talents[i].previousRank, this.tempRankState[i] - this.rankState[i], this.rankState[i])
                         else
-                            call this.ActivateTalentRecursively(this.talents[i], this.tempRankState[i] - this.rankState[i], this.tempRankState[i] + 1)
+                            call this.ActivateTalentRecursively(this.talents[i], this.tempRankState[i] - this.rankState[i], this.rankState[i])
                         endif
                         set this.rankState[i] = this.tempRankState[i]
                     endif
@@ -303,9 +303,9 @@ library STKTalentTree initializer init requires STKTalent, STKConstants
                     if (this.rankState[i] != 0) then
 
                         if (this.talents[i].previousRank != 0) then
-                            call this.DeactivateTalentRecursively(this.talents[i].previousRank, this.rankState[i] - 0, this.rankState[i] + 1)
+                            call this.DeactivateTalentRecursively(this.talents[i].previousRank, this.rankState[i] - 0, 0)
                         else
-                            call this.DeactivateTalentRecursively(this.talents[i], this.rankState[i] - 0, this.rankState[i] + 1)
+                            call this.DeactivateTalentRecursively(this.talents[i], this.rankState[i] - 0, 0)
                         endif
                         set this.rankState[i] = 0
                     endif

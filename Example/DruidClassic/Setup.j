@@ -108,10 +108,10 @@ library STK initializer init requires STKTalentTreeViewModel, STKITalentSlot, ST
     endfunction
 
     // Use to make a player watch unit's talent tree
-    // public function PlayerLookAtUnitsTree takes player p, unit u returns nothing
-    //     local STKTalentTree_TalentTree talentTree = LoadInteger(Hash, 0, GetHandleId(u))
-    //     call TalentUILeft[GetPlayerId(p)].SetTree(talentTree)
-    // endfunction
+    public function PlayerLookAtUnitsTree takes integer panelId, player p, unit u returns nothing
+        local STKTalentTree_TalentTree tree = Store.GetUnitTalentTree(panelId, u)
+        call Store.GetPlayerTalentTreeViewModel(panelId, GetPlayerId(p)).SetTree(tree)
+    endfunction
 
     function GameBeginningSetup takes nothing returns nothing
         local integer i = 0
